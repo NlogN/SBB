@@ -1,8 +1,4 @@
-/**
- * Created with IntelliJ IDEA.
- * User: Ilya Makeev
- * Date: 10.08.14
- */
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -16,12 +12,15 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-
+/**
+ * Created with IntelliJ IDEA.
+ * User: Ilya Makeev
+ * Date: 10.08.14
+ */
 public class  Main extends JFrame {
     static TestClient client = new TestClient();
 
     public Main() {
-
 
         super("Тестовое окно");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -34,9 +33,6 @@ public class  Main extends JFrame {
         final JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.setFont(font);
 
-//        JPanel buttons = new JPanel();
-        //content.add(buttons, BorderLayout.NORTH);
-
         JButton button1 = new JButton("поиск поездов");
         JButton button2 = new JButton("расписание поездов");
         JButton button3 = new JButton("купить билет");
@@ -46,21 +42,33 @@ public class  Main extends JFrame {
                 try {
                     client.send();
                 } catch (IOException e1) {
-                    e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    e1.printStackTrace();
                 } catch (URISyntaxException e1) {
-                    e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    e1.printStackTrace();
                 }
             }
         });
 
         JPanel jPanel1 = new JPanel();
-        //jPanel1.setLayout(new BorderLayout());
+
         jPanel1.add(button1);
         jPanel1.add(button2);
         jPanel1.add(button3);
 
         tabbedPane.addTab("Клиент", jPanel1);
-        tabbedPane.addTab("Сотрудник", new JPanel());
+
+        JPanel jPanel2 = new JPanel();
+        JButton button5 = new JButton("добавить станцию");
+        JButton button6 = new JButton("добавить поезд");
+        JButton button7 = new JButton("просмотр пассажиров");
+        JButton button8 = new JButton("просмотр поездов");
+
+        jPanel2.add(button5);
+        jPanel2.add(button6);
+        jPanel2.add(button7);
+        jPanel2.add(button8);
+
+        tabbedPane.addTab("Сотрудник", jPanel2);
 
 
         content.add(tabbedPane, BorderLayout.CENTER);

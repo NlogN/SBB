@@ -1,8 +1,4 @@
-/**
- * Created with IntelliJ IDEA.
- * User: Ilya Makeev
- * Date: 10.08.14
- */
+
 
 import org.apache.http.HttpException;
 import org.apache.http.HttpResponse;
@@ -21,12 +17,12 @@ import java.io.PrintWriter;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 
 /**
- * User: ilya
- * Date: 22.10.12
+ * Created with IntelliJ IDEA.
+ * User: Ilya Makeev
+ * Date: 10.08.14
  */
 
 
@@ -35,14 +31,6 @@ public class TestClient {
     static int routerPort = 8000;
 
 
-//    public static void main(String[] args) throws IOException, URISyntaxException {
-//        PrintWriter pw = new PrintWriter(System.out, true);
-//        Scanner in = new Scanner(System.in);
-//        while (in.hasNext()) {
-//            String command = in.nextLine();
-//           perform(command, pw);
-//        }
-//    }
 
     public void send() throws IOException, URISyntaxException {
         PrintWriter pw = new PrintWriter(System.out, true);
@@ -50,8 +38,6 @@ public class TestClient {
     }
 
     public static void perform(String command, PrintWriter out) throws IOException, URISyntaxException {
-        command = command.replaceAll(" ", "");
-
 
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
             nameValuePairs.add(new BasicNameValuePair("command", command));
@@ -71,10 +57,7 @@ public class TestClient {
             } catch (HttpException e) {
                 e.printStackTrace();
             }
-            if (command.equals("exit")) {
-                out.println("client is stopped.");
-                System.exit(0);
-            }
+
 
 
     }

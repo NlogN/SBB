@@ -1,8 +1,4 @@
-/**
- * Created with IntelliJ IDEA.
- * User: Ilya Makeev
- * Date: 10.08.14
- */
+
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
@@ -15,8 +11,9 @@ import java.net.InetSocketAddress;
 import java.net.URLDecoder;
 
 /**
- * User: ilya
- * Date: 21.10.12
+ * Created with IntelliJ IDEA.
+ * User: Ilya Makeev
+ * Date: 10.08.14
  */
 
 public class Server {
