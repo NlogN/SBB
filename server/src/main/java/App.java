@@ -17,6 +17,14 @@ public class App {
             Train next = iterator.next();
             System.out.println(next);
         }
+
+//        List<Ticket> studentList = entityManager.createQuery ("SELECT u FROM Ticket u").getResultList();
+//
+//        for (Iterator<Ticket> iterator = studentList.iterator(); iterator.hasNext(); ) {
+//            Ticket next = iterator.next();
+//            System.out.println(next);
+//        }
+
         entityManager.close();
         entityManagerFactory.close();
     }

@@ -1,5 +1,6 @@
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "train")
@@ -14,6 +15,9 @@ public class Train {
 
     @Column(name = "capacity")
     private int capacity;
+
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "train")
+    private List<Ticket> ticketList;
 
 
     public Train() {
@@ -44,13 +48,35 @@ public class Train {
         this.capacity = capacity;
     }
 
+    public List<Ticket> getTicketList() {
+        return ticketList;
+    }
+
+    public void setTicketList(List<Ticket> ticketList) {
+        this.ticketList = ticketList;
+    }
+
+//    @Override
+//    public String toString() {
+//        return "Train{" +
+//                "id=" + train_id +
+//                ", number='" + number + '\'' +
+//                ", capacity='" + capacity +
+//                '}';
+//    }
 
     @Override
     public String toString() {
+        StringBuffer  sb   = new StringBuffer();
+        for (Ticket ticket:ticketList){
+            sb.append(ticket.getId()+" ");
+        }
+
         return "Train{" +
                 "id=" + train_id +
                 ", number='" + number + '\'' +
                 ", capacity='" + capacity +
+                ", ticketInfo='" + sb.toString() +
                 '}';
     }
 }
