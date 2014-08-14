@@ -17,12 +17,12 @@ import javax.swing.JTabbedPane;
  * User: Ilya Makeev
  * Date: 10.08.14
  */
-public class  Main extends JFrame {
+public class AppFrame extends JFrame {
     static TestClient client = new TestClient();
 
-    public Main() {
+    public AppFrame() {
 
-        super("Тестовое окно");
+        super("sbb");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         Font font = new Font("Verdana", Font.PLAIN, 10);
@@ -86,7 +86,7 @@ public class  Main extends JFrame {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 JFrame.setDefaultLookAndFeelDecorated(true);
-                new Main();
+                new AppFrame();
             }
         });
     }
