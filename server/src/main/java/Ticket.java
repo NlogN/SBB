@@ -11,11 +11,11 @@ public class Ticket {
 
 
     @ManyToOne
-    @JoinColumn(name="passenger_id")
+    @JoinColumn(name = "passenger_id")
     private Passenger passenger;
 
     @ManyToOne
-    @JoinColumn(name="train_id")
+    @JoinColumn(name = "train_id")
     private Train train;
 
     @Column(name = "date")

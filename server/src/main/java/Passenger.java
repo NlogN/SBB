@@ -21,7 +21,7 @@ public class Passenger {
     @Temporal(TemporalType.DATE)
     private Date date;
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "passenger")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "passenger")
     private List<Ticket> ticketList;
 
     public Passenger() {
@@ -35,7 +35,6 @@ public class Passenger {
     public void setId(int id) {
         this.passenger_id = id;
     }
-
 
 
     public String getName() {

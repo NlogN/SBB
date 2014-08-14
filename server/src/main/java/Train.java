@@ -1,5 +1,4 @@
 import javax.persistence.*;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -16,7 +15,7 @@ public class Train {
     @Column(name = "capacity")
     private int capacity;
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "train")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "train")
     private List<Ticket> ticketList;
 
 
@@ -67,9 +66,9 @@ public class Train {
 
     @Override
     public String toString() {
-        StringBuffer  sb   = new StringBuffer();
-        for (Ticket ticket:ticketList){
-            sb.append(ticket.getPassenger().getName()+" ");
+        StringBuffer sb = new StringBuffer();
+        for (Ticket ticket : ticketList) {
+            sb.append(ticket.getPassenger().getName() + " ");
         }
 
         return "Train{" +
