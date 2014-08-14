@@ -9,8 +9,10 @@ public class Ticket {
     @Column(name = "ticket_id")
     private int ticket_id;
 
-    @Column(name = "passenger_id")
-    private int passenger_id;
+
+    @ManyToOne
+    @JoinColumn(name="passenger_id")
+    private Passenger passenger;
 
     @ManyToOne
     @JoinColumn(name="train_id")
@@ -33,12 +35,12 @@ public class Ticket {
         this.ticket_id = id;
     }
 
-    public int getPassengerId() {
-        return passenger_id;
+    public Passenger getPassenger() {
+        return passenger;
     }
 
-    public void setPassengerId(int p) {
-        this.passenger_id = p;
+    public void setPassengerId(Passenger p) {
+        this.passenger = p;
     }
 
     public Train getTrain() {
@@ -65,7 +67,7 @@ public class Ticket {
                 "id=" + ticket_id +
                 ", tarin_id='" + train.getId() + '\'' +
                 ", tarin_number='" + train.getNumber() + '\'' +
-                ", passanger_id='" + passenger_id +
+                ", passanger_name='" + passenger.getName() +
                 ", date='" + date +
                 '}';
     }

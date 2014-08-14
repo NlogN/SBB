@@ -69,7 +69,7 @@ public class Train {
     public String toString() {
         StringBuffer  sb   = new StringBuffer();
         for (Ticket ticket:ticketList){
-            sb.append(ticket.getId()+" ");
+            sb.append(ticket.getPassenger().getName()+" ");
         }
 
         return "Train{" +
