@@ -8,7 +8,7 @@ public class Passenger {
 
     @Id
     @Column(name = "passenger_id")
-    private int passenger_id;
+    private int passengerId;
 
 
     @Column(name = "name")
@@ -29,11 +29,11 @@ public class Passenger {
     }
 
     public int getId() {
-        return passenger_id;
+        return passengerId;
     }
 
     public void setId(int id) {
-        this.passenger_id = id;
+        this.passengerId = id;
     }
 
 
@@ -73,7 +73,7 @@ public class Passenger {
     @Override
     public String toString() {
         return "Passenger{" +
-                "id=" + passenger_id +
+                "id=" + passengerId +
                 ", name='" + name + '\'' +
                 ", surname='" + surname +
                 '}';

@@ -7,7 +7,7 @@ public class Ticket {
 
     @Id
     @Column(name = "ticket_id")
-    private int ticket_id;
+    private int ticketId;
 
 
     @ManyToOne
@@ -28,11 +28,11 @@ public class Ticket {
     }
 
     public int getId() {
-        return ticket_id;
+        return ticketId;
     }
 
     public void setId(int id) {
-        this.ticket_id = id;
+        this.ticketId = id;
     }
 
     public Passenger getPassenger() {
@@ -64,7 +64,7 @@ public class Ticket {
     @Override
     public String toString() {
         return "Ticket{" +
-                "id=" + ticket_id +
+                "id=" + ticketId +
                 ", tarin_id='" + train.getId() + '\'' +
                 ", tarin_number='" + train.getNumber() + '\'' +
                 ", passanger_name='" + passenger.getName() +

@@ -13,6 +13,12 @@ public class Main {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("sbb_unit");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
+
+//        List<Station> studentList = entityManager.createQuery ("SELECT u FROM Station u").getResultList();
+//        for (Station station:studentList) {
+//            System.out.println(station);
+//        }
+
         System.out.println("\n get passenger by train number:\n-------------");
         List<Passenger> passengerList = getPassengerByTrain(123, entityManager);
         for (Passenger passenger : passengerList) {

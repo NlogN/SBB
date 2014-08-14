@@ -7,7 +7,7 @@ public class Train {
 
     @Id
     @Column(name = "train_id")
-    private int train_id;
+    private int trainId;
 
     @Column(name = "number")
     private int number;
@@ -24,11 +24,11 @@ public class Train {
     }
 
     public int getId() {
-        return train_id;
+        return trainId;
     }
 
     public void setId(int id) {
-        this.train_id = id;
+        this.trainId = id;
     }
 
     public int getNumber() {
@@ -72,7 +72,7 @@ public class Train {
         }
 
         return "Train{" +
-                "id=" + train_id +
+                "id=" + trainId +
                 ", number='" + number + '\'' +
                 ", capacity='" + capacity +
                 ", ticketInfo='" + sb.toString() +
