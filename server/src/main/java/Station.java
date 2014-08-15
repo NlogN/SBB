@@ -48,7 +48,7 @@ public class Station {
     public void printSchedule() {
         StringBuffer sb = new StringBuffer();
         for (Schedule schedule : scheduleList) {
-            sb.append(schedule.getTrain().getNumber() + " "+schedule.getTime()+"\n");
+            sb.append(schedule.getTrain().getNumber() + " " + schedule.getTime() + "\n");
         }
         System.out.println(sb.toString());
     }

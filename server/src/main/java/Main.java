@@ -13,39 +13,25 @@ public class Main {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("sbb_unit");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
+        System.out.println("\n get passenger by train number:\n-------------");
+        List<Passenger> passengerList = getPassengerByTrain(123, entityManager);
+        for (Passenger passenger : passengerList) {
+            System.out.println(passenger);
+        }
 
-//        List<Station> studentList = entityManager.createQuery ("SELECT u FROM Station u").getResultList();
-//        for (Station station:studentList) {
-//            System.out.println(station);
-//        }
-//        List<Schedule> studentList = entityManager.createQuery ("SELECT u FROM Schedule u").getResultList();
-//        for (Schedule schedule:studentList) {
-//            System.out.println(schedule);
-//        }
-//
-//        List<Train> studentList = entityManager.createQuery ("SELECT u FROM Train u").getResultList();
-//        for (Train train:studentList) {
-//            System.out.println(train);
-//        }
-
-//        System.out.println("\n get passenger by train number:\n-------------");
-//        List<Passenger> passengerList = getPassengerByTrain(123, entityManager);
-//        for (Passenger passenger : passengerList) {
-//            System.out.println(passenger);
-//        }
-        getScheduleByStation("Moskow",entityManager);
+        System.out.println("\n print station shedule:\n-------------");
+        printStationSchedule("Moskow", entityManager);
 
         entityManager.close();
         entityManagerFactory.close();
     }
 
-    static void getScheduleByStation(String stationName, EntityManager entityManager) {
+    static void printStationSchedule(String stationName, EntityManager entityManager) {
         Query query = entityManager.createQuery("SELECT st FROM Station st WHERE st.name=:stName");
         query.setParameter("stName", stationName);
         List<Station> list = query.getResultList();
         if (list.isEmpty()) {
             log.warning("station not found");
-
         } else {
             Station station = list.get(0);
             station.printSchedule();
@@ -53,7 +39,7 @@ public class Main {
     }
 
     static List<Passenger> getPassengerByTrain(int trainNum, EntityManager entityManager) {
-        Query query = entityManager.createQuery("SELECT tr FROM Train tr " + "WHERE tr.number=:numb");
+        Query query = entityManager.createQuery("SELECT tr FROM Train tr WHERE tr.number=:numb");
         query.setParameter("numb", trainNum);
         List<Train> list = query.getResultList();
         List<Passenger> passengerList = new ArrayList<Passenger>();
