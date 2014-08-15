@@ -1,4 +1,5 @@
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "station")
@@ -12,8 +13,8 @@ public class Station {
     private String name;
 
 
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "schedule")
-//    private List<Ticket> ticketList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "station")
+    private List<Schedule> scheduleList;
 
 
     public Station() {
@@ -36,13 +37,32 @@ public class Station {
         this.name = name;
     }
 
+    public List<Schedule> getScheduleList() {
+        return scheduleList;
+    }
 
+    public void setScheduleList(List<Schedule> scheduleList) {
+        this.scheduleList = scheduleList;
+    }
+
+    public void printSchedule() {
+        StringBuffer sb = new StringBuffer();
+        for (Schedule schedule : scheduleList) {
+            sb.append(schedule.getTrain().getNumber() + " "+schedule.getTime()+"\n");
+        }
+        System.out.println(sb.toString());
+    }
 
     @Override
     public String toString() {
+        StringBuffer sb = new StringBuffer();
+        for (Schedule schedule : scheduleList) {
+            sb.append(schedule.getTrain().getId() + " ");
+        }
         return "Station{" +
                 "id=" + stationId +
                 ", name='" + name +
+                ", trains='" + sb.toString() +
                 '}';
     }
 }

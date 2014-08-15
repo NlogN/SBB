@@ -18,6 +18,9 @@ public class Train {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "train")
     private List<Ticket> ticketList;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "train")
+    private List<Schedule> scheduleList;
+
 
     public Train() {
 
@@ -55,6 +58,14 @@ public class Train {
         this.ticketList = ticketList;
     }
 
+    public List<Schedule> getScheduleList() {
+        return scheduleList;
+    }
+
+    public void setScheduleList(List<Schedule> scheduleList) {
+        this.scheduleList = scheduleList;
+    }
+
 //    @Override
 //    public String toString() {
 //        return "Train{" +
@@ -64,18 +75,33 @@ public class Train {
 //                '}';
 //    }
 
+//    @Override
+//    public String toString() {
+//        StringBuffer sb = new StringBuffer();
+//        for (Ticket ticket : ticketList) {
+//            sb.append(ticket.getPassenger().getName() + " ");
+//        }
+//
+//        return "Train{" +
+//                "id=" + trainId +
+//                ", number='" + number + '\'' +
+//                ", capacity='" + capacity +
+//                ", ticketInfo='" + sb.toString() +
+//                '}';
+//    }
+
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
-        for (Ticket ticket : ticketList) {
-            sb.append(ticket.getPassenger().getName() + " ");
+        for (Schedule schedule : scheduleList) {
+            sb.append(schedule.getStation().getName() + " ");
         }
 
         return "Train{" +
                 "id=" + trainId +
                 ", number='" + number + '\'' +
                 ", capacity='" + capacity +
-                ", ticketInfo='" + sb.toString() +
+                ", stationList='" + sb.toString() +
                 '}';
     }
 }
