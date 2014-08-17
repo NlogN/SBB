@@ -40,7 +40,7 @@ public class Ticket {
         return passenger;
     }
 
-    public void setPassengerId(Passenger p) {
+    public void setPassenger(Passenger p) {
         this.passenger = p;
     }
 

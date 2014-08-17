@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `sbb_schema`.`schedule` (
   `station_id` INT NOT NULL,
   `train_id` INT NOT NULL,
   `time` DATETIME NULL,
-  `order` INT NULL,
+  `offset` INT NULL,
   PRIMARY KEY (`schedule_id`))
 ENGINE = InnoDB;
 

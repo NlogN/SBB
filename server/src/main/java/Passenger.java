@@ -50,7 +50,7 @@ public class Passenger {
         return surname;
     }
 
-    public void setSurname(String surname1) {
+    public void setSurname(String surname) {
         this.surname = surname;
     }
 

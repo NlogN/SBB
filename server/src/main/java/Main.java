@@ -1,7 +1,9 @@
 
 import javax.persistence.*;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.Date;
 import java.util.logging.Logger;
 
 public class Main {
@@ -41,26 +43,26 @@ public class Main {
 //        System.out.println("\n A to B \n-------------");
 //        Date date1 = createDate(2014, 8, 17, 11, 1, 2);
 //        Date date2 = createDate(2014, 8, 17, 16, 1, 2);
-//        List<Train> list = getTrainFromAToBList(date1,date2,"Moskow","Saint-Peterburg",entityManager);
-//        //List<Train> list = getTrainFromAToBList(date1,date2,"Moskow","Novosibirsk",entityManager);
+//        //List<Train> list = getTrainFromAToBList(date1,date2,"Moskow","Saint-Peterburg",entityManager);
+//        List<Train> list = getTrainFromAToBList(date1,date2,"Moskow","Novosibirsk",entityManager);
 //        for (Train train : list) {
 //            System.out.println(train);
 //        }
+
+        //addSchedule("Moskow",239,createDate(2014, 8, 17, 11, 1, 2),15, entityManager);
+        buyTicket(239, "Moskow", "Rubens", "Barikello", createDate(1886, 8, 17, 11, 1, 2), createDate(2013, 5, 3), entityManager);
 
         entityManager.close();
         entityManagerFactory.close();
     }
 
 
-
-
-
     static List<Train> getTrainFromAToBList(Date lowerBound, Date upperBound, String stationAName, String stationBName, EntityManager entityManager) {
         Query query = entityManager.createQuery("SELECT tr FROM Train tr");
         List<Train> allTrainList = query.getResultList();
         List<Train> trainFromAToBList = new ArrayList<Train>();
-        for (Train train:allTrainList){
-            if (checkTrainAB(train,lowerBound,upperBound,stationAName,stationBName)){
+        for (Train train : allTrainList) {
+            if (checkTrainAB(train, lowerBound, upperBound, stationAName, stationBName)) {
                 trainFromAToBList.add(train);
             }
         }
@@ -72,7 +74,7 @@ public class Main {
         Schedule scheduleA = null;
         Schedule scheduleB = null;
         for (Schedule schedule : scheduleList) {
-            if(scheduleA!=null && scheduleB!=null){
+            if (scheduleA != null && scheduleB != null) {
                 break;
             }
             if (schedule.getStation().getName().equals(stationAName)) {
@@ -82,16 +84,12 @@ public class Main {
                 scheduleB = schedule;
             }
         }
-        if(scheduleA!=null && scheduleB!=null){
-
-              if(scheduleA.getUnixTime()<scheduleB.getUnixTime()){
-                  System.out.println(getUnixTime(lowerBound));
-                  System.out.println(scheduleA.getUnixTime());
-                     if(getUnixTime(lowerBound)<scheduleA.getUnixTime() && scheduleB.getUnixTime()<getUnixTime(upperBound)){
-                         System.out.println(getUnixTime(lowerBound));
-                         return true;
-                     }
-              }
+        if (scheduleA != null && scheduleB != null) {
+            if (scheduleA.getUnixTime() < scheduleB.getUnixTime()) {
+                if (getUnixTime(lowerBound) < scheduleA.getUnixTime() && scheduleB.getUnixTime() < getUnixTime(upperBound)) {
+                    return true;
+                }
+            }
         }
         return false;
     }
@@ -113,7 +111,7 @@ public class Main {
         //return passengerList;
     }
 
-    static boolean buyTicket(int trainNum, String stationName, String name, String surname, Date birthday, Date DateOfRace, EntityManager entityManager) {
+    static boolean buyTicket(int trainNum, String stationName, String name, String surname, Date birthday, Date dateOfRace, EntityManager entityManager) {
         Query query = entityManager.createQuery("SELECT tr FROM Train tr where tr.number =:trNum");
         query.setParameter("trNum", trainNum);
         List<Train> list = query.getResultList();
@@ -121,30 +119,44 @@ public class Main {
             System.out.println("Train not found!");
         } else {
             Train train = list.get(0);
-            if(checkStartTime(train,stationName)&&checkSamePassengerNotReg(train,name,surname,birthday)&&checkNotFilledState(train,DateOfRace,entityManager)){
-                //        if(checkReg(trainNum,birthday,entityManager)){
-//            EntityTransaction transaction = entityManager.getTransaction();
-//            try {
-//                transaction.begin();
-//                Ticket newtTicket = new Ticket();
-//                //
-//                entityManager.persist(newtTicket);
-//                transaction.commit();
-//            } finally {
-//                if (transaction.isActive()){
-//                    transaction.rollback();
-//                }
-//            }
-//        }else{
-//            return false;
-//        }
+            if (checkStartTime(train, stationName) && checkSamePassengerNotReg(train, name, surname, birthday) && checkNotFilledState(train, dateOfRace, entityManager)) {
+
+                EntityTransaction transaction = entityManager.getTransaction();
+                try {
+
+                    transaction.begin();
+
+                    Passenger newPassenger = new Passenger();
+                    newPassenger.setDate(birthday);
+                    newPassenger.setName(name);
+                    newPassenger.setSurname(surname);
+
+                    Ticket newTicket = new Ticket();
+                    newTicket.setDate(dateOfRace);
+                    newTicket.setTrain(train);
+                    newTicket.setPassenger(newPassenger);
+
+                    List<Ticket> ticketList = new ArrayList<Ticket>();
+                    ticketList.add(newTicket);
+                    newPassenger.setTicketList(ticketList);
+
+                    entityManager.persist(newPassenger);
+                    entityManager.persist(newTicket);
+                    transaction.commit();
+                } finally {
+                    if (transaction.isActive()) {
+                        transaction.rollback();
+                    }
+                }
+
+            } else {
+                return false;
             }
 
         }
 
         return true;
     }
-
 
 
     static boolean checkStartTime(Train train, String stationName) {
@@ -170,9 +182,9 @@ public class Main {
         query.setParameter("trNum", train.getNumber());
         query.setParameter("day", dateOfRace);
         List<Ticket> list = query.getResultList();
-        for (Ticket t : list) {
-            System.out.println(t);
-        }
+//        for (Ticket t : list) {
+//            System.out.println(t);
+//        }
         return train.getCapacity() > list.size();
 
     }
@@ -224,6 +236,37 @@ public class Main {
         }
     }
 
+    static void addSchedule(String stationName, int trainNumber, Date time, int offset, EntityManager entityManager) {
+        Query query = entityManager.createQuery("SELECT st FROM Station st where st.name =:stName");
+        query.setParameter("stName", stationName);
+        List<Station> stationList = query.getResultList();
+        if (stationList.isEmpty()) {
+            System.out.println("Station not found!");
+            return;
+        }
+
+        Query query1 = entityManager.createQuery("SELECT tr FROM Train tr where tr.number =:trNum");
+        query1.setParameter("trNum", trainNumber);
+        List<Train> trainList = query1.getResultList();
+        if (trainList.isEmpty()) {
+            System.out.println("Train not found!");
+            return;
+        }
+
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
+            Schedule newSchedule = new Schedule();
+            newSchedule.setTrain(trainList.get(0));
+            newSchedule.setStation(stationList.get(0));
+            newSchedule.setOffset(offset);
+            newSchedule.setTime(time);
+            entityManager.persist(newSchedule);
+            transaction.commit();
+        } finally {
+            if (transaction.isActive()) transaction.rollback();
+        }
+    }
 
 
     public void printSchedule() {
@@ -251,7 +294,7 @@ public class Main {
     }
 
     public static Date createDate(int year, int month, int day, int hourofday, int minute, int second) {
-        if (day == 0 && month == 0 && year == 0){
+        if (day == 0 && month == 0 && year == 0) {
             return null;
         }
         Calendar cal = Calendar.getInstance();
@@ -260,6 +303,16 @@ public class Main {
         return cal.getTime();
     }
 
+    public static Date createDate(int year, int month, int day) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+        Date utilDate = null;
+        try {
+            utilDate = formatter.parse(year + "/" + month + "/" + day);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return utilDate;
+    }
 
 
 }

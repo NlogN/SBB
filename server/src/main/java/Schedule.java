@@ -24,8 +24,8 @@ public class Schedule {
     @Column(name = "time")
     private java.util.Date time;
 
-    @Column(name = "order")
-    private int order;
+    @Column(name = "offset")
+    private int offset;
 
 
 
@@ -69,12 +69,12 @@ public class Schedule {
         this.time = t;
     }
 
-    public int getOrder() {
-        return order;
+    public int getOffset() {
+        return offset;
     }
 
-    public void setOrderId(int order) {
-        this.order = order;
+    public void setOffset(int offset) {
+        this.offset = offset;
     }
 
 
