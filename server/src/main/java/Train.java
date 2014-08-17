@@ -7,6 +7,7 @@ public class Train {
 
     @Id
     @Column(name = "train_id")
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private int trainId;
 
     @Column(name = "number")

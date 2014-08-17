@@ -8,6 +8,7 @@ public class Passenger {
 
     @Id
     @Column(name = "passenger_id")
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private int passengerId;
 
 

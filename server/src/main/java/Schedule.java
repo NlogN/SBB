@@ -12,15 +12,17 @@ public class Schedule {
 
     @ManyToOne
     @JoinColumn(name = "station_id")
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Station station;
 
     @ManyToOne
     @JoinColumn(name = "train_id")
     private Train train;
 
+
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "time")
-    @Temporal(TemporalType.TIME)
-    private Date time;
+    private java.util.Date time;
 
     @Column(name = "order")
     private int order;
@@ -57,6 +59,10 @@ public class Schedule {
 
     public Date getTime() {
         return time;
+    }
+
+    public long getUnixTime() {
+        return time.getTime()/1000;
     }
 
     public void setTime(Date t) {

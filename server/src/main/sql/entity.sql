@@ -9,13 +9,13 @@ CREATE SCHEMA IF NOT EXISTS `sbb_schema` DEFAULT CHARACTER SET utf8 COLLATE utf8
 -- -----------------------------------------------------
 -- Schema new_schema1
 -- -----------------------------------------------------
-USE `sbb_schema` ;
+USE `sbb_schema`;
 
 -- -----------------------------------------------------
 -- Table `sbb_schema`.`passenger`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `sbb_schema`.`passenger` (
-  `passenger_id` INT NOT NULL,
+  `passenger_id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL,
   `surname` VARCHAR(45) NULL,
   `birthday` DATE NULL,
@@ -27,7 +27,7 @@ ENGINE = InnoDB;
 -- Table `sbb_schema`.`train`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `sbb_schema`.`train` (
-  `train_id` INT NOT NULL,
+  `train_id` INT NOT NULL AUTO_INCREMENT,
   `number` INT NULL,
   `capacity` INT NULL,
   PRIMARY KEY (`train_id`))
@@ -38,10 +38,11 @@ ENGINE = InnoDB;
 -- Table `sbb_schema`.`ticket`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `sbb_schema`.`ticket` (
-  `ticket_id` INT NOT NULL,
+  `ticket_id` INT NOT NULL AUTO_INCREMENT,
   `passenger_id` INT NOT NULL,
   `train_id` INT NOT NULL,
-  `date` DATE NULL)
+  `date` DATE NULL,
+  PRIMARY KEY (`ticket_id`))
 ENGINE = InnoDB;
 
 
@@ -49,7 +50,7 @@ ENGINE = InnoDB;
 -- Table `sbb_schema`.`station`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `sbb_schema`.`station` (
-  `station_id` INT NOT NULL,
+  `station_id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL,
   PRIMARY KEY (`station_id`))
 ENGINE = InnoDB;
@@ -59,11 +60,12 @@ ENGINE = InnoDB;
 -- Table `sbb_schema`.`schedule`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `sbb_schema`.`schedule` (
-  `schedule_id` INT NOT NULL,
+  `schedule_id` INT NOT NULL AUTO_INCREMENT,
   `station_id` INT NOT NULL,
   `train_id` INT NOT NULL,
-  `time` TIME NULL,
-  `order` INT NULL)
+  `time` DATETIME NULL,
+  `order` INT NULL,
+  PRIMARY KEY (`schedule_id`))
 ENGINE = InnoDB;
 
 

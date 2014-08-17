@@ -7,6 +7,7 @@ public class Station {
 
     @Id
     @Column(name = "station_id")
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private int stationId;
 
     @Column(name = "name")

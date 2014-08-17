@@ -1,11 +1,12 @@
 import javax.persistence.*;
+import java.text.ParseException;
 import java.util.*;
 import java.util.logging.Logger;
 
 public class Main {
     static Logger log = Logger.getLogger(Main.class.getName());
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("sbb_unit");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
@@ -23,9 +24,18 @@ public class Main {
 //            System.out.println(s);
 //        }
 
-//        addTrain(243,50,entityManager);
-//        addStation("Petrozavodsk",entityManager);
-        checkTrainCapacity(239, new Date(93, 2, 20), entityManager);
+//        addTrain(239,200,entityManager);
+        // addStation("Petrozavodsk",entityManager);
+
+
+//        System.out.println("\n check capacity:\n-------------");
+//        Train train = new Train();
+//        train.setNumber(239);
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+//        java.util.Date utilDate = formatter.parse("2013/05/03");
+//        java.util.Date curDate = new java.util.Date();
+//        checkNotFilledState(train, curDate, entityManager);
+//        printSchedule(entityManager);
 
         entityManager.close();
         entityManagerFactory.close();
@@ -42,10 +52,55 @@ public class Main {
         Query query = entityManager.createQuery("SELECT ts.train FROM Station st join st.scheduleList ts where st.name =:stName");
         query.setParameter("stName", stationName);
         List<Train> list = query.getResultList();
-        for (Train train:list){
+        for (Train train : list) {
             System.out.println(train);
         }
         //return passengerList;
+    }
+
+    static boolean buyTicket(int trainNum, String stationName, String name, String surname, Date birthday, Date DateOfRace, EntityManager entityManager) {
+        Query query = entityManager.createQuery("SELECT tr FROM Train tr where tr.number =:trNum");
+        query.setParameter("trNum", trainNum);
+        List<Train> list = query.getResultList();
+        if (list.isEmpty()) {
+            System.out.println("Train not found!");
+        } else {
+            Train train = list.get(0);
+            if(checkStartTime(train,stationName)&&checkSamePassengerNotReg(train,name,surname,birthday)&&checkNotFilledState(train,DateOfRace,entityManager)){
+                //        if(checkReg(trainNum,birthday,entityManager)){
+//            EntityTransaction transaction = entityManager.getTransaction();
+//            try {
+//                transaction.begin();
+//                Ticket newtTicket = new Ticket();
+//                //
+//                entityManager.persist(newtTicket);
+//                transaction.commit();
+//            } finally {
+//                if (transaction.isActive()){
+//                    transaction.rollback();
+//                }
+//            }
+//        }else{
+//            return false;
+//        }
+            }
+
+        }
+
+        return true;
+    }
+
+
+
+    static boolean checkStartTime(Train train, String stationName) {
+        long currentTime = getCurrentTime();
+        List<Schedule> scheduleList = train.getScheduleList();
+        for (Schedule schedule : scheduleList) {
+            if (schedule.getStation().equals(stationName) && (schedule.getUnixTime() - currentTime) > 0 && (schedule.getUnixTime() - currentTime) < 360) {
+                return false;
+            }
+        }
+        return true;
     }
 
     static List<Train> getTrainList(EntityManager entityManager) {
@@ -54,34 +109,35 @@ public class Main {
         return trainList;
     }
 
-    static boolean checkTrainCapacity(int trainNum, Date date, EntityManager entityManager) {
-        Query query = entityManager.createQuery("SELECT tr FROM Train tr where tr.number =:trNum" );
-        query.setParameter("trNum", trainNum);
-        List<Train> list = query.getResultList();
-        for (Train t:list){
-            return checkCapacity(t,date,entityManager);
+
+    static boolean checkNotFilledState(Train train, Date dateOfRace, EntityManager entityManager) {
+        Query query = entityManager.createQuery("SELECT tic FROM Ticket tic where tic.train.number =:trNum and tic.date =:day");
+        query.setParameter("trNum", train.getNumber());
+        query.setParameter("day", dateOfRace);
+        List<Ticket> list = query.getResultList();
+        for (Ticket t : list) {
+            System.out.println(t);
         }
-        return true;
+        return train.getCapacity() > list.size();
 
     }
 
-    static boolean checkCapacity(Train train, Date date, EntityManager entityManager) {
-        Query query = entityManager.createQuery("SELECT tic FROM Ticket tic where tic.train.number =:trNum and tic.date =:day");
-        query.setParameter("trNum", train.getNumber());
-        query.setParameter("day", date);
-        List<Ticket> list = query.getResultList();
-        for (Ticket t:list){
-            System.out.println(t);
+    static boolean checkSamePassengerNotReg(Train train, String name, String surname, Date birthday) {
+        List<Ticket> ticketList = train.getTicketList();
+        for (Ticket ticket : ticketList) {
+            Passenger passenger = ticket.getPassenger();
+            if (passenger.getName().equals(name) && passenger.getSurname().equals(surname) && passenger.getDate().equals(birthday)) {
+                return false;
+            }
         }
-        return train.getCapacity()>list.size();
-
+        return true;
     }
 
     static Set<String> getTrainNumberList(EntityManager entityManager) {
         List<Train> trainList = getTrainList(entityManager);
         Set<String> trainNumberList = new HashSet<String>();
-        for (Train train:trainList){
-                  trainNumberList.add(Integer.toString(train.getNumber()));
+        for (Train train : trainList) {
+            trainNumberList.add(Integer.toString(train.getNumber()));
         }
         return trainNumberList;
     }
@@ -91,7 +147,6 @@ public class Main {
         try {
             transaction.begin();
             Train newtTrain = new Train();
-            newtTrain.setId(3);
             newtTrain.setNumber(number);
             newtTrain.setCapacity(capacity);
             entityManager.persist(newtTrain);
@@ -106,7 +161,6 @@ public class Main {
         try {
             transaction.begin();
             Station newtStation = new Station();
-            newtStation.setId(4);
             newtStation.setName(name);
             entityManager.persist(newtStation);
             transaction.commit();
@@ -115,63 +169,21 @@ public class Main {
         }
     }
 
+    static void printSchedule(EntityManager entityManager) {
+        Query query = entityManager.createQuery("SELECT ts FROM Schedule ts");
 
-//    static void printStationSchedule1(String stationName, EntityManager entityManager) {
-//        Query query = entityManager.createQuery("SELECT st FROM Station st WHERE st.name=:stName");
-//        query.setParameter("stName", stationName);
-//        List<Station> list = query.getResultList();
-//        if (list.isEmpty()) {
-//            log.warning("station not found");
-//        } else {
-//            Station station = list.get(0);
-//            station.printSchedule();
-//        }
-//    }
+        List<Schedule> list = query.getResultList();
+        for (Schedule schedule : list) {
+            System.out.println(schedule);
+        }
+        //return passengerList;
+    }
 
-//    static List<Passenger> getPassengerByTrain(int trainNum, EntityManager entityManager) {
-//        Query query = entityManager.createQuery("SELECT tr FROM Train tr WHERE tr.number=:numb");
-//        query.setParameter("numb", trainNum);
-//        List<Train> list = query.getResultList();
-//        List<Passenger> passengerList = new ArrayList<Passenger>();
-//        if (list.isEmpty()) {
-//            log.warning("train not found");
-//            return passengerList;
-//        } else {
-//            List<Ticket> ticketList = list.get(0).getTicketList();
-//            for (Ticket ticket : ticketList) {
-//                passengerList.add(ticket.getPassenger());
-//            }
-//            return passengerList;
-//        }
-//
-//    }
-//
-//    static List<Passenger> getPassengerByTrain(int trainNum, EntityManager entityManager) {
-//        //
-//        Query query = entityManager.createQuery("SELECT ts.passenger FROM Train tr join tr.ticketList ts where tr.number =:numb");
-//       // Query query = entityManager.createQuery("SELECT trn.ticketList FROM (SELECT Train tr FROM where tr.number =:numb) trn  ");
-//        query.setParameter("numb", trainNum);
-//        //Query query = entityManager.createQuery("SELECT tr.ticketList FROM Train tr");
-//       // List<Train> list = query.getResultList();
-////        List<Ticket> list = query.getResultList();
-////        for (Ticket t :list){
-////            System.out.println(t);
-////        }
-//        List<Passenger> passengerList = query.getResultList();
-////        if (list.isEmpty()) {
-////            log.warning("train not found");
-////            return passengerList;
-////        } else {
-////            List<Ticket> ticketList = list.get(0).getTicketList();
-////            for (Ticket ticket : ticketList) {
-////                passengerList.add(ticket.getPassenger());
-////            }
-////            return passengerList;
-////        }
-//        return passengerList;
-//
-//    }
 
+    static long getCurrentTime() {
+        java.util.Date date = new java.util.Date();
+        return date.getTime() / 1000;
+    }
 
 
 }
