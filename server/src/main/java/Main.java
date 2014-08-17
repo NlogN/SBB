@@ -1,3 +1,4 @@
+
 import javax.persistence.*;
 import java.text.ParseException;
 import java.util.*;
@@ -32,13 +33,67 @@ public class Main {
 //        Train train = new Train();
 //        train.setNumber(239);
 //        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
-//        java.util.Date utilDate = formatter.parse("2013/05/03");
-//        java.util.Date curDate = new java.util.Date();
+//        Date utilDate = formatter.parse("2013/05/03");
+//        Date curDate = new Date();
 //        checkNotFilledState(train, curDate, entityManager);
 //        printSchedule(entityManager);
 
+//        System.out.println("\n A to B \n-------------");
+//        Date date1 = createDate(2014, 8, 17, 11, 1, 2);
+//        Date date2 = createDate(2014, 8, 17, 16, 1, 2);
+//        List<Train> list = getTrainFromAToBList(date1,date2,"Moskow","Saint-Peterburg",entityManager);
+//        //List<Train> list = getTrainFromAToBList(date1,date2,"Moskow","Novosibirsk",entityManager);
+//        for (Train train : list) {
+//            System.out.println(train);
+//        }
+
         entityManager.close();
         entityManagerFactory.close();
+    }
+
+
+
+
+
+    static List<Train> getTrainFromAToBList(Date lowerBound, Date upperBound, String stationAName, String stationBName, EntityManager entityManager) {
+        Query query = entityManager.createQuery("SELECT tr FROM Train tr");
+        List<Train> allTrainList = query.getResultList();
+        List<Train> trainFromAToBList = new ArrayList<Train>();
+        for (Train train:allTrainList){
+            if (checkTrainAB(train,lowerBound,upperBound,stationAName,stationBName)){
+                trainFromAToBList.add(train);
+            }
+        }
+        return trainFromAToBList;
+    }
+
+    static boolean checkTrainAB(Train train, Date lowerBound, Date upperBound, String stationAName, String stationBName) {
+        List<Schedule> scheduleList = train.getScheduleList();
+        Schedule scheduleA = null;
+        Schedule scheduleB = null;
+        for (Schedule schedule : scheduleList) {
+            if(scheduleA!=null && scheduleB!=null){
+                break;
+            }
+            if (schedule.getStation().getName().equals(stationAName)) {
+                scheduleA = schedule;
+            }
+            if (schedule.getStation().getName().equals(stationBName)) {
+                scheduleB = schedule;
+            }
+        }
+        if(scheduleA!=null && scheduleB!=null){
+
+              if(scheduleA.getUnixTime()<scheduleB.getUnixTime()){
+                  System.out.println(getUnixTime(lowerBound));
+                  System.out.println(scheduleA.getUnixTime());
+                     if(getUnixTime(lowerBound)<scheduleA.getUnixTime() && scheduleB.getUnixTime()<getUnixTime(upperBound)){
+                         System.out.println(getUnixTime(lowerBound));
+                         return true;
+                     }
+              }
+        }
+        return false;
     }
 
     static List<Passenger> getPassengerByTrain(int trainNum, EntityManager entityManager) {
@@ -169,7 +224,11 @@ public class Main {
         }
     }
 
-    static void printSchedule(EntityManager entityManager) {
+
+
+    public void printSchedule() {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("sbb_unit");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
         Query query = entityManager.createQuery("SELECT ts FROM Schedule ts");
 
         List<Schedule> list = query.getResultList();
@@ -177,13 +236,30 @@ public class Main {
             System.out.println(schedule);
         }
         //return passengerList;
+        entityManager.close();
+        entityManagerFactory.close();
     }
 
 
     static long getCurrentTime() {
-        java.util.Date date = new java.util.Date();
+        Date date = new Date();
         return date.getTime() / 1000;
     }
+
+    static long getUnixTime(Date date) {
+        return date.getTime() / 1000;
+    }
+
+    public static Date createDate(int year, int month, int day, int hourofday, int minute, int second) {
+        if (day == 0 && month == 0 && year == 0){
+            return null;
+        }
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month - 1, day, hourofday, minute, second);
+        cal.set(Calendar.MILLISECOND, 0);
+        return cal.getTime();
+    }
+
 
 
 }
