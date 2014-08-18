@@ -14,7 +14,7 @@ public class Main {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
 //        System.out.println("\n get passenger by train number:\n-------------");
-//        List<Passenger> passengerList = getPassengerByTrain(123, entityManager);
+//        List<Passenger> passengerList = getPassengersByTrain(123, entityManager);
 //        for (Passenger passenger : passengerList) {
 //            System.out.println(passenger);
 //        }
@@ -43,33 +43,33 @@ public class Main {
 //        System.out.println("\n A to B \n-------------");
 //        Date date1 = createDate(2014, 8, 17, 11, 1, 2);
 //        Date date2 = createDate(2014, 8, 17, 16, 1, 2);
-//        //List<Train> list = getTrainFromAToBList(date1,date2,"Moskow","Saint-Peterburg",entityManager);
-//        List<Train> list = getTrainFromAToBList(date1,date2,"Moskow","Novosibirsk",entityManager);
+//        //List<Train> list = getTrainOnRouteABList(date1,date2,"Moskow","Saint-Peterburg",entityManager);
+//        List<Train> list = getTrainOnRouteABList(date1,date2,"Moskow","Novosibirsk",entityManager);
 //        for (Train train : list) {
 //            System.out.println(train);
 //        }
 
         //addSchedule("Moskow",239,createDate(2014, 8, 17, 11, 1, 2),15, entityManager);
-        buyTicket(239, "Moskow", "Rubens", "Barikello", createDate(1886, 8, 17, 11, 1, 2), createDate(2013, 5, 3), entityManager);
+        //buyTicket(239, "Moskow", "Rubens", "Barikello", createDate(1886, 8, 17, 11, 1, 2), createDate(2013, 5, 3), entityManager);
 
         entityManager.close();
         entityManagerFactory.close();
     }
 
 
-    static List<Train> getTrainFromAToBList(Date lowerBound, Date upperBound, String stationAName, String stationBName, EntityManager entityManager) {
+    static List<Train> getTrainOnRouteABList(Date lowerBound, Date upperBound, String stationAName, String stationBName, EntityManager entityManager) {
         Query query = entityManager.createQuery("SELECT tr FROM Train tr");
         List<Train> allTrainList = query.getResultList();
         List<Train> trainFromAToBList = new ArrayList<Train>();
         for (Train train : allTrainList) {
-            if (checkTrainAB(train, lowerBound, upperBound, stationAName, stationBName)) {
+            if (checkTrainRoute(train, lowerBound, upperBound, stationAName, stationBName)) {
                 trainFromAToBList.add(train);
             }
         }
         return trainFromAToBList;
     }
 
-    static boolean checkTrainAB(Train train, Date lowerBound, Date upperBound, String stationAName, String stationBName) {
+    static boolean checkTrainRoute(Train train, Date lowerBound, Date upperBound, String stationAName, String stationBName) {
         List<Schedule> scheduleList = train.getScheduleList();
         Schedule scheduleA = null;
         Schedule scheduleB = null;
@@ -94,7 +94,7 @@ public class Main {
         return false;
     }
 
-    static List<Passenger> getPassengerByTrain(int trainNum, EntityManager entityManager) {
+    static List<Passenger> getPassengersByTrain(int trainNum, EntityManager entityManager) {
         Query query = entityManager.createQuery("SELECT ts.passenger FROM Train tr join tr.ticketList ts where tr.number =:numb");
         query.setParameter("numb", trainNum);
         List<Passenger> passengerList = query.getResultList();
@@ -182,11 +182,7 @@ public class Main {
         query.setParameter("trNum", train.getNumber());
         query.setParameter("day", dateOfRace);
         List<Ticket> list = query.getResultList();
-//        for (Ticket t : list) {
-//            System.out.println(t);
-//        }
         return train.getCapacity() > list.size();
-
     }
 
     static boolean checkSamePassengerNotReg(Train train, String name, String surname, Date birthday) {
@@ -237,17 +233,17 @@ public class Main {
     }
 
     static void addSchedule(String stationName, int trainNumber, Date time, int offset, EntityManager entityManager) {
-        Query query = entityManager.createQuery("SELECT st FROM Station st where st.name =:stName");
-        query.setParameter("stName", stationName);
-        List<Station> stationList = query.getResultList();
+        Query stationQuery = entityManager.createQuery("SELECT st FROM Station st where st.name =:stName");
+        stationQuery.setParameter("stName", stationName);
+        List<Station> stationList = stationQuery.getResultList();
         if (stationList.isEmpty()) {
             System.out.println("Station not found!");
             return;
         }
 
-        Query query1 = entityManager.createQuery("SELECT tr FROM Train tr where tr.number =:trNum");
-        query1.setParameter("trNum", trainNumber);
-        List<Train> trainList = query1.getResultList();
+        Query trainQuery = entityManager.createQuery("SELECT tr FROM Train tr where tr.number =:trNum");
+        trainQuery.setParameter("trNum", trainNumber);
+        List<Train> trainList = trainQuery.getResultList();
         if (trainList.isEmpty()) {
             System.out.println("Train not found!");
             return;
@@ -269,19 +265,19 @@ public class Main {
     }
 
 
-    public void printSchedule() {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("sbb_unit");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        Query query = entityManager.createQuery("SELECT ts FROM Schedule ts");
-
-        List<Schedule> list = query.getResultList();
-        for (Schedule schedule : list) {
-            System.out.println(schedule);
-        }
-        //return passengerList;
-        entityManager.close();
-        entityManagerFactory.close();
-    }
+//    public void printSchedule() {
+//        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("sbb_unit");
+//        EntityManager entityManager = entityManagerFactory.createEntityManager();
+//        Query query = entityManager.createQuery("SELECT ts FROM Schedule ts");
+//
+//        List<Schedule> list = query.getResultList();
+//        for (Schedule schedule : list) {
+//            System.out.println(schedule);
+//        }
+//        //return passengerList;
+//        entityManager.close();
+//        entityManagerFactory.close();
+//    }
 
 
     static long getCurrentTime() {
