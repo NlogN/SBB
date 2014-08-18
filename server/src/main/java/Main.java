@@ -102,11 +102,22 @@ public class Main {
     }
 
     static void printStationSchedule(String stationName, EntityManager entityManager) {
-        Query query = entityManager.createQuery("SELECT ts.train FROM Station st join st.scheduleList ts where st.name =:stName");
+//        Query query = entityManager.createQuery("SELECT ts.train FROM Station st join st.scheduleList ts where st.name =:stName");
+//        query.setParameter("stName", stationName);
+//        List<Train> list = query.getResultList();
+//        for (Train train : list) {
+//            System.out.println(train);
+//        }
+        Query query = entityManager.createQuery("SELECT st FROM Station st where st.name =:stName");
         query.setParameter("stName", stationName);
-        List<Train> list = query.getResultList();
-        for (Train train : list) {
-            System.out.println(train);
+        List<Station> list = query.getResultList();
+        if (list.isEmpty()) {
+            System.out.println("Station not found!");
+        } else {
+            List<Schedule> scheduleList = list.get(0).getScheduleList();
+            for (Schedule schedule : scheduleList) {
+                System.out.println(schedule.getTrain().getNumber()+" "+schedule.getTime());
+            }
         }
         //return passengerList;
     }

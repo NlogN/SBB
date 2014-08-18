@@ -1,11 +1,12 @@
+package ru.sbb.app;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Font;
+import ru.sbb.TestClient;
+import ru.sbb.request.GetStationScheduleRequest;
+
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.net.URISyntaxException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,7 +19,7 @@ import javax.swing.JTabbedPane;
  * Date: 10.08.14
  */
 public class AppFrame extends JFrame {
-    static TestClient client = new TestClient();
+    //static ru.sbb.TestClient client = new ru.sbb.TestClient();
 
     public AppFrame() {
 
@@ -37,17 +38,7 @@ public class AppFrame extends JFrame {
         JButton button1 = new JButton("поиск поездов");
 
         button1.setFont(font);
-        button1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    client.send();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                } catch (URISyntaxException e1) {
-                    e1.printStackTrace();
-                }
-            }
-        });
+
 
 
         Font font1 = new Font("Jokerman", Font.PLAIN, 20);
@@ -56,8 +47,28 @@ public class AppFrame extends JFrame {
         final JTabbedPane tabbedPane1 = new JTabbedPane();
         tabbedPane1.setFont( font1);
         JPanel jPanel3 = new JPanel();
-        jPanel3.add(button1);
+
         JPanel jPanel4 = new JPanel();
+        Label R1 = new Label("название станции:");
+        final TextField n1 = new TextField(20);
+
+        button1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                TestClient client = null;
+                try {
+                    client = new TestClient();
+                    client.send(new GetStationScheduleRequest(n1.getText()));
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+
+
+            }
+        });
+
+        jPanel4.add(button1);
+        jPanel4.add(R1);
+        jPanel4.add(n1);
         JPanel jPanel5 = new JPanel();
         tabbedPane1.addTab("поиск поезда", jPanel3);
         tabbedPane1.addTab("расписание поездов", jPanel4);
