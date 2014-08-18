@@ -29,7 +29,7 @@ import java.util.List;
 public class TestClient {
     private static HttpClient client = new DefaultHttpClient();
     static int routerPort = 8000;
-
+    public static String defaultHttp = "http://127.0.0.1:";
 
 
     public void send() throws IOException, URISyntaxException {
@@ -42,7 +42,7 @@ public class TestClient {
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
             nameValuePairs.add(new BasicNameValuePair("command", command));
 
-            HttpPost post1 = new HttpPost(Server.defaultHttp + routerPort + "/");
+            HttpPost post1 = new HttpPost(defaultHttp + routerPort + "/");
             post1.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
 
             try {

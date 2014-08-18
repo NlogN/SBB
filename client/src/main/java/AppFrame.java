@@ -33,9 +33,9 @@ public class AppFrame extends JFrame {
         final JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.setFont(font);
 
+
         JButton button1 = new JButton("поиск поездов");
-        JButton button2 = new JButton("расписание поездов");
-        JButton button3 = new JButton("купить билет");
+
         button1.setFont(font);
         button1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -49,33 +49,51 @@ public class AppFrame extends JFrame {
             }
         });
 
-        JPanel jPanel1 = new JPanel();
 
-        jPanel1.add(button1);
-        jPanel1.add(button2);
-        jPanel1.add(button3);
+        Font font1 = new Font("Jokerman", Font.PLAIN, 20);
+        JPanel content1 = new JPanel();
+        content1.setLayout(new BorderLayout());
+        final JTabbedPane tabbedPane1 = new JTabbedPane();
+        tabbedPane1.setFont( font1);
+        JPanel jPanel3 = new JPanel();
+        jPanel3.add(button1);
+        JPanel jPanel4 = new JPanel();
+        JPanel jPanel5 = new JPanel();
+        tabbedPane1.addTab("поиск поезда", jPanel3);
+        tabbedPane1.addTab("расписание поездов", jPanel4);
+        tabbedPane1.addTab("купить билет", jPanel5);
+        content1.add(tabbedPane1, BorderLayout.CENTER);
+        content1.add(tabbedPane1);
 
-        tabbedPane.addTab("Клиент", jPanel1);
+        tabbedPane.addTab("Клиент", content1);
 
-        JPanel jPanel2 = new JPanel();
-        JButton button5 = new JButton("добавить станцию");
-        JButton button6 = new JButton("добавить поезд");
-        JButton button7 = new JButton("просмотр пассажиров");
-        JButton button8 = new JButton("просмотр поездов");
+        JPanel content2 = new JPanel();
+        content2.setLayout(new BorderLayout());
+        final JTabbedPane tabbedPane2 = new JTabbedPane();
+        tabbedPane2.setFont(font1);
+        JPanel jPanel6 = new JPanel();
+        JPanel jPanel7 = new JPanel();
+        JPanel jPanel8 = new JPanel();
+        JPanel jPanel9 = new JPanel();
+        JPanel jPanel10 = new JPanel();
+        tabbedPane2.addTab("добавить поезд", jPanel6);
+        tabbedPane2.addTab("добавить станцию", jPanel7);
+        tabbedPane2.addTab("добавить расписание", jPanel8);
+        tabbedPane2.addTab("просмотр поездов", jPanel9);
+        tabbedPane2.addTab("просмотр пассажиров", jPanel10);
+        content2.add(tabbedPane2, BorderLayout.CENTER);
 
-        jPanel2.add(button5);
-        jPanel2.add(button6);
-        jPanel2.add(button7);
-        jPanel2.add(button8);
+        content2.add(tabbedPane2);
 
-        tabbedPane.addTab("Сотрудник", jPanel2);
+
+        tabbedPane.addTab("Сотрудник", content2);
 
 
         content.add(tabbedPane, BorderLayout.CENTER);
 
         getContentPane().add(content);
 
-        setPreferredSize(new Dimension(260, 220));
+        setPreferredSize(new Dimension(700, 500));
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
