@@ -1,3 +1,5 @@
+package ru.sbb;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -60,7 +62,7 @@ public class Station {
         for (Schedule schedule : scheduleList) {
             sb.append(schedule.getTrain().getId() + " ");
         }
-        return "Station{" +
+        return "ru.sbb.Station{" +
                 "id=" + stationId +
                 ", name='" + name +
                 ", trains='" + sb.toString() +

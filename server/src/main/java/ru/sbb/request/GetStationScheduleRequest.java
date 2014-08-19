@@ -15,7 +15,7 @@ public class GetStationScheduleRequest extends Request implements Serializable {
         type=RequestType.GET_STATION_SCHEDULE;
     }
 
-    String getStationName(){
+    public String getStationName(){
         return stationName;
     }
 

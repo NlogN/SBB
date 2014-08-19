@@ -1,3 +1,5 @@
+package ru.sbb;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -69,7 +71,7 @@ public class Train {
 
 //    @Override
 //    public String toString() {
-//        return "Train{" +
+//        return "ru.sbb.Train{" +
 //                "id=" + train_id +
 //                ", number='" + number + '\'' +
 //                ", capacity='" + capacity +
@@ -79,11 +81,11 @@ public class Train {
 //    @Override
 //    public String toString() {
 //        StringBuffer sb = new StringBuffer();
-//        for (Ticket ticket : ticketList) {
+//        for (ru.sbb.Ticket ticket : ticketList) {
 //            sb.append(ticket.getPassenger().getName() + " ");
 //        }
 //
-//        return "Train{" +
+//        return "ru.sbb.Train{" +
 //                "id=" + trainId +
 //                ", number='" + number + '\'' +
 //                ", capacity='" + capacity +
@@ -98,7 +100,7 @@ public class Train {
             sb.append(schedule.getStation().getName() + " ");
         }
 
-        return "Train{" +
+        return "ru.sbb.Train{" +
                 "id=" + trainId +
                 ", number='" + number + '\'' +
                 ", capacity='" + capacity +

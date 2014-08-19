@@ -1,3 +1,5 @@
+package ru.sbb;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -64,7 +66,7 @@ public class Ticket {
 
     @Override
     public String toString() {
-        return "Ticket{" +
+        return "ru.sbb.Ticket{" +
                 "id=" + ticketId +
                 ", tarin_id='" + train.getId() + '\'' +
                 ", tarin_number='" + train.getNumber() + '\'' +
