@@ -7,66 +7,80 @@ import ru.sbb.request.Message;
 import ru.sbb.request.Request;
 
 import java.io.*;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.net.SocketAddress;
+import java.net.*;
 
 /**
  * Created with IntelliJ IDEA.
  * User: Ilya Makeev
- * Date: 19.08.14
+ * Date: 20.08.14
  */
 
 public class Server {
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
+    public static void main(String[] args) throws IOException {
         ServerSocket serverSock = new ServerSocket(8070);
 
-
+        System.out.println("Listening on 8070 at localhost");
         while (true) {
-            Socket clientSock = serverSock.accept();
+            final Socket clientSock = serverSock.accept();
+            new Thread(new Runnable() {
+                public void run() {
+                    SocketAddress sockAddr = clientSock.getRemoteSocketAddress();
+                    System.out.println("Processing new connection from " + sockAddr);
+                    try {
+                        InputStream inputStream = clientSock.getInputStream();
+                        ObjectInputStream input = new ObjectInputStream(
+                                new BufferedInputStream(inputStream));
+                        ObjectOutputStream output = new ObjectOutputStream(
+                                new BufferedOutputStream(clientSock.getOutputStream()));
 
-            SocketAddress sockAddr = clientSock.getRemoteSocketAddress();
-            System.out.println("Processing new connection from " + sockAddr);
+                        while (true){
+                            try {
+                                Request req = receive(sockAddr, input);
 
-            ObjectInputStream input = new ObjectInputStream(
-                    new BufferedInputStream(clientSock.getInputStream()));
+                                switch (req.getType()) {
+                                    case GET_STATION_SCHEDULE: {
+                                        GetStationScheduleRequest request = (GetStationScheduleRequest) req;
+                                        stationScheduleRequestMethod(sockAddr, request, output);
+                                        break;
+                                    }
+                                    case GET_TRAIN_PASSENGERS: {
+                                        GetTrainPassengersRequest request = (GetTrainPassengersRequest) req;
+                                        RequestService requestService = new RequestService();
+                                        String res = requestService.getPassengersByTrainInfo(request.getTrainNum(), requestService.entityManager);
+                                        send(sockAddr, output, new Message(res));
+                                        break;
+                                    }
+                                    default:
+                                        System.out.println();
+                                        send(sockAddr, output, new Message(""));
+                                        break;
+                                }
+                            } catch (EOFException e){
+                                System.out.println("End of stream");
+                                break;
+                            }
+                        }
 
-            Request req = receive(sockAddr, input);
 
-            ObjectOutputStream output = new ObjectOutputStream(
-                    new BufferedOutputStream(clientSock.getOutputStream()));
-
-            switch (req.getType()) {
-                case GET_STATION_SCHEDULE: {
-                    GetStationScheduleRequest request = (GetStationScheduleRequest) req;
-                    stationScheduleRequestMethod(sockAddr, request, output);
-                    break;
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally {
+                        if (clientSock != null) {
+                            try {
+                                clientSock.close();
+                            } catch (IOException e) {
+                            }
+                        }
+                    }
                 }
-                case GET_TRAIN_PASSENGERS: {
-                    GetTrainPassengersRequest request = (GetTrainPassengersRequest) req;
-                    RequestService requestService = new RequestService();
-                    String res = requestService.getPassengersByTrainInfo(request.getTrainNum(), requestService.entityManager);
-                    send(sockAddr, output, new Message(res));
-                   // System.out.println(res);
-                    break;
-                }
-                default:
-                    System.out.println();
-                    break;
-            }
-
-
-            //
-            //  receive(sockAddr, input);
-            //  System.out.println("ru.sbb.Server thinking on the answer for " + sockAddr);
-            //  Thread.sleep(10000);
-            //  send(sockAddr, output, new Message("Fine, thanks! And you?"));
-
-
+            }).start();
         }
 
     }
+
 
     private static void send(SocketAddress sockAddr, ObjectOutputStream output, Message m) throws IOException {
         System.out.println("Sending a message to " + sockAddr + ": " + m);
@@ -74,17 +88,12 @@ public class Server {
         output.flush();
     }
 
-//    private static void send(SocketAddress sockAddr, ObjectOutputStream output, String s) throws IOException {
-//        System.out.println("Sending a message to " + sockAddr + ": " + s);
-//        output.writeObject(s);
-//        output.flush();
-//    }
 
-    static void stationScheduleRequestMethod(SocketAddress sockAddr,GetStationScheduleRequest request,ObjectOutputStream output) throws IOException {
+    static void stationScheduleRequestMethod(SocketAddress sockAddr, GetStationScheduleRequest request, ObjectOutputStream output) throws IOException {
         RequestService requestService = new RequestService();
         String res = requestService.getStationSchedule(request.getStationName(), requestService.entityManager);
         System.out.println(res);
-        send(sockAddr,output,new Message(res));
+        send(sockAddr, output, new Message(res));
     }
 
     private static Request receive(SocketAddress sockAddr, ObjectInputStream input) throws IOException, ClassNotFoundException {
@@ -92,13 +101,6 @@ public class Server {
         Request m = (Request) input.readObject();
         return m;
 
-
-
-//        System.out.println("Receiving a message from " + sockAddr + ": ");
-//        GetStationScheduleRequest obj = null;
-//        while ((obj = (GetStationScheduleRequest)input.readObject()) != null) {
-//            System.out.println(obj);
-//        }
     }
 
 }

@@ -1,4 +1,4 @@
-package ru.sbb.app;
+package ru.sbb.test;
 
 /**
  * Created with IntelliJ IDEA.
@@ -6,10 +6,7 @@ package ru.sbb.app;
  * Date: 20.08.14
  */
 
-import ru.sbb.request.GetStationScheduleRequest;
-import ru.sbb.request.GetTrainPassengersRequest;
-import ru.sbb.request.Message;
-import ru.sbb.request.Request;
+import ru.sbb.request.*;
 
 import java.io.*;
 import java.net.*;
@@ -22,13 +19,18 @@ public class Client {
         System.out.println("Local socket address is " + sock.getLocalSocketAddress());
         SocketAddress sockAddr = sock.getRemoteSocketAddress();
         ObjectOutputStream output = new ObjectOutputStream(new BufferedOutputStream(sock.getOutputStream()));
-        //send(sockAddr, output, new GetStationScheduleRequest("Saint-Peterburg"));
-        send(sockAddr, output, new GetTrainPassengersRequest(239));
+        send(sockAddr, output, new OverRequest(""));
         ObjectInputStream input = new ObjectInputStream(new BufferedInputStream(sock.getInputStream()));
         receive(sockAddr, input);
+        send(sockAddr, output, new GetStationScheduleRequest("Saint-Peterburg"));
+//       send(sockAddr, output, new GetTrainPassengersRequest(239));
+      receive(sockAddr, input);
 
-//        send(sockAddr, output, new GetStationScheduleRequest("Moskow"));
-//        receive(sockAddr, input);
+        //
+        send(sockAddr, output, new GetTrainPassengersRequest(123));
+        receive(sockAddr, input);
+
+          sock.close();
 
     }
 

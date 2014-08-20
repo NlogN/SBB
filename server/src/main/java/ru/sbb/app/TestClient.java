@@ -1,11 +1,8 @@
 package ru.sbb.app;
 
-import ru.sbb.request.Request;
+import ru.sbb.request.*;
 
-import java.io.BufferedOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.net.SocketAddress;
 
@@ -16,40 +13,49 @@ import java.net.SocketAddress;
  */
 
 public class TestClient {
-    public static Socket sock;
-    static SocketAddress sockAddr;
-    static ObjectOutputStream output;
+    private  Socket sock;
+    private SocketAddress sockAddr;
+    private ObjectOutputStream output;
+    private ObjectInputStream input;
 
     public Socket getSock(){
          return sock;
     }
 
-    static{
+
+    void close() throws IOException {
+        sock.close();
+    }
+
+    public TestClient() throws IOException {
         try {
             sock = new Socket("localhost", 8070);
-            output = new ObjectOutputStream(new BufferedOutputStream(sock.getOutputStream()));
         } catch (IOException e) {
             e.printStackTrace();
         }
         sockAddr = sock.getRemoteSocketAddress();
 
-    }
+        this.output = new ObjectOutputStream(new BufferedOutputStream(sock.getOutputStream()));
+        send(new OverRequest(""));
+        this.input = new ObjectInputStream(new BufferedInputStream(sock.getInputStream()));
+        receive();
 
-    public TestClient() throws IOException {
+
         System.out.print("Connected to 8080 at localhost");
         System.out.println("Local socket address is " + sock.getLocalSocketAddress());
     }
 
-//    public static void main(String[] args) throws IOException, ClassNotFoundException {
-//            TestClient client = new TestClient();
-//            client.send(new GetStationScheduleRequest("Moskow"));
-//           // client.send(new GetStationScheduleRequest("Moskow1"));
-//           // output.flush();
-////            ObjectInputStream input = new ObjectInputStream(new BufferedInputStream(sock.getInputStream()));
-////            receive(sockAddr, input);
-//
-//
-//    }
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+
+            TestClient client = new TestClient();
+            client.send(new GetStationScheduleRequest("Moskow"));
+//            ObjectInputStream input = new ObjectInputStream(new BufferedInputStream(client.getSock().getInputStream()));
+           client.receive();
+        client.send(new GetTrainPassengersRequest(123));
+        client.receive();
+           client.close();
+
+    }
 
     public void send(Request m) throws IOException {
         //System.out.println("Sending a message to " + sockAddr + ": " + m);
@@ -57,9 +63,14 @@ public class TestClient {
         output.flush();
     }
 
-    public void receive(ObjectInputStream input) throws IOException, ClassNotFoundException {
+    public void receive() throws IOException {
         System.out.print("Receiving a message from " + sockAddr + ": ");
-        Request m = (Request) input.readObject();
+        Message m = null;
+        try {
+            m = (Message) input.readObject();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         System.out.println(m);
     }
 

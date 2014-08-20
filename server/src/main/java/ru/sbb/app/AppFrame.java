@@ -17,12 +17,18 @@ import java.io.ObjectInputStream;
  * Date: 10.08.14
  */
 public class AppFrame extends JFrame {
-    //static ru.sbb.app.TestClient client = new ru.sbb.app.TestClient();
+    TestClient client;
+
 
 
     public AppFrame() {
 
         super("sbb");
+        try {
+            client  = new TestClient();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 //        try {
 //            TestClient client = new TestClient();
 //        } catch (IOException e) {
@@ -89,7 +95,7 @@ public class AppFrame extends JFrame {
     }
 
 
-    static JPanel getStationScheduleRequestPanel(){
+    JPanel getStationScheduleRequestPanel(){
         JButton button1 = new JButton("поиск поездов");
         JPanel jPanel4 = new JPanel();
         Label R1 = new Label("название станции:");
@@ -98,10 +104,12 @@ public class AppFrame extends JFrame {
         button1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    TestClient client = new TestClient();
+
                     GetStationScheduleRequest request = new GetStationScheduleRequest(n1.getText());
                     System.out.println(request);
                     client.send(request);
+                    client.receive();
+
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -115,7 +123,7 @@ public class AppFrame extends JFrame {
         return jPanel4;
     }
 
-    static JPanel getPassengersByTrainPanel(){
+    JPanel getPassengersByTrainPanel(){
         JButton button1 = new JButton("вывести пассадиров");
         JPanel jPanel4 = new JPanel();
         Label R1 = new Label("номер поезда:");
@@ -124,12 +132,13 @@ public class AppFrame extends JFrame {
         button1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    TestClient client = new TestClient();
+
                     GetTrainPassengersRequest request = new GetTrainPassengersRequest(Integer.parseInt(n1.getText()));
                     System.out.println(request);
                     client.send(request);
-//                    ObjectInputStream input = new ObjectInputStream(new BufferedInputStream(client.getSock().getInputStream()));
-//                    client.receive(input);
+                    client.receive();
+
+
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
