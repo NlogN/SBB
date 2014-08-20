@@ -3,6 +3,7 @@ package ru.sbb;
 
 import ru.sbb.request.GetStationScheduleRequest;
 import ru.sbb.request.GetTrainPassengersRequest;
+import ru.sbb.request.Message;
 import ru.sbb.request.Request;
 
 import java.io.*;
@@ -25,13 +26,14 @@ public class Server {
         while (true) {
             Socket clientSock = serverSock.accept();
 
-
             SocketAddress sockAddr = clientSock.getRemoteSocketAddress();
             System.out.println("Processing new connection from " + sockAddr);
 
             ObjectInputStream input = new ObjectInputStream(
                     new BufferedInputStream(clientSock.getInputStream()));
+
             Request req = receive(sockAddr, input);
+
             ObjectOutputStream output = new ObjectOutputStream(
                     new BufferedOutputStream(clientSock.getOutputStream()));
 
@@ -45,7 +47,8 @@ public class Server {
                     GetTrainPassengersRequest request = (GetTrainPassengersRequest) req;
                     RequestService requestService = new RequestService();
                     String res = requestService.getPassengersByTrainInfo(request.getTrainNum(), requestService.entityManager);
-                    System.out.println(res);
+                    send(sockAddr, output, new Message(res));
+                   // System.out.println(res);
                     break;
                 }
                 default:
@@ -54,7 +57,7 @@ public class Server {
             }
 
 
-                  send(sockAddr, output, new GetStationScheduleRequest("Hello, I'm a server!"));
+            //
             //  receive(sockAddr, input);
             //  System.out.println("ru.sbb.Server thinking on the answer for " + sockAddr);
             //  Thread.sleep(10000);
@@ -65,23 +68,23 @@ public class Server {
 
     }
 
-    private static void send(SocketAddress sockAddr, ObjectOutputStream output, Request m) throws IOException {
+    private static void send(SocketAddress sockAddr, ObjectOutputStream output, Message m) throws IOException {
         System.out.println("Sending a message to " + sockAddr + ": " + m);
         output.writeObject(m);
         output.flush();
     }
 
-    private static void send(SocketAddress sockAddr, ObjectOutputStream output, String s) throws IOException {
-        System.out.println("Sending a message to " + sockAddr + ": " + s);
-        output.writeObject(s);
-        output.flush();
-    }
+//    private static void send(SocketAddress sockAddr, ObjectOutputStream output, String s) throws IOException {
+//        System.out.println("Sending a message to " + sockAddr + ": " + s);
+//        output.writeObject(s);
+//        output.flush();
+//    }
 
     static void stationScheduleRequestMethod(SocketAddress sockAddr,GetStationScheduleRequest request,ObjectOutputStream output) throws IOException {
         RequestService requestService = new RequestService();
-        String res = requestService.printStationSchedule(request.getStationName(), requestService.entityManager);
+        String res = requestService.getStationSchedule(request.getStationName(), requestService.entityManager);
         System.out.println(res);
-        send(sockAddr,output,res);
+        send(sockAddr,output,new Message(res));
     }
 
     private static Request receive(SocketAddress sockAddr, ObjectInputStream input) throws IOException, ClassNotFoundException {

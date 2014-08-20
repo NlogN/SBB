@@ -32,7 +32,7 @@ public class RequestService {
 //        }
 
 //        System.out.println("\n print station shedule:\n-------------");
-//        printStationSchedule("Moskow", entityManager);
+//        getStationSchedule("Moskow", entityManager);
 
 //        System.out.println("\n train number list:\n-------------");
 //        for (String s : getTrainNumberList(entityManager)) {
@@ -122,7 +122,7 @@ public class RequestService {
         return sb.toString();
     }
 
-     String printStationSchedule(String stationName, EntityManager entityManager) {
+     String getStationSchedule(String stationName, EntityManager entityManager) {
 //        Query query = entityManager.createQuery("SELECT ts.train FROM ru.sbb.Station st join st.scheduleList ts where st.name =:stName");
 //        query.setParameter("stName", stationName);
 //        List<ru.sbb.Train> list = query.getResultList();
@@ -133,7 +133,7 @@ public class RequestService {
         query.setParameter("stName", stationName);
         List<Station> list = query.getResultList();
         if (list.isEmpty()) {
-            System.out.println("ru.sbb.Station not found!");
+            System.out.println("Station not found!");
         } else {
             StringBuffer sb = new StringBuffer();
             List<Schedule> scheduleList = list.get(0).getScheduleList();

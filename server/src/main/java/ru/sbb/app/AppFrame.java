@@ -128,13 +128,14 @@ public class AppFrame extends JFrame {
                     GetTrainPassengersRequest request = new GetTrainPassengersRequest(Integer.parseInt(n1.getText()));
                     System.out.println(request);
                     client.send(request);
-                    ObjectInputStream input = new ObjectInputStream(new BufferedInputStream(client.getSock().getInputStream()));
-                    client.receive(input);
+//                    ObjectInputStream input = new ObjectInputStream(new BufferedInputStream(client.getSock().getInputStream()));
+//                    client.receive(input);
                 } catch (IOException e1) {
                     e1.printStackTrace();
-                } catch (ClassNotFoundException e1) {
-                    e1.printStackTrace();
                 }
+//                catch (ClassNotFoundException e1) {
+//                    e1.printStackTrace();
+//                }
 
 
             }
