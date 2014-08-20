@@ -3,7 +3,7 @@ package ru.sbb.request;
 /**
  * Created with IntelliJ IDEA.
  * User: Ilya Makeev
- * Date: 20.08.14
+ * DateBuilder: 20.08.14
  */
 import java.io.Serializable;
 import java.util.Random;

@@ -1,4 +1,4 @@
-package ru.sbb;
+package ru.sbb.entity;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -82,7 +82,7 @@ public class Schedule {
 
     @Override
     public String toString() {
-        return "ru.sbb.Schedule{" +
+        return "ru.sbb.entity.Schedule{" +
                 "id=" + scheduleId +
                 ", trainId='" + train.getId() + '\'' +
                 ", stationId='" + station.getId() +

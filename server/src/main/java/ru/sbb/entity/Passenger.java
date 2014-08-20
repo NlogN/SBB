@@ -1,4 +1,4 @@
-package ru.sbb;
+package ru.sbb.entity;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -75,7 +75,7 @@ public class Passenger {
 
     @Override
     public String toString() {
-        return "ru.sbb.Passenger{" +
+        return "ru.sbb.entity.Passenger{" +
                 "id=" + passengerId +
                 ", name='" + name + '\'' +
                 ", surname='" + surname +

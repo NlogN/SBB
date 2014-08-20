@@ -5,6 +5,8 @@ import ru.sbb.request.GetStationScheduleRequest;
 import ru.sbb.request.GetTrainPassengersRequest;
 import ru.sbb.request.Message;
 import ru.sbb.request.Request;
+import ru.sbb.service.ClientService;
+import ru.sbb.service.ManagerService;
 
 import java.io.*;
 import java.net.*;
@@ -12,7 +14,7 @@ import java.net.*;
 /**
  * Created with IntelliJ IDEA.
  * User: Ilya Makeev
- * Date: 20.08.14
+ * DateBuilder: 20.08.14
  */
 
 public class Server {
@@ -46,8 +48,7 @@ public class Server {
                                     }
                                     case GET_TRAIN_PASSENGERS: {
                                         GetTrainPassengersRequest request = (GetTrainPassengersRequest) req;
-                                        RequestService requestService = new RequestService();
-                                        String res = requestService.getPassengersByTrainInfo(request.getTrainNum(), requestService.entityManager);
+                                        String res = ManagerService.getInstance().getPassengersByTrainInfo(request.getTrainNum());
                                         send(sockAddr, output, new Message(res));
                                         break;
                                     }
@@ -90,8 +91,7 @@ public class Server {
 
 
     static void stationScheduleRequestMethod(SocketAddress sockAddr, GetStationScheduleRequest request, ObjectOutputStream output) throws IOException {
-        RequestService requestService = new RequestService();
-        String res = requestService.getStationSchedule(request.getStationName(), requestService.entityManager);
+        String res = ClientService.getInstance().getStationSchedule(request.getStationName());
         System.out.println(res);
         send(sockAddr, output, new Message(res));
     }

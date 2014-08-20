@@ -1,4 +1,4 @@
-package ru.sbb;
+package ru.sbb.entity;
 
 import javax.persistence.*;
 import java.util.List;
@@ -71,7 +71,7 @@ public class Train {
 
 //    @Override
 //    public String toString() {
-//        return "ru.sbb.Train{" +
+//        return "ru.sbb.entity.Train{" +
 //                "id=" + train_id +
 //                ", number='" + number + '\'' +
 //                ", capacity='" + capacity +
@@ -81,11 +81,11 @@ public class Train {
 //    @Override
 //    public String toString() {
 //        StringBuffer sb = new StringBuffer();
-//        for (ru.sbb.Ticket ticket : ticketList) {
+//        for (ru.sbb.entity.Ticket ticket : ticketList) {
 //            sb.append(ticket.getPassenger().getName() + " ");
 //        }
 //
-//        return "ru.sbb.Train{" +
+//        return "ru.sbb.entity.Train{" +
 //                "id=" + trainId +
 //                ", number='" + number + '\'' +
 //                ", capacity='" + capacity +
@@ -100,7 +100,7 @@ public class Train {
             sb.append(schedule.getStation().getName() + " ");
         }
 
-        return "ru.sbb.Train{" +
+        return "ru.sbb.entity.Train{" +
                 "id=" + trainId +
                 ", number='" + number + '\'' +
                 ", capacity='" + capacity +

@@ -1,4 +1,4 @@
-package ru.sbb;
+package ru.sbb.entity;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -66,7 +66,7 @@ public class Ticket {
 
     @Override
     public String toString() {
-        return "ru.sbb.Ticket{" +
+        return "ru.sbb.entity.Ticket{" +
                 "id=" + ticketId +
                 ", tarin_id='" + train.getId() + '\'' +
                 ", tarin_number='" + train.getNumber() + '\'' +

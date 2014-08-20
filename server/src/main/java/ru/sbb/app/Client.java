@@ -9,10 +9,10 @@ import java.net.SocketAddress;
 /**
  * Created with IntelliJ IDEA.
  * User: Ilya Makeev
- * Date: 19.08.14
+ * DateBuilder: 19.08.14
  */
 
-public class TestClient {
+public class Client {
     private  Socket sock;
     private SocketAddress sockAddr;
     private ObjectOutputStream output;
@@ -27,7 +27,7 @@ public class TestClient {
         sock.close();
     }
 
-    public TestClient() throws IOException {
+    public Client() throws IOException {
         try {
             sock = new Socket("localhost", 8070);
         } catch (IOException e) {
@@ -47,7 +47,7 @@ public class TestClient {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
 
-            TestClient client = new TestClient();
+            Client client = new Client();
             client.send(new GetStationScheduleRequest("Moskow"));
 //            ObjectInputStream input = new ObjectInputStream(new BufferedInputStream(client.getSock().getInputStream()));
            client.receive();

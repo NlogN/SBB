@@ -1,4 +1,4 @@
-package ru.sbb;
+package ru.sbb.entity;
 
 import javax.persistence.*;
 import java.util.List;
@@ -62,7 +62,7 @@ public class Station {
         for (Schedule schedule : scheduleList) {
             sb.append(schedule.getTrain().getId() + " ");
         }
-        return "ru.sbb.Station{" +
+        return "ru.sbb.entity.Station{" +
                 "id=" + stationId +
                 ", name='" + name +
                 ", trains='" + sb.toString() +

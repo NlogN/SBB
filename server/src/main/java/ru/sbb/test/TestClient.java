@@ -3,7 +3,7 @@ package ru.sbb.test;
 /**
  * Created with IntelliJ IDEA.
  * User: Ilya Makeev
- * Date: 20.08.14
+ * DateBuilder: 20.08.14
  */
 
 import ru.sbb.request.*;
@@ -11,7 +11,7 @@ import ru.sbb.request.*;
 import java.io.*;
 import java.net.*;
 
-public class Client {
+public class TestClient {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         Socket sock = new Socket("localhost", 8070);

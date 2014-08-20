@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created with IntelliJ IDEA.
  * User: Ilya Makeev
- * Date: 19.08.14
+ * DateBuilder: 19.08.14
  */
 public class GetTrainPassengersRequest extends Request implements Serializable {
     private final int trainNum;

@@ -7,17 +7,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 
 /**
  * Created with IntelliJ IDEA.
  * User: Ilya Makeev
- * Date: 10.08.14
+ * DateBuilder: 10.08.14
  */
 public class AppFrame extends JFrame {
-    TestClient client;
+    Client client;
 
 
 
@@ -25,12 +23,12 @@ public class AppFrame extends JFrame {
 
         super("sbb");
         try {
-            client  = new TestClient();
+            client  = new Client();
         } catch (IOException e) {
             e.printStackTrace();
         }
 //        try {
-//            TestClient client = new TestClient();
+//            Client client = new Client();
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
