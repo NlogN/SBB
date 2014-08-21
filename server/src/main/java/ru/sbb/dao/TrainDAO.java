@@ -11,10 +11,10 @@ import java.util.List;
  */
 public interface TrainDAO {
 
-    public void addTrain(Train train);
+    public void addTrain(int number, int capacity);
 
     public List<Train> getTrainOnRouteABList(java.util.Date lowerBound, java.util.Date upperBound, String stationAName, String stationBName);
 
-    public Train getTrainById(int id);
+    public List<Train> getTrains();
 
 }

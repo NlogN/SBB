@@ -10,6 +10,7 @@ import ru.sbb.service.ManagerService;
 
 import java.io.*;
 import java.net.*;
+import java.util.logging.Logger;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,6 +19,7 @@ import java.net.*;
  */
 
 public class Server {
+    static Logger log = Logger.getLogger(SbbEntityManager.class.getName());
 
     public static void main(String[] args) throws IOException {
         ServerSocket serverSock = new ServerSocket(8070);
@@ -42,14 +44,11 @@ public class Server {
 
                                 switch (req.getType()) {
                                     case GET_STATION_SCHEDULE: {
-                                        GetStationScheduleRequest request = (GetStationScheduleRequest) req;
-                                        stationScheduleRequestMethod(sockAddr, request, output);
+                                        stationScheduleRequestMethod(sockAddr, req, output);
                                         break;
                                     }
                                     case GET_TRAIN_PASSENGERS: {
-                                        GetTrainPassengersRequest request = (GetTrainPassengersRequest) req;
-                                        String res = ManagerService.getInstance().getPassengersByTrainInfo(request.getTrainNum());
-                                        send(sockAddr, output, new Message(res));
+                                        trainPassengersRequestMethod(sockAddr,req,output);
                                         break;
                                     }
                                     default:
@@ -83,17 +82,24 @@ public class Server {
     }
 
 
+    static void stationScheduleRequestMethod(SocketAddress sockAddr, Request req, ObjectOutputStream output) throws IOException {
+        GetStationScheduleRequest request = (GetStationScheduleRequest) req;
+        String res = ClientService.getInstance().getStationSchedule(request.getStationName());
+        System.out.println(res);
+        send(sockAddr, output, new Message(res));
+    }
+
+    static void trainPassengersRequestMethod(SocketAddress sockAddr, Request req, ObjectOutputStream output) throws IOException {
+        GetTrainPassengersRequest request = (GetTrainPassengersRequest) req;
+        String res = ManagerService.getInstance().getPassengersByTrainInfo(request.getTrainNum());
+        System.out.println(res);
+        send(sockAddr, output, new Message(res));
+    }
+
     private static void send(SocketAddress sockAddr, ObjectOutputStream output, Message m) throws IOException {
         System.out.println("Sending a message to " + sockAddr + ": " + m);
         output.writeObject(m);
         output.flush();
-    }
-
-
-    static void stationScheduleRequestMethod(SocketAddress sockAddr, GetStationScheduleRequest request, ObjectOutputStream output) throws IOException {
-        String res = ClientService.getInstance().getStationSchedule(request.getStationName());
-        System.out.println(res);
-        send(sockAddr, output, new Message(res));
     }
 
     private static Request receive(SocketAddress sockAddr, ObjectInputStream input) throws IOException, ClassNotFoundException {
