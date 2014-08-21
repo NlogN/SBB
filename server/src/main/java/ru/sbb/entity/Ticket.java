@@ -66,7 +66,7 @@ public class Ticket {
 
     @Override
     public String toString() {
-        return "ru.sbb.entity.Ticket{" +
+        return "ru.sbb.entity.TicketDAO{" +
                 "id=" + ticketId +
                 ", tarin_id='" + train.getId() + '\'' +
                 ", tarin_number='" + train.getNumber() + '\'' +

@@ -3,7 +3,6 @@ package ru.sbb.service;
 import ru.sbb.DateBuilder;
 import ru.sbb.entity.*;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import java.util.ArrayList;
@@ -38,7 +37,7 @@ public class ClientService extends Service{
     }
 
     boolean checkNotFilledState(Train train, java.util.Date dateOfRace) {
-        Query query = entityManager.createQuery("SELECT tic FROM ru.sbb.entity.Ticket tic where tic.train.number =:trNum and tic.date =:day");
+        Query query = entityManager.createQuery("SELECT tic FROM ru.sbb.entity.TicketDAO tic where tic.train.number =:trNum and tic.date =:day");
         query.setParameter("trNum", train.getNumber());
         query.setParameter("day", dateOfRace);
         List<Ticket> list = query.getResultList();
@@ -57,10 +56,10 @@ public class ClientService extends Service{
     }
 
     static boolean checkTrainRoute(Train train, java.util.Date lowerBound, java.util.Date upperBound, String stationAName, String stationBName) {
-        List<Schedule> scheduleList = train.getScheduleList();
-        Schedule scheduleA = null;
-        Schedule scheduleB = null;
-        for (Schedule schedule : scheduleList) {
+        List<ScheduleRecord> scheduleList = train.getScheduleList();
+        ScheduleRecord scheduleA = null;
+        ScheduleRecord scheduleB = null;
+        for (ScheduleRecord schedule : scheduleList) {
             if (scheduleA != null && scheduleB != null) {
                 break;
             }
@@ -97,8 +96,8 @@ public class ClientService extends Service{
             System.out.println("Station not found!");
         } else {
             StringBuffer sb = new StringBuffer();
-            List<Schedule> scheduleList = list.get(0).getScheduleList();
-            for (Schedule schedule : scheduleList) {
+            List<ScheduleRecord> scheduleList = list.get(0).getScheduleList();
+            for (ScheduleRecord schedule : scheduleList) {
                 //   System.out.println(schedule.getTrain().getNumber()+" "+schedule.getTime());
                 sb.append(schedule.getTrain().getNumber() + " " + schedule.getTime() + "; \n");
             }
@@ -158,8 +157,8 @@ public class ClientService extends Service{
 
     static boolean checkStartTime(Train train, String stationName) {
         long currentTime = DateBuilder.getCurrentTime();
-        List<Schedule> scheduleList = train.getScheduleList();
-        for (Schedule schedule : scheduleList) {
+        List<ScheduleRecord> scheduleList = train.getScheduleList();
+        for (ScheduleRecord schedule : scheduleList) {
             if (schedule.getStation().equals(stationName) && (schedule.getUnixTime() - currentTime) > 0 && (schedule.getUnixTime() - currentTime) < 360) {
                 return false;
             }

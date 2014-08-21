@@ -1,7 +1,7 @@
 package ru.sbb.service;
 
 import ru.sbb.entity.Passenger;
-import ru.sbb.entity.Schedule;
+import ru.sbb.entity.ScheduleRecord;
 import ru.sbb.entity.Station;
 import ru.sbb.entity.Train;
 
@@ -109,7 +109,7 @@ public class ManagerService extends Service{
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
-            Schedule newSchedule = new Schedule();
+            ScheduleRecord newSchedule = new ScheduleRecord();
             newSchedule.setTrain(trainList.get(0));
             newSchedule.setStation(stationList.get(0));
             newSchedule.setOffset(offset);

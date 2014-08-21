@@ -17,7 +17,7 @@ public class Station {
 
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "station")
-    private List<Schedule> scheduleList;
+    private List<ScheduleRecord> scheduleList;
 
 
     public Station() {
@@ -40,17 +40,17 @@ public class Station {
         this.name = name;
     }
 
-    public List<Schedule> getScheduleList() {
+    public List<ScheduleRecord> getScheduleList() {
         return scheduleList;
     }
 
-    public void setScheduleList(List<Schedule> scheduleList) {
+    public void setScheduleList(List<ScheduleRecord> scheduleList) {
         this.scheduleList = scheduleList;
     }
 
     public void printSchedule() {
         StringBuffer sb = new StringBuffer();
-        for (Schedule schedule : scheduleList) {
+        for (ScheduleRecord schedule : scheduleList) {
             sb.append(schedule.getTrain().getNumber() + " " + schedule.getTime() + "\n");
         }
         System.out.println(sb.toString());
@@ -59,7 +59,7 @@ public class Station {
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
-        for (Schedule schedule : scheduleList) {
+        for (ScheduleRecord schedule : scheduleList) {
             sb.append(schedule.getTrain().getId() + " ");
         }
         return "ru.sbb.entity.Station{" +

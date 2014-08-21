@@ -1,15 +1,15 @@
 package ru.sbb.test;
 
+
+import ru.sbb.request.*;
+import java.io.*;
+import java.net.*;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Ilya Makeev
  * DateBuilder: 20.08.14
  */
-
-import ru.sbb.request.*;
-
-import java.io.*;
-import java.net.*;
 
 public class TestClient {
 
@@ -24,13 +24,13 @@ public class TestClient {
         receive(sockAddr, input);
         send(sockAddr, output, new GetStationScheduleRequest("Saint-Peterburg"));
 //       send(sockAddr, output, new GetTrainPassengersRequest(239));
-      receive(sockAddr, input);
+        receive(sockAddr, input);
 
         //
         send(sockAddr, output, new GetTrainPassengersRequest(123));
         receive(sockAddr, input);
 
-          sock.close();
+        sock.close();
 
     }
 

@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "schedule")
-public class Schedule {
+public class ScheduleRecord {
 
     @Id
     @Column(name = "schedule_id")
@@ -31,7 +31,7 @@ public class Schedule {
 
 
 
-    public Schedule() {
+    public ScheduleRecord() {
 
     }
 
@@ -82,7 +82,7 @@ public class Schedule {
 
     @Override
     public String toString() {
-        return "ru.sbb.entity.Schedule{" +
+        return "ru.sbb.entity.ScheduleRecord{" +
                 "id=" + scheduleId +
                 ", trainId='" + train.getId() + '\'' +
                 ", stationId='" + station.getId() +

@@ -22,7 +22,7 @@ public class Train {
     private List<Ticket> ticketList;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "train")
-    private List<Schedule> scheduleList;
+    private List<ScheduleRecord> scheduleList;
 
 
     public Train() {
@@ -61,11 +61,11 @@ public class Train {
         this.ticketList = ticketList;
     }
 
-    public List<Schedule> getScheduleList() {
+    public List<ScheduleRecord> getScheduleList() {
         return scheduleList;
     }
 
-    public void setScheduleList(List<Schedule> scheduleList) {
+    public void setScheduleList(List<ScheduleRecord> scheduleList) {
         this.scheduleList = scheduleList;
     }
 
@@ -81,7 +81,7 @@ public class Train {
 //    @Override
 //    public String toString() {
 //        StringBuffer sb = new StringBuffer();
-//        for (ru.sbb.entity.Ticket ticket : ticketList) {
+//        for (ru.sbb.entity.TicketDAO ticket : ticketList) {
 //            sb.append(ticket.getPassenger().getName() + " ");
 //        }
 //
@@ -96,7 +96,7 @@ public class Train {
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
-        for (Schedule schedule : scheduleList) {
+        for (ScheduleRecord schedule : scheduleList) {
             sb.append(schedule.getStation().getName() + " ");
         }
 
