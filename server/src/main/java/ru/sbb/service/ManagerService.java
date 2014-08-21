@@ -48,8 +48,9 @@ public class ManagerService {
         }
     }
 
-    public void addTrain(int number, int capacity) {
+    public String addTrain(int number, int capacity) {
         trainDAO.addTrain(number,capacity);
+        return "train added";
     }
 
     public void addStation(String name) {

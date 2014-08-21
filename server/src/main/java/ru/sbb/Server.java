@@ -41,15 +41,19 @@ public class Server {
 
                                 switch (req.getType()) {
                                     case GET_STATION_SCHEDULE: {
-                                        stationScheduleRequestMethod(sockAddr, req, output);
+                                        getStationScheduleRequestMethod(sockAddr, req, output);
                                         break;
                                     }
                                     case GET_TRAIN_PASSENGERS: {
-                                        trainPassengersRequestMethod(sockAddr,req,output);
+                                        getTrainPassengersRequestMethod(sockAddr, req, output);
                                         break;
                                     }
                                     case GET_ALL_TRAIN_LIST: {
-                                        trainRequestMethod(sockAddr,req,output);
+                                        getAllTrainsRequestMethod(sockAddr, req, output);
+                                        break;
+                                    }
+                                    case ADD_TRAIN: {
+                                        addTrainRequestMethod(sockAddr,req,output);
                                         break;
                                     }
                                     default:
@@ -83,14 +87,14 @@ public class Server {
     }
 
 
-    static void stationScheduleRequestMethod(SocketAddress sockAddr, Request req, ObjectOutputStream output) throws IOException {
+    static void getStationScheduleRequestMethod(SocketAddress sockAddr, Request req, ObjectOutputStream output) throws IOException {
         GetStationScheduleRequest request = (GetStationScheduleRequest) req;
         String res = ClientService.getInstance().getStationSchedule(request.getStationName());
         System.out.println(res);
         send(sockAddr, output, new Message(res));
     }
 
-    static void trainPassengersRequestMethod(SocketAddress sockAddr, Request req, ObjectOutputStream output) throws IOException {
+    static void getTrainPassengersRequestMethod(SocketAddress sockAddr, Request req, ObjectOutputStream output) throws IOException {
         GetTrainPassengersRequest request = (GetTrainPassengersRequest) req;
         String res;
         if(RegService.getInstance().checkPassword(request.getPassword())){
@@ -102,11 +106,23 @@ public class Server {
         send(sockAddr, output, new Message(res));
     }
 
-    static void trainRequestMethod(SocketAddress sockAddr, Request req, ObjectOutputStream output) throws IOException {
+    static void addTrainRequestMethod(SocketAddress sockAddr, Request req, ObjectOutputStream output) throws IOException {
+        AddTrainRequest request = (AddTrainRequest) req;
+        String res;
+        if(RegService.getInstance().checkPassword(request.getPassword())){
+             res = ManagerService.getInstance().addTrain(request.getNumber(),request.getCapacity());
+        } else{
+            res = "incorrect password";
+        }
+        System.out.println(res);
+        send(sockAddr, output, new Message(res));
+    }
+
+    static void getAllTrainsRequestMethod(SocketAddress sockAddr, Request req, ObjectOutputStream output) throws IOException {
         GetAllTrainsRequest request = (GetAllTrainsRequest) req;
         String res;
         if(RegService.getInstance().checkPassword(request.getPassword())){
-             res = ManagerService.getInstance().getTrainNumbers();
+            res = ManagerService.getInstance().getTrainNumbers();
         } else{
             res = "incorrect password";
         }
