@@ -8,9 +8,15 @@ import java.io.Serializable;
  * DateBuilder: 19.08.14
  */
 public class GetAllTrainsRequest extends Request implements Serializable {
+    private String psw;
 
-    public GetAllTrainsRequest(){
+    public GetAllTrainsRequest(String psw){
+        this.psw = psw;
         type=RequestType.GET_ALL_TRAIN_LIST;
+    }
+
+    public String getPassword(){
+        return psw;
     }
 
     public RequestType getType(){

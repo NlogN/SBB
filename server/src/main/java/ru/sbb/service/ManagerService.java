@@ -33,15 +33,19 @@ public class ManagerService {
 
     public String getTrainNumbers() {
         List<Train> trainList = trainDAO.getTrains();
-        Set<String> trainNumberSet = new HashSet<String>();
-        for (Train train : trainList) {
-            trainNumberSet.add(Integer.toString(train.getNumber()));
+        if(trainList.isEmpty()){
+            return "no data";
+        }else{
+            Set<String> trainNumberSet = new HashSet<String>();
+            for (Train train : trainList) {
+                trainNumberSet.add(Integer.toString(train.getNumber()));
+            }
+            StringBuffer sb = new StringBuffer();
+            for (String num : trainNumberSet) {
+                sb.append(num + " ;\n");
+            }
+            return sb.toString();
         }
-        StringBuffer sb = new StringBuffer();
-        for (String num : trainNumberSet) {
-            sb.append(num + " ;\n");
-        }
-        return sb.toString();
     }
 
     public void addTrain(int number, int capacity) {
@@ -58,11 +62,15 @@ public class ManagerService {
 
     public String getPassengersByTrainInfo(int trainNum) {
         List<Passenger> passengerList = passengerDAO.getPassengersByTrain(trainNum);
-        StringBuffer sb = new StringBuffer();
-        for (Passenger passenger : passengerList) {
-            sb.append(passenger.getName() + " " + passenger.getSurname() + " ;\n");
+        if(passengerList.isEmpty()){
+            return "no data";
+        }else{
+            StringBuffer sb = new StringBuffer();
+            for (Passenger passenger : passengerList) {
+                sb.append(passenger.getName() + " " + passenger.getSurname() + " ;\n");
+            }
+            return sb.toString();
         }
-        return sb.toString();
     }
 
 

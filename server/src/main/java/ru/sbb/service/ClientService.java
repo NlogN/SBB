@@ -32,12 +32,16 @@ public class ClientService {
 
 
     public String getStationSchedule(String stationName) {
-        StringBuffer sb = new StringBuffer();
         List<ScheduleRecord> scheduleList = scheduleRecordDAO.getStationScheduleRecords(stationName);
-        for (ScheduleRecord schedule : scheduleList) {
-            sb.append(schedule.getTrain().getNumber() + " " + schedule.getTime() + "; \n");
+        if(scheduleList.isEmpty()){
+            return "no data";
+        } else{
+            StringBuffer sb = new StringBuffer();
+            for (ScheduleRecord schedule : scheduleList) {
+                sb.append(schedule.getTrain().getNumber() + " " + schedule.getTime() + "; \n");
+            }
+            return sb.toString();
         }
-        return sb.toString();
     }
 
     boolean buyTicket(int trainNum, String stationName, String name, String surname, java.util.Date birthday, java.util.Date dateOfRace) {

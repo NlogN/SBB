@@ -129,13 +129,15 @@ public class AppFrame extends JFrame {
         JButton button1 = new JButton("вывести данные пассажиров");
         JPanel jPanel4 = new JPanel();
         Label R1 = new Label("номер поезда:");
+        Label R2 = new Label("пароль:");
         final TextField n1 = new TextField(20);
+        final TextField n2 = new TextField(20);
         final JTextArea ta = new JTextArea();
         button1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
 
-                    GetTrainPassengersRequest request = new GetTrainPassengersRequest(Integer.parseInt(n1.getText()));
+                    GetTrainPassengersRequest request = new GetTrainPassengersRequest(Integer.parseInt(n1.getText()),n2.getText());
                     System.out.println(request);
                     client.send(request);
                     ta.setText("");
@@ -151,24 +153,30 @@ public class AppFrame extends JFrame {
 
             }
         });
-        jPanel4.add(button1,BorderLayout.NORTH);
-        jPanel4.add(R1,BorderLayout.NORTH);
-        jPanel4.add(n1,BorderLayout.NORTH);
-        jPanel4.add(ta,BorderLayout.CENTER);
+
+        jPanel4.add(R1);
+        jPanel4.add(n1);
+        jPanel4.add(R2);
+        jPanel4.add(n2);
+        jPanel4.add(button1);
+        jPanel4.add(ta);
+
+        //jPanel4.setLayout(new GridLayout(3, 2));
         return jPanel4;
     }
 
     JPanel getAllTrainsPanel(){
         JButton button1 = new JButton("вывести номера поездов");
         JPanel jPanel4 = new JPanel();
-       // Label R1 = new Label("номер поезда:");
-      //  final TextField n1 = new TextField(20);
+        //jPanel4.setSize(100,300);
+        Label R1 = new Label("пароль:");
+        final TextField n1 = new TextField(20);
         final JTextArea ta = new JTextArea();
         button1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
 
-                    GetAllTrainsRequest request = new GetAllTrainsRequest();
+                    GetAllTrainsRequest request = new GetAllTrainsRequest(n1.getText());
                     System.out.println(request);
                     client.send(request);
                     ta.setText("");
@@ -184,10 +192,12 @@ public class AppFrame extends JFrame {
 
             }
         });
+       // jPanel4.SetLayout(new BorderLayout(100,100));
+        jPanel4.add(R1);
+        jPanel4.add(n1);
         jPanel4.add(button1);
-       // jPanel4.add(R1);
-       // jPanel4.add(n1);
-        jPanel4.add(ta,BorderLayout.EAST);
+        jPanel4.add(ta);
+       // jPanel4.add(ta,BorderLayout.EAST);
         return jPanel4;
     }
 

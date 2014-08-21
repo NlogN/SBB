@@ -1,10 +1,7 @@
 package ru.sbb;
 
 
-import ru.sbb.request.GetStationScheduleRequest;
-import ru.sbb.request.GetTrainPassengersRequest;
-import ru.sbb.request.Message;
-import ru.sbb.request.Request;
+import ru.sbb.request.*;
 import ru.sbb.service.ClientService;
 import ru.sbb.service.ManagerService;
 
@@ -52,7 +49,7 @@ public class Server {
                                         break;
                                     }
                                     case GET_ALL_TRAIN_LIST: {
-                                        trainRequestMethod(sockAddr,output);
+                                        trainRequestMethod(sockAddr,req,output);
                                         break;
                                     }
                                     default:
@@ -95,13 +92,24 @@ public class Server {
 
     static void trainPassengersRequestMethod(SocketAddress sockAddr, Request req, ObjectOutputStream output) throws IOException {
         GetTrainPassengersRequest request = (GetTrainPassengersRequest) req;
-        String res = ManagerService.getInstance().getPassengersByTrainInfo(request.getTrainNum());
+        String res;
+        if(RegService.getInstance().checkPassword(request.getPassword())){
+            res = ManagerService.getInstance().getPassengersByTrainInfo(request.getTrainNum());
+        } else{
+            res = "incorrect password";
+        }
         System.out.println(res);
         send(sockAddr, output, new Message(res));
     }
 
-    static void trainRequestMethod(SocketAddress sockAddr, ObjectOutputStream output) throws IOException {
-        String res = ManagerService.getInstance().getTrainNumbers();
+    static void trainRequestMethod(SocketAddress sockAddr, Request req, ObjectOutputStream output) throws IOException {
+        GetAllTrainsRequest request = (GetAllTrainsRequest) req;
+        String res;
+        if(RegService.getInstance().checkPassword(request.getPassword())){
+             res = ManagerService.getInstance().getTrainNumbers();
+        } else{
+            res = "incorrect password";
+        }
         System.out.println(res);
         send(sockAddr, output, new Message(res));
     }

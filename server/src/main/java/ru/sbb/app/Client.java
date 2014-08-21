@@ -1,5 +1,6 @@
 package ru.sbb.app;
 
+import ru.sbb.RegService;
 import ru.sbb.request.*;
 
 import java.io.*;
@@ -51,7 +52,7 @@ public class Client {
             client.send(new GetStationScheduleRequest("Moskow"));
 //            ObjectInputStream input = new ObjectInputStream(new BufferedInputStream(client.getSock().getInputStream()));
            client.receive();
-        client.send(new GetTrainPassengersRequest(123));
+        client.send(new GetTrainPassengersRequest(123,"123"));
         client.receive();
            client.close();
 

@@ -27,7 +27,7 @@ public class TestClient {
         receive(sockAddr, input);
 
         //
-        send(sockAddr, output, new GetTrainPassengersRequest(123));
+        send(sockAddr, output, new GetTrainPassengersRequest(123,"123"));
         receive(sockAddr, input);
 
         sock.close();
