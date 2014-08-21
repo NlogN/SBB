@@ -31,24 +31,28 @@ public class ManagerService {
     }
 
 
-    Set<String> getTrainNumberList() {
+    public String getTrainNumbers() {
         List<Train> trainList = trainDAO.getTrains();
-        Set<String> trainNumberList = new HashSet<String>();
+        Set<String> trainNumberSet = new HashSet<String>();
         for (Train train : trainList) {
-            trainNumberList.add(Integer.toString(train.getNumber()));
+            trainNumberSet.add(Integer.toString(train.getNumber()));
         }
-        return trainNumberList;
+        StringBuffer sb = new StringBuffer();
+        for (String num : trainNumberSet) {
+            sb.append(num + " ;\n");
+        }
+        return sb.toString();
     }
 
-    void addTrain(int number, int capacity) {
+    public void addTrain(int number, int capacity) {
         trainDAO.addTrain(number,capacity);
     }
 
-    void addStation(String name) {
+    public void addStation(String name) {
         stationDAO.addStation(name);
     }
 
-    void addSchedule(String stationName, int trainNumber, Date time, int offset) {
+    public void addSchedule(String stationName, int trainNumber, Date time, int offset) {
         scheduleRecordDAO.addScheduleRecord(stationName, trainNumber, time, offset);
     }
 

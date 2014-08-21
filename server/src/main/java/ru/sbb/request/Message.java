@@ -30,7 +30,7 @@ public class Message implements Serializable {
     }
 
     public String toString() {
-        return "[" + id + "] " + text;
+        return text;
     }
 
 }

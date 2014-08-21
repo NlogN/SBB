@@ -63,15 +63,18 @@ public class Client {
         output.flush();
     }
 
-    public void receive() throws IOException {
+    public String receive() throws IOException {
         System.out.print("Receiving a message from " + sockAddr + ": ");
         Message m = null;
         try {
             m = (Message) input.readObject();
+            System.out.println(m);
+            return m.toString();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        System.out.println(m);
+
+        return "";
     }
 
 }

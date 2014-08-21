@@ -51,6 +51,10 @@ public class Server {
                                         trainPassengersRequestMethod(sockAddr,req,output);
                                         break;
                                     }
+                                    case GET_ALL_TRAIN_LIST: {
+                                        trainRequestMethod(sockAddr,output);
+                                        break;
+                                    }
                                     default:
                                         System.out.println();
                                         send(sockAddr, output, new Message(""));
@@ -92,6 +96,12 @@ public class Server {
     static void trainPassengersRequestMethod(SocketAddress sockAddr, Request req, ObjectOutputStream output) throws IOException {
         GetTrainPassengersRequest request = (GetTrainPassengersRequest) req;
         String res = ManagerService.getInstance().getPassengersByTrainInfo(request.getTrainNum());
+        System.out.println(res);
+        send(sockAddr, output, new Message(res));
+    }
+
+    static void trainRequestMethod(SocketAddress sockAddr, ObjectOutputStream output) throws IOException {
+        String res = ManagerService.getInstance().getTrainNumbers();
         System.out.println(res);
         send(sockAddr, output, new Message(res));
     }

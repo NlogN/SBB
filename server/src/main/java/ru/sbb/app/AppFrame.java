@@ -1,5 +1,6 @@
 package ru.sbb.app;
 
+import ru.sbb.request.GetAllTrainsRequest;
 import ru.sbb.request.GetStationScheduleRequest;
 import ru.sbb.request.GetTrainPassengersRequest;
 
@@ -67,12 +68,12 @@ public class AppFrame extends JFrame {
         JPanel jPanel6 = new JPanel();
         JPanel jPanel7 = new JPanel();
         JPanel jPanel8 = new JPanel();
-        JPanel jPanel9 = new JPanel();
+
 
         tabbedPane2.addTab("добавить поезд", jPanel6);
         tabbedPane2.addTab("добавить станцию", jPanel7);
         tabbedPane2.addTab("добавить расписание", jPanel8);
-        tabbedPane2.addTab("просмотр поездов", jPanel9);
+        tabbedPane2.addTab("просмотр поездов", getAllTrainsPanel());
         tabbedPane2.addTab("просмотр пассажиров",getPassengersByTrainPanel() );
         content2.add(tabbedPane2, BorderLayout.CENTER);
 
@@ -98,7 +99,7 @@ public class AppFrame extends JFrame {
         JPanel jPanel4 = new JPanel();
         Label R1 = new Label("название станции:");
         final TextField n1 = new TextField(20);
-
+        final JTextArea ta = new JTextArea();
         button1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -106,7 +107,8 @@ public class AppFrame extends JFrame {
                     GetStationScheduleRequest request = new GetStationScheduleRequest(n1.getText());
                     System.out.println(request);
                     client.send(request);
-                    client.receive();
+                    ta.setText("");
+                    ta.append(client.receive());
 
                 } catch (IOException e1) {
                     e1.printStackTrace();
@@ -118,15 +120,17 @@ public class AppFrame extends JFrame {
         jPanel4.add(button1);
         jPanel4.add(R1);
         jPanel4.add(n1);
+        jPanel4.add(ta,BorderLayout.EAST);
         return jPanel4;
     }
 
     JPanel getPassengersByTrainPanel(){
-        JButton button1 = new JButton("вывести пассадиров");
+        setLayout(new BorderLayout());
+        JButton button1 = new JButton("вывести данные пассажиров");
         JPanel jPanel4 = new JPanel();
         Label R1 = new Label("номер поезда:");
         final TextField n1 = new TextField(20);
-
+        final JTextArea ta = new JTextArea();
         button1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -134,8 +138,41 @@ public class AppFrame extends JFrame {
                     GetTrainPassengersRequest request = new GetTrainPassengersRequest(Integer.parseInt(n1.getText()));
                     System.out.println(request);
                     client.send(request);
-                    client.receive();
+                    ta.setText("");
+                    ta.append(client.receive());
 
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+//                catch (ClassNotFoundException e1) {
+//                    e1.printStackTrace();
+//                }
+
+
+            }
+        });
+        jPanel4.add(button1,BorderLayout.NORTH);
+        jPanel4.add(R1,BorderLayout.NORTH);
+        jPanel4.add(n1,BorderLayout.NORTH);
+        jPanel4.add(ta,BorderLayout.CENTER);
+        return jPanel4;
+    }
+
+    JPanel getAllTrainsPanel(){
+        JButton button1 = new JButton("вывести номера поездов");
+        JPanel jPanel4 = new JPanel();
+       // Label R1 = new Label("номер поезда:");
+      //  final TextField n1 = new TextField(20);
+        final JTextArea ta = new JTextArea();
+        button1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+
+                    GetAllTrainsRequest request = new GetAllTrainsRequest();
+                    System.out.println(request);
+                    client.send(request);
+                    ta.setText("");
+                    ta.append(client.receive());
 
                 } catch (IOException e1) {
                     e1.printStackTrace();
@@ -148,8 +185,9 @@ public class AppFrame extends JFrame {
             }
         });
         jPanel4.add(button1);
-        jPanel4.add(R1);
-        jPanel4.add(n1);
+       // jPanel4.add(R1);
+       // jPanel4.add(n1);
+        jPanel4.add(ta,BorderLayout.EAST);
         return jPanel4;
     }
 
