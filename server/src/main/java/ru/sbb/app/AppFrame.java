@@ -1,9 +1,6 @@
 package ru.sbb.app;
 
-import ru.sbb.request.AddTrainRequest;
-import ru.sbb.request.GetAllTrainsRequest;
-import ru.sbb.request.GetStationScheduleRequest;
-import ru.sbb.request.GetTrainPassengersRequest;
+import ru.sbb.request.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -56,7 +53,7 @@ public class AppFrame extends JFrame {
 
         tabbedPane1.addTab("поиск поезда", jPanel3);
         tabbedPane1.addTab("расписание поездов", getStationScheduleRequestPanel() );
-        tabbedPane1.addTab("купить билет", jPanel5);
+        tabbedPane1.addTab("купить билет", getBuyTicketRequestPanel());
         content1.add(tabbedPane1, BorderLayout.CENTER);
         content1.add(tabbedPane1);
 
@@ -96,6 +93,69 @@ public class AppFrame extends JFrame {
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
+    }
+
+    JPanel getBuyTicketRequestPanel(){
+        JPanel jPanel = new JPanel();
+        JPanel jPanel4 = new JPanel();
+        //jPanel4.setLayout(new BoxLayout(jPanel4, BoxLayout.X_AXIS));
+        jPanel4.setLayout(new GridLayout(8, 2));
+
+        Label R1 = new Label("имя:");
+        final TextField n1 = new TextField(20);
+        Label R2 = new Label("фамилия:");
+        final TextField n2 = new TextField(20);
+        Label R3 = new Label("дата рождения (yyyy/MM/dd):");
+        final TextField n3 = new TextField(20);
+        Label R4 = new Label("дата билета (yyyy/MM/dd)");
+        final TextField n4 = new TextField(20);
+//        Label R5 = new Label("день месяца:");
+//        final TextField n5 = new TextField(20);
+        Label R6 = new Label("станция:");
+        final TextField n6 = new TextField(20);
+        Label R7 = new Label("номер поезда:");
+        final TextField n7 = new TextField(20);
+        final JTextArea ta = new JTextArea();
+
+        //final String dateOfBirth = n3.getText()+"/"  +n3.getText()+"/"+n3.getText();
+
+        JButton button1 = new JButton("купить билет");
+        button1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    BuyTicketRequest request = new BuyTicketRequest(n1.getText(),n2.getText(),n3.getText(),Integer.parseInt(n7.getText()),n6.getText(), n4.getText());
+                    System.out.println(request);
+                    client.send(request);
+                    ta.setText("");
+                    ta.append(client.receive());
+
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+
+
+            }
+        });
+
+        jPanel4.add(R1);
+        jPanel4.add(n1);
+        jPanel4.add(R2);
+        jPanel4.add(n2);
+        jPanel4.add(R3);
+        jPanel4.add(n3);
+        jPanel4.add(R4);
+        jPanel4.add(n4);
+//        jPanel4.add(R5);
+//        jPanel4.add(n5);
+        jPanel4.add(R6);
+        jPanel4.add(n6);
+        jPanel4.add(R7);
+        jPanel4.add(n7);
+        jPanel4.add(button1);
+        jPanel4.add(ta);
+
+        jPanel.add(jPanel4);
+        return jPanel;
     }
 
     JPanel getAddTrainRequestPanel(){

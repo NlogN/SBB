@@ -20,7 +20,10 @@ import java.util.List;
 public class TicketDAOImpl implements TicketDAO {
 
     @Override
-    public boolean buyTicket(int trainNum, String stationName, String name, String surname, java.util.Date birthday, java.util.Date dateOfRace) {
+    public boolean buyTicket(int trainNum, String stationName, Passenger passenger, java.util.Date dateOfRace) {
+        String name = passenger.getName();
+        String surname = passenger.getSurname();
+        java.util.Date birthday = passenger.getDate();
         Query query = SbbEntityManager.getInstance().getEntityManager().createQuery("SELECT tr FROM ru.sbb.entity.Train tr where tr.number =:trNum");
         query.setParameter("trNum", trainNum);
         List<Train> list = query.getResultList();

@@ -7,16 +7,16 @@ import java.io.Serializable;
  * User: Ilya Makeev
  * DateBuilder: 19.08.14
  */
-public class AddTrainRequest extends Request implements Serializable {
+public class AddTrainRequest extends Request{
     private String psw;
     private int number;
     private int capacity;
 
     public AddTrainRequest(int number,int capacity, String psw){
+        super(RequestType.ADD_TRAIN);
         this.psw = psw;
         this.number=number;
         this.capacity=capacity;
-        type=RequestType.ADD_TRAIN;
     }
 
     public String getPassword(){
@@ -29,8 +29,6 @@ public class AddTrainRequest extends Request implements Serializable {
         return capacity;
     }
 
-    public RequestType getType(){
-        return type;
-    }
+
 
 }

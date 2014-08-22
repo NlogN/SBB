@@ -7,20 +7,18 @@ import java.io.Serializable;
  * User: Ilya Makeev
  * DateBuilder: 19.08.14
  */
-public class GetAllTrainsRequest extends Request implements Serializable {
+public class GetAllTrainsRequest extends Request  {
     private String psw;
 
     public GetAllTrainsRequest(String psw){
+        super(RequestType.GET_ALL_TRAIN_LIST);
         this.psw = psw;
-        type=RequestType.GET_ALL_TRAIN_LIST;
     }
 
     public String getPassword(){
         return psw;
     }
 
-    public RequestType getType(){
-        return type;
-    }
+
 
 }

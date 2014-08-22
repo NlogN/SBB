@@ -26,7 +26,7 @@ public class ClientService {
     }
 
 
-    List<Train> getTrainOnRouteABList(java.util.Date lowerBound, java.util.Date upperBound, String stationAName, String stationBName) {
+    public List<Train> getTrainOnRouteABList(java.util.Date lowerBound, java.util.Date upperBound, String stationAName, String stationBName) {
         return trainDAO.getTrainOnRouteABList(lowerBound, upperBound, stationAName, stationBName);
     }
 
@@ -44,8 +44,8 @@ public class ClientService {
         }
     }
 
-    boolean buyTicket(int trainNum, String stationName, String name, String surname, java.util.Date birthday, java.util.Date dateOfRace) {
-        return ticketDAO.buyTicket(trainNum, stationName, name, surname, birthday, dateOfRace);
+    public boolean buyTicket(int trainNum, String stationName, Passenger passenger, java.util.Date dateOfRace) {
+        return ticketDAO.buyTicket(trainNum, stationName, passenger, dateOfRace);
     }
 
 

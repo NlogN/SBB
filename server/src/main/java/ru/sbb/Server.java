@@ -1,12 +1,15 @@
 package ru.sbb;
 
 
+import ru.sbb.entity.Passenger;
 import ru.sbb.request.*;
 import ru.sbb.service.ClientService;
 import ru.sbb.service.ManagerService;
 
 import java.io.*;
 import java.net.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.logging.Logger;
 
 /**
@@ -53,7 +56,11 @@ public class Server {
                                         break;
                                     }
                                     case ADD_TRAIN: {
-                                        addTrainRequestMethod(sockAddr,req,output);
+                                        addTrainRequestMethod(sockAddr, req, output);
+                                        break;
+                                    }
+                                    case BUY_TICKET: {
+                                        buyTicketMethod(sockAddr, req, output);
                                         break;
                                     }
                                     default:
@@ -128,6 +135,36 @@ public class Server {
         }
         System.out.println(res);
         send(sockAddr, output, new Message(res));
+    }
+
+    static void buyTicketMethod(SocketAddress sockAddr, Request req, ObjectOutputStream output) throws IOException {
+        BuyTicketRequest request = (BuyTicketRequest) req;
+
+        Passenger passenger = new Passenger();
+        passenger.setName(request.getName());
+        passenger.setSurname(request.getSurname());
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+
+        java.util.Date dateOfBirth = null;
+        java.util.Date dateOfRace = null;
+        try {
+            dateOfBirth = formatter.parse(request.getDayOfBirth());
+            dateOfRace = formatter.parse(request.getDayOfBirth());
+        } catch (ParseException e) {
+            send(sockAddr, output, new Message("incorrect date format"));
+            e.printStackTrace();
+        }
+
+        passenger.setDate(dateOfBirth);
+
+        boolean res = ClientService.getInstance().buyTicket(request.getTrainNumber(),request.getStationName(),passenger,dateOfRace);
+
+        if(res){
+            send(sockAddr, output, new Message("you buy a ticket"));
+        } else{
+            send(sockAddr, output, new Message("you could not buy a ticket"));
+        }
+
     }
 
     private static void send(SocketAddress sockAddr, ObjectOutputStream output, Message m) throws IOException {

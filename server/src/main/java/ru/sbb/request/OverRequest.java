@@ -11,17 +11,14 @@ public class OverRequest extends Request implements Serializable {
     private final String text;
 
     public OverRequest(String text){
+        super(RequestType.OVER);
         this.text=text;
-        type=RequestType.OVER;
     }
 
     public String getText(){
         return text;
     }
 
-    public RequestType getType(){
-        return type;
-    }
 
     public String toString() {
         return "[" + text + "] ";

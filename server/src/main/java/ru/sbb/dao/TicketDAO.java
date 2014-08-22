@@ -1,5 +1,7 @@
 package ru.sbb.dao;
 
+import ru.sbb.entity.Passenger;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Ilya Makeev
@@ -7,6 +9,6 @@ package ru.sbb.dao;
  */
 public interface TicketDAO {
 
-    public boolean buyTicket(int trainNum, String stationName, String name, String surname, java.util.Date birthday, java.util.Date dateOfRace);
+    public boolean buyTicket(int trainNum, String stationName, Passenger passenger, java.util.Date dateOfRace);
 
 }

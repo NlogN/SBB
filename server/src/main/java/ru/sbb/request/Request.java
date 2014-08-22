@@ -8,7 +8,11 @@ import java.io.Serializable;
  * DateBuilder: 19.08.14
  */
 public class Request implements Serializable {
-    protected RequestType type;
+    private final RequestType type;
+
+    Request(RequestType type){
+        this.type=type;
+    }
 
     public RequestType getType(){
            return type;
