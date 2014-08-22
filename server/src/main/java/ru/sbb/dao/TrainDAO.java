@@ -17,4 +17,6 @@ public interface TrainDAO {
 
     public List<Train> getTrains();
 
+    public List<Train> getTrainByNum(int trainNum);
+
 }

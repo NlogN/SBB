@@ -32,13 +32,15 @@ public class DateBuilder {
     }
 
     public static java.util.Date createDate(int year, int month, int day) {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
-        java.util.Date utilDate = null;
-        try {
-            utilDate = formatter.parse(year + "/" + month + "/" + day);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return utilDate;
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+//        java.util.Date utilDate = null;
+//        try {
+//            utilDate = formatter.parse(year + "/" + month + "/" + day);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+        return createDate(year,month,day,0,0,0);
     }
+
+
 }

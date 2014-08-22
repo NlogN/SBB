@@ -28,6 +28,6 @@ INSERT INTO ticket (passenger_id, train_id, date) VALUES (2, 2, '2014/08/17');
 INSERT INTO schedule (`station_id`, `train_id`, `time`,  `offset`) VALUES ( 1, 1, '2014-08-17 12:05:11', 1);
 INSERT INTO schedule (`station_id`, `train_id`, `time`,  `offset`) VALUES ( 2, 1, '2014-08-17 15:10:11', 3);
 INSERT INTO schedule (`station_id`, `train_id`, `time`,  `offset`) VALUES ( 1, 2, '2014-08-17 12:05:11', 2);
-INSERT INTO schedule (`station_id`, `train_id`, `time`,  `offset`) VALUES ( 3, 2, '2014-08-17 13:05:11', 4);
-
+INSERT INTO schedule (`station_id`, `train_id`, `time`,  `offset`) VALUES ( 3, 2, '2014-08-22 21:25:11', 4);
+INSERT INTO schedule (`station_id`, `train_id`, `time`,  `offset`) VALUES ( 3, 2, '2014-08-22 22:25:11', 4);
 

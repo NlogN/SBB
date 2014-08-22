@@ -149,7 +149,7 @@ public class Server {
         java.util.Date dateOfRace = null;
         try {
             dateOfBirth = formatter.parse(request.getDayOfBirth());
-            dateOfRace = formatter.parse(request.getDayOfBirth());
+            dateOfRace = formatter.parse(request.getDateOfRace());
         } catch (ParseException e) {
             send(sockAddr, output, new Message("incorrect date format"));
             e.printStackTrace();
@@ -160,7 +160,7 @@ public class Server {
         boolean res = ClientService.getInstance().buyTicket(request.getTrainNumber(),request.getStationName(),passenger,dateOfRace);
 
         if(res){
-            send(sockAddr, output, new Message("you buy a ticket"));
+            send(sockAddr, output, new Message("operation was successful"));
         } else{
             send(sockAddr, output, new Message("you could not buy a ticket"));
         }

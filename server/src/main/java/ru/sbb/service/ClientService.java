@@ -1,8 +1,12 @@
 package ru.sbb.service;
 
 
+import ru.sbb.DateBuilder;
+import ru.sbb.SbbEntityManager;
 import ru.sbb.dao.*;
 import ru.sbb.entity.*;
+
+import javax.persistence.Query;
 import java.util.List;
 
 /**
@@ -33,9 +37,9 @@ public class ClientService {
 
     public String getStationSchedule(String stationName) {
         List<ScheduleRecord> scheduleList = scheduleRecordDAO.getStationScheduleRecords(stationName);
-        if(scheduleList.isEmpty()){
+        if (scheduleList.isEmpty()) {
             return "no data";
-        } else{
+        } else {
             StringBuffer sb = new StringBuffer();
             for (ScheduleRecord schedule : scheduleList) {
                 sb.append(schedule.getTrain().getNumber() + " " + schedule.getTime() + "; \n");
@@ -45,7 +49,86 @@ public class ClientService {
     }
 
     public boolean buyTicket(int trainNum, String stationName, Passenger passenger, java.util.Date dateOfRace) {
-        return ticketDAO.buyTicket(trainNum, stationName, passenger, dateOfRace);
+        List<Train> list = trainDAO.getTrainByNum(trainNum);
+        if (list.isEmpty()) {
+            System.out.println("Train not found!");
+            return false;
+        } else {
+            Train train = list.get(0);
+            if (checkStationVisit(train, stationName, dateOfRace)) {
+                if (!checkStartTime(train, stationName)) {
+                    System.out.println("registration on this train is closed");
+                    return false;
+                } else {
+                    if (!checkSamePassengerNotReg(train, passenger.getName(), passenger.getSurname(), passenger.getDate())) {
+                        System.out.println("such passenger is already registered");
+                        return false;
+                    } else {
+                        if (!checkNotFilledState(train, dateOfRace)) {
+                            System.out.println("no empty seats");
+                            return false;
+                        } else {
+                            ticketDAO.addTicket(passenger, train, dateOfRace);
+                        }
+
+                    }
+                }
+            } else {
+                System.out.println("train not visit this station in this day");
+                return false;
+            }
+
+        }
+
+        return true;
+    }
+
+    boolean checkStationVisit(Train train, String stationName, java.util.Date dateOfRace) {
+        List<ScheduleRecord> scheduleList = train.getScheduleList();
+        for (ScheduleRecord schedule : scheduleList) {
+            if (schedule.getStation().getName().equals(stationName)) {
+//                System.out.println(schedule.getUnixTime());
+//                System.out.println(DateBuilder.getUnixTime(dateOfRace));
+//                System.out.println(schedule.getUnixTime() - DateBuilder.getUnixTime(dateOfRace));
+                if ((schedule.getUnixTime()>DateBuilder.getUnixTime(dateOfRace))&&(schedule.getUnixTime() < DateBuilder.getUnixTime(dateOfRace)+86400)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    boolean checkStartTime(Train train, String stationName) {
+        long currentTime = DateBuilder.getCurrentTime();
+        List<ScheduleRecord> scheduleList = train.getScheduleList();
+        for (ScheduleRecord schedule : scheduleList) {
+            if(schedule.getStation().getName().equals(stationName)){
+//                System.out.println(schedule.getUnixTime());
+//                System.out.println(currentTime);
+//                System.out.println(schedule.getUnixTime() - currentTime);
+                if ((schedule.getUnixTime() > (currentTime+360)) ) {
+                    return true;
+                }
+            }
+
+        }
+        return false;
+    }
+
+    boolean checkNotFilledState(Train train, java.util.Date dateOfRace) {
+        List<Ticket> list = ticketDAO.getTicketByDayAndTrain(train, dateOfRace);
+        return train.getCapacity() > list.size();
+    }
+
+    boolean checkSamePassengerNotReg(Train train, String name, String surname, java.util.Date birthday) {
+        List<Ticket> ticketList = train.getTicketList();
+        for (Ticket ticket : ticketList) {
+            Passenger passenger = ticket.getPassenger();
+            if (passenger.getName().equals(name) && passenger.getSurname().equals(surname) && passenger.getDate().equals(birthday)) {
+                return false;
+            }
+        }
+        return true;
     }
 
 

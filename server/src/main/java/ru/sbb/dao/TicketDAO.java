@@ -1,6 +1,10 @@
 package ru.sbb.dao;
 
 import ru.sbb.entity.Passenger;
+import ru.sbb.entity.Ticket;
+import ru.sbb.entity.Train;
+
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -9,6 +13,8 @@ import ru.sbb.entity.Passenger;
  */
 public interface TicketDAO {
 
-    public boolean buyTicket(int trainNum, String stationName, Passenger passenger, java.util.Date dateOfRace);
+    public void addTicket(Passenger newPassenger, Train train, java.util.Date dateOfRace);
+
+    public List<Ticket> getTicketByDayAndTrain(Train train, java.util.Date dateOfRace);
 
 }
