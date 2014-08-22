@@ -63,6 +63,14 @@ public class Server {
                                         buyTicketMethod(sockAddr, req, output);
                                         break;
                                     }
+                                    case ADD_STATION: {
+                                        addStationRequestMethod(sockAddr, req, output);
+                                        break;
+                                    }
+                                    case ADD_SHEDULE_RECORD: {
+                                        addScheduleRecordRequestMethod(sockAddr, req, output);
+                                        break;
+                                    }
                                     default:
                                         System.out.println();
                                         send(sockAddr, output, new Message(""));
@@ -117,7 +125,34 @@ public class Server {
         AddTrainRequest request = (AddTrainRequest) req;
         String res;
         if(RegService.getInstance().checkPassword(request.getPassword())){
-             res = ManagerService.getInstance().addTrain(request.getNumber(),request.getCapacity());
+              ManagerService.getInstance().addTrain(request.getNumber(),request.getCapacity());
+            res = "train added";
+        } else{
+            res = "incorrect password";
+        }
+        System.out.println(res);
+        send(sockAddr, output, new Message(res));
+    }
+
+    static void addScheduleRecordRequestMethod(SocketAddress sockAddr, Request req, ObjectOutputStream output) throws IOException {
+        AddScheduleRecordRequest request = (AddScheduleRecordRequest) req;
+        String res;
+        if(RegService.getInstance().checkPassword(request.getPassword())){
+            ManagerService.getInstance().addScheduleRecord(request.getStationName(), request.getTrainNumber(), request.getTime(), request.getOffset());
+            res = "shedule record added";
+        } else{
+            res = "incorrect password";
+        }
+        System.out.println(res);
+        send(sockAddr, output, new Message(res));
+    }
+
+    static void addStationRequestMethod(SocketAddress sockAddr, Request req, ObjectOutputStream output) throws IOException {
+        AddStationRequest request = (AddStationRequest) req;
+        String res;
+        if(RegService.getInstance().checkPassword(request.getPassword())){
+            ManagerService.getInstance().addStation(request.getName());
+            res = "station added";
         } else{
             res = "incorrect password";
         }

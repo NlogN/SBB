@@ -48,16 +48,15 @@ public class ManagerService {
         }
     }
 
-    public String addTrain(int number, int capacity) {
+    public void addTrain(int number, int capacity) {
         trainDAO.addTrain(number,capacity);
-        return "train added";
     }
 
     public void addStation(String name) {
         stationDAO.addStation(name);
     }
 
-    public void addSchedule(String stationName, int trainNumber, Date time, int offset) {
+    public void addScheduleRecord(String stationName, int trainNumber, Date time, int offset) {
         scheduleRecordDAO.addScheduleRecord(stationName, trainNumber, time, offset);
     }
 

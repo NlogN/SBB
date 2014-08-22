@@ -31,6 +31,12 @@ public class DateBuilder {
         return cal.getTime();
     }
 
+    public static java.util.Date createDateTime(String s) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = sdf.parse(s);
+        return date;
+    }
+
     public static java.util.Date createDate(int year, int month, int day) {
 //        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
 //        java.util.Date utilDate = null;

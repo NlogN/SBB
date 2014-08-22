@@ -1,9 +1,12 @@
 package ru.sbb.test;
 
 
+import ru.sbb.DateBuilder;
 import ru.sbb.request.*;
 import java.io.*;
 import java.net.*;
+import java.text.ParseException;
+import java.util.Date;
 
 /**
  * Created with IntelliJ IDEA.
@@ -28,6 +31,12 @@ public class TestClient {
       //  send(sockAddr, output, new BuyTicketRequest("Peter4","Petrov","1991/01/01",239,"Moskow","2014/08/22"));
       // send(sockAddr, output, new GetTrainPassengersRequest(239,"123"));
       //  receive(sockAddr, input);
+//        try {
+//            Date time = DateBuilder.createDateTime("1991/01/01 12:01:01");
+//            send(sockAddr, output, new AddScheduleRecordRequest("Bergorod",239,time,23,"123"));
+//            receive(sockAddr, input);
+//        } catch (ParseException e) {
+//        }
 
         //
       //  send(sockAddr, output, new GetTrainPassengersRequest(123,"123"));

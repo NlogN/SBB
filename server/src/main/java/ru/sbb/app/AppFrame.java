@@ -1,5 +1,6 @@
 package ru.sbb.app;
 
+import ru.sbb.DateBuilder;
 import ru.sbb.request.*;
 
 import javax.swing.*;
@@ -7,6 +8,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.text.ParseException;
+import java.util.Date;
 
 /**
  * Created with IntelliJ IDEA.
@@ -68,13 +71,10 @@ public class AppFrame extends JFrame {
         final JTabbedPane tabbedPane2 = new JTabbedPane();
         tabbedPane2.setFont(font1);
 
-        JPanel jPanel7 = new JPanel();
-        JPanel jPanel8 = new JPanel();
-
 
         tabbedPane2.addTab("добавить поезд", getAddTrainRequestPanel());
-        tabbedPane2.addTab("добавить станцию", jPanel7);
-        tabbedPane2.addTab("добавить расписание", jPanel8);
+        tabbedPane2.addTab("добавить станцию", getAddStationRequestPanel());
+        tabbedPane2.addTab("добавить расписание", getAddSchedulRecordRequestPanel());
         tabbedPane2.addTab("просмотр поездов", getAllTrainsPanel());
         tabbedPane2.addTab("просмотр пассажиров",getPassengersByTrainPanel() );
         //content2.add(tabbedPane2, BorderLayout.CENTER);
@@ -194,6 +194,112 @@ public class AppFrame extends JFrame {
         jPanel4.add(n1);
         jPanel4.add(R2);
         jPanel4.add(n2);
+        jPanel4.add(R3);
+        jPanel4.add(n3);
+        jPanel4.add(button1);
+        jPanel4.add(ta);
+
+        jPanel.add(jPanel4);
+        return jPanel;
+    }
+
+    JPanel getAddSchedulRecordRequestPanel(){
+        JPanel jPanel = new JPanel();
+        JPanel jPanel4 = new JPanel();
+
+        jPanel4.setLayout(new GridLayout(6, 2));
+
+        Label R1 = new Label("название станции:");
+        final TextField n1 = new TextField(20);
+
+        Label R2 = new Label("номер поезда:");
+        final TextField n2 = new TextField(20);
+
+        Label R3 = new Label("время (yyyy/MM/dd HH:mm:ss):");
+        final TextField n3 = new TextField(20);
+
+        Label R4 = new Label("offset:");
+        final TextField n4 = new TextField(20);
+
+        Label R5 = new Label("пароль:");
+        final TextField n5 = new TextField(20);
+
+        final JTextArea ta = new JTextArea();
+
+        JButton button1 = new JButton("добавить расписание");
+        button1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    try {
+                        Date time  = DateBuilder.createDateTime(n3.getText());
+                        AddScheduleRecordRequest request = new AddScheduleRecordRequest(n1.getText(),Integer.parseInt(n2.getText()),time,Integer.parseInt(n4.getText()),n5.getText());
+                        System.out.println(request);
+                        client.send(request);
+                        ta.setText("");
+                        ta.append(client.receive());
+                    } catch (ParseException e1) {
+                        ta.setText("");
+                        ta.append("incorrect date format");
+                    }
+
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+
+
+            }
+        });
+
+        jPanel4.add(R1);
+        jPanel4.add(n1);
+        jPanel4.add(R2);
+        jPanel4.add(n2);
+        jPanel4.add(R3);
+        jPanel4.add(n3);
+        jPanel4.add(R4);
+        jPanel4.add(n4);
+        jPanel4.add(R5);
+        jPanel4.add(n5);
+        jPanel4.add(button1);
+        jPanel4.add(ta);
+
+        jPanel.add(jPanel4);
+        return jPanel;
+    }
+
+    JPanel getAddStationRequestPanel(){
+        JPanel jPanel = new JPanel();
+        JPanel jPanel4 = new JPanel();
+        //jPanel4.setLayout(new BoxLayout(jPanel4, BoxLayout.X_AXIS));
+        jPanel4.setLayout(new GridLayout(4, 2));
+
+        Label R1 = new Label("название станции:");
+        final TextField n1 = new TextField(20);
+
+        Label R3 = new Label("пароль:");
+        final TextField n3 = new TextField(20);
+        final JTextArea ta = new JTextArea();
+
+        JButton button1 = new JButton("добавить станцию");
+        button1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    AddStationRequest request = new AddStationRequest(n1.getText(),n3.getText());
+                    System.out.println(request);
+                    client.send(request);
+                    ta.setText("");
+                    ta.append(client.receive());
+
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+
+
+            }
+        });
+
+        jPanel4.add(R1);
+        jPanel4.add(n1);
         jPanel4.add(R3);
         jPanel4.add(n3);
         jPanel4.add(button1);
