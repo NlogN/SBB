@@ -46,7 +46,7 @@ public class TrainDAOImpl implements TrainDAO{
     }
 
     @Override
-    public List<Train> getTrainOnRouteABList(java.util.Date lowerBound, java.util.Date upperBound, String stationAName, String stationBName) {
+    public List<Train> getTrainByRoute(java.util.Date lowerBound, java.util.Date upperBound, String stationAName, String stationBName) {
         Query query = SbbEntityManager.getInstance().getEntityManager().createQuery("SELECT tr FROM ru.sbb.entity.Train tr");
         List<Train> allTrainList = query.getResultList();
         List<Train> trainFromAToBList = new ArrayList<Train>();

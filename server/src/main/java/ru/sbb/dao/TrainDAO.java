@@ -13,7 +13,7 @@ public interface TrainDAO {
 
     public void addTrain(int number, int capacity);
 
-    public List<Train> getTrainOnRouteABList(java.util.Date lowerBound, java.util.Date upperBound, String stationAName, String stationBName);
+    public List<Train> getTrainByRoute(java.util.Date lowerBound, java.util.Date upperBound, String stationAName, String stationBName);
 
     public List<Train> getTrains();
 

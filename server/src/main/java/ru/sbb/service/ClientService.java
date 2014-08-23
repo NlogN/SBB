@@ -2,11 +2,9 @@ package ru.sbb.service;
 
 
 import ru.sbb.DateBuilder;
-import ru.sbb.SbbEntityManager;
 import ru.sbb.dao.*;
 import ru.sbb.entity.*;
 
-import javax.persistence.Query;
 import java.util.List;
 
 /**
@@ -30,8 +28,17 @@ public class ClientService {
     }
 
 
-    public List<Train> getTrainOnRouteABList(java.util.Date lowerBound, java.util.Date upperBound, String stationAName, String stationBName) {
-        return trainDAO.getTrainOnRouteABList(lowerBound, upperBound, stationAName, stationBName);
+    public String getTrainsByRoute(java.util.Date lowerBound, java.util.Date upperBound, String stationAName, String stationBName) {
+        List<Train> trainList = trainDAO.getTrainByRoute(lowerBound, upperBound, stationAName, stationBName);
+             if(trainList.isEmpty()){
+                 return "no such trains";
+             } else{
+                 StringBuffer sb = new StringBuffer();
+                 for (Train train : trainList) {
+                     sb.append(train.getNumber() + "; \n");
+                 }
+                 return sb.toString();
+             }
     }
 
 

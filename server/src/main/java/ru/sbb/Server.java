@@ -71,6 +71,10 @@ public class Server {
                                         addScheduleRecordRequestMethod(sockAddr, req, output);
                                         break;
                                     }
+                                    case TRAIN_BY_ROUTE: {
+                                        getTrainByRouteMethod(sockAddr, req, output);
+                                        break;
+                                    }
                                     default:
                                         System.out.println();
                                         send(sockAddr, output, new Message(""));
@@ -101,6 +105,12 @@ public class Server {
 
     }
 
+    static void getTrainByRouteMethod(SocketAddress sockAddr, Request req, ObjectOutputStream output) throws IOException {
+        GetTrainsByRouteRequest request = (GetTrainsByRouteRequest) req;
+        String res = ClientService.getInstance().getTrainsByRoute(request.getLowerBound(),request.getUpperBound(),request.getStationAName(),request.getStationBName());
+        System.out.println(res);
+        send(sockAddr, output, new Message(res));
+    }
 
     static void getStationScheduleRequestMethod(SocketAddress sockAddr, Request req, ObjectOutputStream output) throws IOException {
         GetStationScheduleRequest request = (GetStationScheduleRequest) req;

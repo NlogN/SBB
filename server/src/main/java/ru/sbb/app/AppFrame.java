@@ -31,11 +31,6 @@ public class AppFrame extends JFrame {
                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             }
 
-//        try {
-//            Client client = new Client();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -52,11 +47,9 @@ public class AppFrame extends JFrame {
         content1.setLayout(new BorderLayout());
         final JTabbedPane tabbedPane1 = new JTabbedPane();
         tabbedPane1.setFont(font1);
-        JPanel jPanel3 = new JPanel();
 
-       JPanel jPanel5 = new JPanel();
 
-        tabbedPane1.addTab("train search", jPanel3);
+        tabbedPane1.addTab("train search", getTrainByRouteRequestPanel());
         tabbedPane1.addTab("station schedule", getStationScheduleRequestPanel() );
         tabbedPane1.addTab("buy ticket", getBuyTicketRequestPanel());
         content1.add(tabbedPane1, BorderLayout.CENTER);
@@ -66,10 +59,7 @@ public class AppFrame extends JFrame {
 
         JPanel content2 = new JPanel();
         content2.setLayout(new BorderLayout());
-//        Label R2 = new Label("пароль:");
-//        final TextField n1 = new TextField(20);
-//        content2.add(R2);
-//        content2.add(n1);
+
         final JTabbedPane tabbedPane2 = new JTabbedPane();
         tabbedPane2.setFont(font1);
 
@@ -79,7 +69,6 @@ public class AppFrame extends JFrame {
         tabbedPane2.addTab("add schedule", getAddSchedulRecordRequestPanel());
         tabbedPane2.addTab("train review", getAllTrainsPanel());
         tabbedPane2.addTab("passenger review",getPassengersByTrainPanel() );
-        //content2.add(tabbedPane2, BorderLayout.CENTER);
 
         content2.add(tabbedPane2);
 
@@ -97,10 +86,71 @@ public class AppFrame extends JFrame {
         setVisible(true);
     }
 
+    JPanel getTrainByRouteRequestPanel(){
+        JPanel jPanel = new JPanel();
+        JPanel jPanel4 = new JPanel();
+
+        jPanel4.setLayout(new GridLayout(5, 2));
+
+        Label R1 = new Label("station A name:");
+        final TextField n1 = new TextField(20);
+
+        Label R2 = new Label("station B name:");
+        final TextField n2 = new TextField(20);
+
+        Label R3 = new Label("lowerBound (yyyy/MM/dd HH:mm:ss):");
+        final TextField n3 = new TextField(20);
+
+        Label R4 = new Label("upperBound (yyyy/MM/dd HH:mm:ss):");
+        final TextField n4 = new TextField(20);
+
+
+        final JTextArea ta = new JTextArea();
+
+        JButton button1 = new JButton("view trains");
+        button1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    try {
+                        Date time1  = DateBuilder.createDateTime(n3.getText());
+                        Date time2  = DateBuilder.createDateTime(n4.getText());
+                        GetTrainsByRouteRequest request = new GetTrainsByRouteRequest(n1.getText(),n2.getText(),time1,time2);
+                        System.out.println(request);
+                        client.send(request);
+                        ta.setText("");
+                        ta.append(client.receive());
+                    } catch (ParseException e1) {
+                        ta.setText("");
+                        ta.append("incorrect date format");
+                    }
+
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+
+
+            }
+        });
+
+        jPanel4.add(R1);
+        jPanel4.add(n1);
+        jPanel4.add(R2);
+        jPanel4.add(n2);
+        jPanel4.add(R3);
+        jPanel4.add(n3);
+        jPanel4.add(R4);
+        jPanel4.add(n4);
+        jPanel4.add(button1);
+        jPanel4.add(ta);
+
+        jPanel.add(jPanel4);
+        return jPanel;
+    }
+
     JPanel getBuyTicketRequestPanel(){
         JPanel jPanel = new JPanel();
         JPanel jPanel4 = new JPanel();
-        //jPanel4.setLayout(new BoxLayout(jPanel4, BoxLayout.X_AXIS));
+
         jPanel4.setLayout(new GridLayout(8, 2));
 
         Label R1 = new Label("name:");
@@ -111,15 +161,12 @@ public class AppFrame extends JFrame {
         final TextField n3 = new TextField(20);
         Label R4 = new Label("ticket date (yyyy/MM/dd)");
         final TextField n4 = new TextField(20);
-//        Label R5 = new Label("день месяца:");
-//        final TextField n5 = new TextField(20);
+
         Label R6 = new Label("station:");
         final TextField n6 = new TextField(20);
         Label R7 = new Label("train num:");
         final TextField n7 = new TextField(20);
         final JTextArea ta = new JTextArea();
-
-        //final String dateOfBirth = n3.getText()+"/"  +n3.getText()+"/"+n3.getText();
 
         JButton button1 = new JButton("buy ticket");
         button1.addActionListener(new ActionListener() {
@@ -147,8 +194,7 @@ public class AppFrame extends JFrame {
         jPanel4.add(n3);
         jPanel4.add(R4);
         jPanel4.add(n4);
-//        jPanel4.add(R5);
-//        jPanel4.add(n5);
+
         jPanel4.add(R6);
         jPanel4.add(n6);
         jPanel4.add(R7);
@@ -163,7 +209,7 @@ public class AppFrame extends JFrame {
     JPanel getAddTrainRequestPanel(){
         JPanel jPanel = new JPanel();
         JPanel jPanel4 = new JPanel();
-        //jPanel4.setLayout(new BoxLayout(jPanel4, BoxLayout.X_AXIS));
+
         jPanel4.setLayout(new GridLayout(4, 2));
 
         Label R1 = new Label("train num:");
@@ -272,7 +318,7 @@ public class AppFrame extends JFrame {
     JPanel getAddStationRequestPanel(){
         JPanel jPanel = new JPanel();
         JPanel jPanel4 = new JPanel();
-        //jPanel4.setLayout(new BoxLayout(jPanel4, BoxLayout.X_AXIS));
+
         jPanel4.setLayout(new GridLayout(4, 2));
 
         Label R1 = new Label("station name:");
@@ -373,9 +419,7 @@ public class AppFrame extends JFrame {
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
-//                catch (ClassNotFoundException e1) {
-//                    e1.printStackTrace();
-//                }
+
 
 
             }
@@ -398,15 +442,12 @@ public class AppFrame extends JFrame {
         JButton button1 = new JButton("view trains");
         JPanel jPanel4 = new JPanel();
         jPanel4.setLayout(new GridLayout(3, 2));
-       // FlowLayout experimentLayout = new FlowLayout();
-       // jPanel4.setLayout(null);
-        //jPanel4.setSize(100,300);
+
         Label R1 = new Label("password:");
         final TextField n1 = new TextField(20);
         final JTextArea ta = new JTextArea();
 
-  //      ta.setSize(300,100);
-//        ta.setLocation(40,40);
+
         button1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -420,19 +461,16 @@ public class AppFrame extends JFrame {
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
-//                catch (ClassNotFoundException e1) {
-//                    e1.printStackTrace();
-//                }
 
 
             }
         });
-       // jPanel4.SetLayout(new BorderLayout(100,100));
+
         jPanel4.add(R1);
         jPanel4.add(n1);
         jPanel4.add(button1);
         jPanel4.add(ta);
-       // jPanel4.add(ta,BorderLayout.EAST);
+
         jPanel.add(jPanel4);
         return jPanel;
     }
