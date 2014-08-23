@@ -9,11 +9,10 @@ import java.util.Scanner;
  * User: Ilya Makeev
  * Date: 21.08.14
  */
-public class RegService {
-    private static RegService instance;
+public class RegistrationService {
     private static String password;
 
-    private RegService(){
+    public RegistrationService(){
         Scanner in = null;
         try {
             in = new Scanner(new File("psw.txt"));
@@ -25,13 +24,6 @@ public class RegService {
         }
     }
 
-
-    public static synchronized RegService getInstance() {
-        if (instance == null) {
-            instance = new RegService();
-        }
-        return instance;
-    }
 
     public boolean checkPassword(String psw){
         return psw.equals(password);

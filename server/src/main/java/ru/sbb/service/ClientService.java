@@ -16,32 +16,28 @@ import java.util.List;
  * DateBuilder: 21.08.14
  */
 public class ClientService {
-    private static ClientService instance;
-    private static PassengerDAO passengerDAO = new PassengerDAOImpl();
-    private static TrainDAO trainDAO = new TrainDAOImpl();
-    private static TicketDAO ticketDAO = new TicketDAOImpl();
-    private static StationDAO stationDAO = new StationDAOImpl();
-    private static ScheduleRecordDAO scheduleRecordDAO = new ScheduleRecordDAOImpl();
+    private TicketDAO ticketDAO;
+    private ScheduleRecordDAO scheduleRecordDAO;
+    private TrainDAO trainDAO;
 
-    public static synchronized ClientService getInstance() {
-        if (instance == null) {
-            instance = new ClientService();
-        }
-        return instance;
+    public ClientService(TicketDAO ticketDAO, TrainDAO trainDAO, ScheduleRecordDAO scheduleRecordDAO) {
+        this.scheduleRecordDAO = scheduleRecordDAO;
+        this.trainDAO = trainDAO;
+        this.ticketDAO = ticketDAO;
     }
 
 
     public String getTrainsByRoute(java.util.Date lowerBound, java.util.Date upperBound, String stationAName, String stationBName) {
         List<Train> trainList = trainDAO.getTrainByRoute(lowerBound, upperBound, stationAName, stationBName);
-             if(trainList.isEmpty()){
-                 return "no such trains";
-             } else{
-                 StringBuffer sb = new StringBuffer();
-                 for (Train train : trainList) {
-                     sb.append(train.getNumber() + "; \n");
-                 }
-                 return sb.toString();
-             }
+        if (trainList.isEmpty()) {
+            return "no such trains";
+        } else {
+            StringBuffer sb = new StringBuffer();
+            for (Train train : trainList) {
+                sb.append(train.getNumber() + "; \n");
+            }
+            return sb.toString();
+        }
     }
 
 
@@ -52,7 +48,7 @@ public class ClientService {
         } else {
             StringBuffer sb = new StringBuffer();
             for (ScheduleRecord schedule : scheduleList) {
-                sb.append("train "+schedule.getTrain().getNumber() + "    time: " + schedule.getTime() + "; \n");
+                sb.append("train " + schedule.getTrain().getNumber() + "    time: " + schedule.getTime() + "; \n");
             }
             return sb.toString();
         }
@@ -91,7 +87,7 @@ public class ClientService {
         for (ScheduleRecord schedule : scheduleList) {
             if (schedule.getStation().getName().equals(stationName)) {
 
-                if ((schedule.getUnixTime()>DateBuilder.getUnixTime(dateOfRace))&&(schedule.getUnixTime() < DateBuilder.getUnixTime(dateOfRace)+86400)) {
+                if ((schedule.getUnixTime() > DateBuilder.getUnixTime(dateOfRace)) && (schedule.getUnixTime() < DateBuilder.getUnixTime(dateOfRace) + 86400)) {
                     return true;
                 }
             }
@@ -103,9 +99,9 @@ public class ClientService {
         long currentTime = DateBuilder.getCurrentTime();
         List<ScheduleRecord> scheduleList = train.getScheduleList();
         for (ScheduleRecord schedule : scheduleList) {
-            if(schedule.getStation().getName().equals(stationName)){
+            if (schedule.getStation().getName().equals(stationName)) {
 
-                if ((schedule.getUnixTime() > (currentTime+360)) ) {
+                if ((schedule.getUnixTime() > (currentTime + 360))) {
                     return true;
                 }
             }

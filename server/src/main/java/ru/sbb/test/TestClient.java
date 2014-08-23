@@ -1,12 +1,9 @@
 package ru.sbb.test;
 
 
-import ru.sbb.DateBuilder;
 import ru.sbb.request.*;
 import java.io.*;
 import java.net.*;
-import java.text.ParseException;
-import java.util.Date;
 
 /**
  * Created with IntelliJ IDEA.
@@ -39,7 +36,7 @@ public class TestClient {
 //        }
 
         //
-      //  send(sockAddr, output, new GetTrainPassengersRequest(123,"123"));
+        //send(sockAddr, output, new GetTrainPassengersRequest(123,"123"));
         receive(sockAddr, input);
 
         sock.close();
@@ -54,8 +51,8 @@ public class TestClient {
 
     private static void receive(SocketAddress sockAddr, ObjectInputStream input) throws IOException, ClassNotFoundException {
         System.out.println("Receiving a message from " + sockAddr + ": ");
-        Message m = (Message) input.readObject();
-        System.out.println(m);
+        Response m = (Response) input.readObject();
+        System.out.println(m.getText());
     }
 
 }

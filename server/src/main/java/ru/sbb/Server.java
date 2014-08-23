@@ -1,6 +1,7 @@
 package ru.sbb;
 
 
+import ru.sbb.dao.*;
 import ru.sbb.entity.Passenger;
 import ru.sbb.exception.BuyTicketException;
 import ru.sbb.exception.StationNotFoundException;
@@ -9,6 +10,9 @@ import ru.sbb.request.*;
 import ru.sbb.service.ClientService;
 import ru.sbb.service.ManagerService;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.io.*;
 import java.net.*;
 import java.util.logging.Logger;
@@ -20,9 +24,37 @@ import java.util.logging.Logger;
  */
 
 public class Server {
-    static Logger log = Logger.getLogger(SbbEntityManager.class.getName());
+    private ClientService clientService;
+    private ManagerService managerService;
+    private final RegistrationService regService = new RegistrationService();
+    static Logger log = Logger.getLogger(Server.class.getName());
+
+
+    Server(ClientService clientService, ManagerService managerService) {
+        this.clientService = clientService;
+        this.managerService = managerService;
+    }
 
     public static void main(String[] args) throws IOException {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("sbb_unit");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+        TrainDAO trainDAO = new TrainDAOImpl(entityManager);
+        TicketDAO ticketDAO = new TicketDAOImpl(entityManager);
+        ScheduleRecordDAO scheduleRecordDAO = new ScheduleRecordDAOImpl(entityManager);
+        PassengerDAO passengerDAO = new PassengerDAOImpl(entityManager);
+        StationDAO stationDAO = new StationDAOImpl(entityManager);
+
+        ClientService clientService = new ClientService(ticketDAO, trainDAO, scheduleRecordDAO);
+        ManagerService managerService = new ManagerService(passengerDAO, trainDAO, stationDAO, scheduleRecordDAO);
+
+        Server server = new Server(clientService, managerService);
+        server.start();
+
+    }
+
+
+    void start() throws IOException {
         ServerSocket serverSock = new ServerSocket(8070);
 
         System.out.println("Listening on 8070 at localhost");
@@ -78,11 +110,11 @@ public class Server {
                                     }
                                     default:
                                         System.out.println();
-                                        send(sockAddr, output, new Message(""));
+                                        send(sockAddr, output, new Response(""));
                                         break;
                                 }
                             } catch (EOFException e) {
-                                System.out.println("End of stream");
+                                log.info("End of stream");
                                 break;
                             }
                         }
@@ -103,60 +135,60 @@ public class Server {
                 }
             }).start();
         }
-
     }
 
-    static void getTrainByRouteMethod(SocketAddress sockAddr, Request req, ObjectOutputStream output) throws IOException {
+
+    void getTrainByRouteMethod(SocketAddress sockAddr, Request req, ObjectOutputStream output) throws IOException {
         GetTrainsByRouteRequest request = (GetTrainsByRouteRequest) req;
-        String res = ClientService.getInstance().getTrainsByRoute(request.getLowerBound(), request.getUpperBound(), request.getStationAName(), request.getStationBName());
-        log.info(res);
-        send(sockAddr, output, new Message(res));
+        String res = clientService.getTrainsByRoute(request.getLowerBound(), request.getUpperBound(), request.getStationAName(), request.getStationBName());
+
+        send(sockAddr, output, new Response(res));
     }
 
-    static void getStationScheduleRequestMethod(SocketAddress sockAddr, Request req, ObjectOutputStream output) throws IOException {
+    void getStationScheduleRequestMethod(SocketAddress sockAddr, Request req, ObjectOutputStream output) throws IOException {
         GetStationScheduleRequest request = (GetStationScheduleRequest) req;
         String res = null;
         try {
-            res = ClientService.getInstance().getStationSchedule(request.getStationName());
+            res = clientService.getStationSchedule(request.getStationName());
         } catch (StationNotFoundException stationNotFoundExeption) {
             res = stationNotFoundExeption.getMessage();
         }
-        log.info(res);
-        send(sockAddr, output, new Message(res));
+
+        send(sockAddr, output, new Response(res));
     }
 
-    static void getTrainPassengersRequestMethod(SocketAddress sockAddr, Request req, ObjectOutputStream output) throws IOException {
+    void getTrainPassengersRequestMethod(SocketAddress sockAddr, Request req, ObjectOutputStream output) throws IOException {
         GetTrainPassengersRequest request = (GetTrainPassengersRequest) req;
         String res;
-        if (RegService.getInstance().checkPassword(request.getPassword())) {
-            res = ManagerService.getInstance().getPassengersByTrainInfo(request.getTrainNum());
+        if (regService.checkPassword(request.getPassword())) {
+            res = managerService.getPassengersByTrainInfo(request.getTrainNum());
         } else {
             res = "incorrect password";
         }
-        log.info(res);
 
-        send(sockAddr, output, new Message(res));
+
+        send(sockAddr, output, new Response(res));
     }
 
-    static void addTrainRequestMethod(SocketAddress sockAddr, Request req, ObjectOutputStream output) throws IOException {
+    void addTrainRequestMethod(SocketAddress sockAddr, Request req, ObjectOutputStream output) throws IOException {
         AddTrainRequest request = (AddTrainRequest) req;
         String res;
-        if (RegService.getInstance().checkPassword(request.getPassword())) {
-            ManagerService.getInstance().addTrain(request.getNumber(), request.getCapacity());
+        if (regService.checkPassword(request.getPassword())) {
+            managerService.addTrain(request.getNumber(), request.getCapacity());
             res = "train added";
         } else {
             res = "incorrect password";
         }
-        log.info(res);
-        send(sockAddr, output, new Message(res));
+
+        send(sockAddr, output, new Response(res));
     }
 
-    static void addScheduleRecordRequestMethod(SocketAddress sockAddr, Request req, ObjectOutputStream output) throws IOException {
+    void addScheduleRecordRequestMethod(SocketAddress sockAddr, Request req, ObjectOutputStream output) throws IOException {
         AddScheduleRecordRequest request = (AddScheduleRecordRequest) req;
         String res;
-        if (RegService.getInstance().checkPassword(request.getPassword())) {
+        if (regService.checkPassword(request.getPassword())) {
             try {
-                ManagerService.getInstance().addScheduleRecord(request.getStationName(), request.getTrainNumber(), request.getTime(), request.getOffset());
+                managerService.addScheduleRecord(request.getStationName(), request.getTrainNumber(), request.getTime(), request.getOffset());
                 res = "shedule record added";
             } catch (StationNotFoundException stationNotFoundException) {
                 res = stationNotFoundException.getMessage();
@@ -167,36 +199,36 @@ public class Server {
         } else {
             res = "incorrect password";
         }
-        log.info(res);
-        send(sockAddr, output, new Message(res));
+
+        send(sockAddr, output, new Response(res));
     }
 
-    static void addStationRequestMethod(SocketAddress sockAddr, Request req, ObjectOutputStream output) throws IOException {
+    void addStationRequestMethod(SocketAddress sockAddr, Request req, ObjectOutputStream output) throws IOException {
         AddStationRequest request = (AddStationRequest) req;
         String res;
-        if (RegService.getInstance().checkPassword(request.getPassword())) {
-            ManagerService.getInstance().addStation(request.getName());
+        if (regService.checkPassword(request.getPassword())) {
+            managerService.addStation(request.getName());
             res = "station added";
         } else {
             res = "incorrect password";
         }
-        log.info(res);
-        send(sockAddr, output, new Message(res));
+
+        send(sockAddr, output, new Response(res));
     }
 
-    static void getAllTrainsRequestMethod(SocketAddress sockAddr, Request req, ObjectOutputStream output) throws IOException {
+    void getAllTrainsRequestMethod(SocketAddress sockAddr, Request req, ObjectOutputStream output) throws IOException {
         GetAllTrainsRequest request = (GetAllTrainsRequest) req;
         String res;
-        if (RegService.getInstance().checkPassword(request.getPassword())) {
-            res = ManagerService.getInstance().getTrainNumbers();
+        if (regService.checkPassword(request.getPassword())) {
+            res = managerService.getTrainNumbers();
         } else {
             res = "incorrect password";
         }
-        log.info(res);
-        send(sockAddr, output, new Message(res));
+
+        send(sockAddr, output, new Response(res));
     }
 
-    static void buyTicketMethod(SocketAddress sockAddr, Request req, ObjectOutputStream output) throws IOException {
+    void buyTicketMethod(SocketAddress sockAddr, Request req, ObjectOutputStream output) throws IOException {
         BuyTicketRequest request = (BuyTicketRequest) req;
         Passenger passenger = new Passenger();
         passenger.setName(request.getName());
@@ -204,24 +236,24 @@ public class Server {
         passenger.setDate(request.getDayOfBirth());
 
         try {
-            ClientService.getInstance().buyTicket(request.getTrainNumber(), request.getStationName(), passenger, request.getDateOfRace());
-            send(sockAddr, output, new Message("operation was successful"));
+            clientService.buyTicket(request.getTrainNumber(), request.getStationName(), passenger, request.getDateOfRace());
+            send(sockAddr, output, new Response("operation was successful"));
         } catch (BuyTicketException buyTicketException) {
-            send(sockAddr, output, new Message("you can not buy a ticket: \n " + buyTicketException.getMessage()));
+            send(sockAddr, output, new Response("you can not buy a ticket: \n " + buyTicketException.getMessage()));
         } catch (TrainNotFoundException trainNotFoundException) {
-            send(sockAddr, output, new Message("you can not buy a ticket: \n " + trainNotFoundException.getMessage()));
+            send(sockAddr, output, new Response("you can not buy a ticket: \n " + trainNotFoundException.getMessage()));
         }
 
     }
 
-    private static void send(SocketAddress sockAddr, ObjectOutputStream output, Message m) throws IOException {
-        System.out.println("Sending a message to " + sockAddr + ": " + m);
+    private void send(SocketAddress sockAddr, ObjectOutputStream output, Response m) throws IOException {
+        log.info("Sending a message to " + sockAddr + ": " + m);
         output.writeObject(m);
         output.flush();
     }
 
-    private static Request receive(SocketAddress sockAddr, ObjectInputStream input) throws IOException, ClassNotFoundException {
-        System.out.println("Receiving a message from " + sockAddr + ": ");
+    private Request receive(SocketAddress sockAddr, ObjectInputStream input) throws IOException, ClassNotFoundException {
+//        System.out.println("Receiving a message from " + sockAddr + ": ");
         Request m = (Request) input.readObject();
         return m;
 
