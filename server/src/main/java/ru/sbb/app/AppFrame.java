@@ -358,7 +358,9 @@ public class AppFrame extends JFrame {
     }
 
     JPanel getStationScheduleRequestPanel(){
+        JPanel jPanel11 = new JPanel();
         JPanel jPanel = new JPanel();
+        jPanel.setLayout(new GridLayout(2, 1));
         JButton button1 = new JButton("view schedule");
         JPanel jPanel4 = new JPanel();
         jPanel4.setLayout(new GridLayout(2, 2));
@@ -392,11 +394,15 @@ public class AppFrame extends JFrame {
 
         jPanel.add(ta);
 
-        return jPanel;
+        jPanel11.add(jPanel);
+
+        return jPanel11;
     }
 
     JPanel getPassengersByTrainPanel(){
+        JPanel jPanel11 = new JPanel();
         JPanel jPanel = new JPanel();
+        jPanel.setLayout(new GridLayout(2, 1));
         JButton button1 = new JButton("view passengers");
         JPanel jPanel4 = new JPanel();
         jPanel4.setLayout(new GridLayout(3, 2));
@@ -430,18 +436,22 @@ public class AppFrame extends JFrame {
         jPanel4.add(R2);
         jPanel4.add(n2);
         jPanel4.add(button1);
-        jPanel4.add(ta);
 
         jPanel.add(jPanel4);
+        jPanel.add(ta);
 
-        return jPanel;
+        jPanel11.add(jPanel);
+
+        return jPanel11;
     }
 
     JPanel getAllTrainsPanel(){
+        JPanel jPanel11 = new JPanel();
         JPanel jPanel = new JPanel();
+        jPanel.setLayout(new GridLayout(2, 1));
         JButton button1 = new JButton("view trains");
         JPanel jPanel4 = new JPanel();
-        jPanel4.setLayout(new GridLayout(3, 2));
+        jPanel4.setLayout(new GridLayout(2, 2));
 
         Label R1 = new Label("password:");
         final TextField n1 = new TextField(20);
@@ -469,10 +479,13 @@ public class AppFrame extends JFrame {
         jPanel4.add(R1);
         jPanel4.add(n1);
         jPanel4.add(button1);
-        jPanel4.add(ta);
 
         jPanel.add(jPanel4);
-        return jPanel;
+        jPanel.add(ta);
+
+        jPanel11.add(jPanel);
+
+        return jPanel11;
     }
 
     public static void main(String[] args) {

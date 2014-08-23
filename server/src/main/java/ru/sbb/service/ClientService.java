@@ -49,7 +49,7 @@ public class ClientService {
         } else {
             StringBuffer sb = new StringBuffer();
             for (ScheduleRecord schedule : scheduleList) {
-                sb.append(schedule.getTrain().getNumber() + " " + schedule.getTime() + "; \n");
+                sb.append("train № "+schedule.getTrain().getNumber() + "    time: " + schedule.getTime() + "; \n");
             }
             return sb.toString();
         }
