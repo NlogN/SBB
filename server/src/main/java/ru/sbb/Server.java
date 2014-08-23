@@ -109,7 +109,7 @@ public class Server {
     static void getTrainByRouteMethod(SocketAddress sockAddr, Request req, ObjectOutputStream output) throws IOException {
         GetTrainsByRouteRequest request = (GetTrainsByRouteRequest) req;
         String res = ClientService.getInstance().getTrainsByRoute(request.getLowerBound(), request.getUpperBound(), request.getStationAName(), request.getStationBName());
-        System.out.println(res);
+        log.info(res);
         send(sockAddr, output, new Message(res));
     }
 
@@ -121,7 +121,7 @@ public class Server {
         } catch (StationNotFoundException stationNotFoundExeption) {
             res = stationNotFoundExeption.getMessage();
         }
-        System.out.println(res);
+        log.info(res);
         send(sockAddr, output, new Message(res));
     }
 
@@ -133,7 +133,8 @@ public class Server {
         } else {
             res = "incorrect password";
         }
-        System.out.println(res);
+        log.info(res);
+
         send(sockAddr, output, new Message(res));
     }
 
@@ -146,7 +147,7 @@ public class Server {
         } else {
             res = "incorrect password";
         }
-        System.out.println(res);
+        log.info(res);
         send(sockAddr, output, new Message(res));
     }
 
@@ -166,7 +167,7 @@ public class Server {
         } else {
             res = "incorrect password";
         }
-        System.out.println(res);
+        log.info(res);
         send(sockAddr, output, new Message(res));
     }
 
@@ -179,7 +180,7 @@ public class Server {
         } else {
             res = "incorrect password";
         }
-        System.out.println(res);
+        log.info(res);
         send(sockAddr, output, new Message(res));
     }
 
@@ -191,7 +192,7 @@ public class Server {
         } else {
             res = "incorrect password";
         }
-        System.out.println(res);
+        log.info(res);
         send(sockAddr, output, new Message(res));
     }
 
