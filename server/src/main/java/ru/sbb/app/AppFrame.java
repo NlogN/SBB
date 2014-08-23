@@ -24,11 +24,13 @@ public class AppFrame extends JFrame {
     public AppFrame() {
 
         super("sbb");
-        try {
-            client  = new Client();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+            try {
+                client  = new Client();
+            } catch (IOException e) {
+               e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+
 //        try {
 //            Client client = new Client();
 //        } catch (IOException e) {
@@ -54,13 +56,13 @@ public class AppFrame extends JFrame {
 
        JPanel jPanel5 = new JPanel();
 
-        tabbedPane1.addTab("поиск поезда", jPanel3);
-        tabbedPane1.addTab("расписание поездов", getStationScheduleRequestPanel() );
-        tabbedPane1.addTab("купить билет", getBuyTicketRequestPanel());
+        tabbedPane1.addTab("train search", jPanel3);
+        tabbedPane1.addTab("station schedule", getStationScheduleRequestPanel() );
+        tabbedPane1.addTab("buy ticket", getBuyTicketRequestPanel());
         content1.add(tabbedPane1, BorderLayout.CENTER);
         content1.add(tabbedPane1);
 
-        tabbedPane.addTab("Клиент", content1);
+        tabbedPane.addTab("Client", content1);
 
         JPanel content2 = new JPanel();
         content2.setLayout(new BorderLayout());
@@ -72,17 +74,17 @@ public class AppFrame extends JFrame {
         tabbedPane2.setFont(font1);
 
 
-        tabbedPane2.addTab("добавить поезд", getAddTrainRequestPanel());
-        tabbedPane2.addTab("добавить станцию", getAddStationRequestPanel());
-        tabbedPane2.addTab("добавить расписание", getAddSchedulRecordRequestPanel());
-        tabbedPane2.addTab("просмотр поездов", getAllTrainsPanel());
-        tabbedPane2.addTab("просмотр пассажиров",getPassengersByTrainPanel() );
+        tabbedPane2.addTab("add train", getAddTrainRequestPanel());
+        tabbedPane2.addTab("add station", getAddStationRequestPanel());
+        tabbedPane2.addTab("add schedule", getAddSchedulRecordRequestPanel());
+        tabbedPane2.addTab("train review", getAllTrainsPanel());
+        tabbedPane2.addTab("passenger review",getPassengersByTrainPanel() );
         //content2.add(tabbedPane2, BorderLayout.CENTER);
 
         content2.add(tabbedPane2);
 
 
-        tabbedPane.addTab("Сотрудник", content2);
+        tabbedPane.addTab("Мanager", content2);
 
 
         content.add(tabbedPane, BorderLayout.CENTER);
@@ -101,25 +103,25 @@ public class AppFrame extends JFrame {
         //jPanel4.setLayout(new BoxLayout(jPanel4, BoxLayout.X_AXIS));
         jPanel4.setLayout(new GridLayout(8, 2));
 
-        Label R1 = new Label("имя:");
+        Label R1 = new Label("name:");
         final TextField n1 = new TextField(20);
-        Label R2 = new Label("фамилия:");
+        Label R2 = new Label("surname:");
         final TextField n2 = new TextField(20);
-        Label R3 = new Label("дата рождения (yyyy/MM/dd):");
+        Label R3 = new Label("birthday (yyyy/MM/dd):");
         final TextField n3 = new TextField(20);
-        Label R4 = new Label("дата билета (yyyy/MM/dd)");
+        Label R4 = new Label("ticket date (yyyy/MM/dd)");
         final TextField n4 = new TextField(20);
 //        Label R5 = new Label("день месяца:");
 //        final TextField n5 = new TextField(20);
-        Label R6 = new Label("станция:");
+        Label R6 = new Label("station:");
         final TextField n6 = new TextField(20);
-        Label R7 = new Label("номер поезда:");
+        Label R7 = new Label("train num:");
         final TextField n7 = new TextField(20);
         final JTextArea ta = new JTextArea();
 
         //final String dateOfBirth = n3.getText()+"/"  +n3.getText()+"/"+n3.getText();
 
-        JButton button1 = new JButton("купить билет");
+        JButton button1 = new JButton("buy ticket");
         button1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -164,15 +166,15 @@ public class AppFrame extends JFrame {
         //jPanel4.setLayout(new BoxLayout(jPanel4, BoxLayout.X_AXIS));
         jPanel4.setLayout(new GridLayout(4, 2));
 
-        Label R1 = new Label("номер поезда:");
+        Label R1 = new Label("train num:");
         final TextField n1 = new TextField(20);
-        Label R2 = new Label("сместимость поезда:");
+        Label R2 = new Label("capacity:");
         final TextField n2 = new TextField(20);
-        Label R3 = new Label("пароль:");
+        Label R3 = new Label("password:");
         final TextField n3 = new TextField(20);
         final JTextArea ta = new JTextArea();
 
-        JButton button1 = new JButton("добавить поезд");
+        JButton button1 = new JButton("add train");
         button1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -209,24 +211,24 @@ public class AppFrame extends JFrame {
 
         jPanel4.setLayout(new GridLayout(6, 2));
 
-        Label R1 = new Label("название станции:");
+        Label R1 = new Label("station name:");
         final TextField n1 = new TextField(20);
 
-        Label R2 = new Label("номер поезда:");
+        Label R2 = new Label("train num:");
         final TextField n2 = new TextField(20);
 
-        Label R3 = new Label("время (yyyy/MM/dd HH:mm:ss):");
+        Label R3 = new Label("time (yyyy/MM/dd HH:mm:ss):");
         final TextField n3 = new TextField(20);
 
         Label R4 = new Label("offset:");
         final TextField n4 = new TextField(20);
 
-        Label R5 = new Label("пароль:");
+        Label R5 = new Label("password:");
         final TextField n5 = new TextField(20);
 
         final JTextArea ta = new JTextArea();
 
-        JButton button1 = new JButton("добавить расписание");
+        JButton button1 = new JButton("add schedule record");
         button1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -273,14 +275,14 @@ public class AppFrame extends JFrame {
         //jPanel4.setLayout(new BoxLayout(jPanel4, BoxLayout.X_AXIS));
         jPanel4.setLayout(new GridLayout(4, 2));
 
-        Label R1 = new Label("название станции:");
+        Label R1 = new Label("station name:");
         final TextField n1 = new TextField(20);
 
-        Label R3 = new Label("пароль:");
+        Label R3 = new Label("password:");
         final TextField n3 = new TextField(20);
         final JTextArea ta = new JTextArea();
 
-        JButton button1 = new JButton("добавить станцию");
+        JButton button1 = new JButton("add station");
         button1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -310,9 +312,12 @@ public class AppFrame extends JFrame {
     }
 
     JPanel getStationScheduleRequestPanel(){
-        JButton button1 = new JButton("поиск поездов");
+        JPanel jPanel = new JPanel();
+        JButton button1 = new JButton("view schedule");
         JPanel jPanel4 = new JPanel();
-        Label R1 = new Label("название станции:");
+        jPanel4.setLayout(new GridLayout(2, 2));
+
+        Label R1 = new Label("station name:");
         final TextField n1 = new TextField(20);
         final JTextArea ta = new JTextArea();
         button1.addActionListener(new ActionListener() {
@@ -332,19 +337,26 @@ public class AppFrame extends JFrame {
 
             }
         });
-        jPanel4.add(button1);
+
         jPanel4.add(R1);
         jPanel4.add(n1);
-        jPanel4.add(ta,BorderLayout.EAST);
-        return jPanel4;
+        jPanel4.add(button1);
+
+        jPanel.add(jPanel4);
+
+        jPanel.add(ta);
+
+        return jPanel;
     }
 
     JPanel getPassengersByTrainPanel(){
-        setLayout(new BorderLayout());
-        JButton button1 = new JButton("вывести данные пассажиров");
+        JPanel jPanel = new JPanel();
+        JButton button1 = new JButton("view passengers");
         JPanel jPanel4 = new JPanel();
-        Label R1 = new Label("номер поезда:");
-        Label R2 = new Label("пароль:");
+        jPanel4.setLayout(new GridLayout(3, 2));
+
+        Label R1 = new Label("train number:");
+        Label R2 = new Label("password:");
         final TextField n1 = new TextField(20);
         final TextField n2 = new TextField(20);
         final JTextArea ta = new JTextArea();
@@ -376,19 +388,20 @@ public class AppFrame extends JFrame {
         jPanel4.add(button1);
         jPanel4.add(ta);
 
-        //jPanel4.setLayout(new GridLayout(3, 2));
-        return jPanel4;
+        jPanel.add(jPanel4);
+
+        return jPanel;
     }
 
     JPanel getAllTrainsPanel(){
         JPanel jPanel = new JPanel();
-        JButton button1 = new JButton("вывести номера поездов");
+        JButton button1 = new JButton("view trains");
         JPanel jPanel4 = new JPanel();
         jPanel4.setLayout(new GridLayout(3, 2));
        // FlowLayout experimentLayout = new FlowLayout();
        // jPanel4.setLayout(null);
         //jPanel4.setSize(100,300);
-        Label R1 = new Label("пароль:");
+        Label R1 = new Label("password:");
         final TextField n1 = new TextField(20);
         final JTextArea ta = new JTextArea();
 

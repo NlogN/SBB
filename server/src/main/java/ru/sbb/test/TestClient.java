@@ -25,7 +25,7 @@ public class TestClient {
         send(sockAddr, output, new OverRequest(""));
         ObjectInputStream input = new ObjectInputStream(new BufferedInputStream(sock.getInputStream()));
         receive(sockAddr, input);
-//        send(sockAddr, output, new GetStationScheduleRequest("Saint-Peterburg"));
+        send(sockAddr, output, new GetStationScheduleRequest("Saint-Peterburg"));
        // send(sockAddr, output, new BuyTicketRequest("Peter1","Petrov","1991/01/01",239,"Novosibirsk","2014/08/22"));
        // send(sockAddr, output, new BuyTicketRequest("Peter2","Petrov","1991/01/01",239,"Novosibirsk","2014/08/22"));
       //  send(sockAddr, output, new BuyTicketRequest("Peter4","Petrov","1991/01/01",239,"Moskow","2014/08/22"));
@@ -40,7 +40,7 @@ public class TestClient {
 
         //
       //  send(sockAddr, output, new GetTrainPassengersRequest(123,"123"));
-     //   receive(sockAddr, input);
+        receive(sockAddr, input);
 
         sock.close();
 

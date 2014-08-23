@@ -36,10 +36,15 @@ public class Client {
         }
         sockAddr = sock.getRemoteSocketAddress();
 
-        this.output = new ObjectOutputStream(new BufferedOutputStream(sock.getOutputStream()));
-        send(new OverRequest(""));
-        this.input = new ObjectInputStream(new BufferedInputStream(sock.getInputStream()));
-        receive();
+//        try {} catch (IOException e) {
+//            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+//        }
+            this.output = new ObjectOutputStream(new BufferedOutputStream(sock.getOutputStream()));
+            send(new OverRequest(""));
+            this.input = new ObjectInputStream(new BufferedInputStream(sock.getInputStream()));
+            receive();
+
+
 
 
         System.out.print("Connected to 8080 at localhost");
