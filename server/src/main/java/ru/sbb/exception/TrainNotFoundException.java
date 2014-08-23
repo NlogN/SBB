@@ -5,9 +5,9 @@ package ru.sbb.exception;
  * User: Ilya Makeev
  * Date: 24.08.14
  */
-public class TrainNotFoundExeption extends Exception {
+public class TrainNotFoundException extends Exception {
 
-    public TrainNotFoundExeption(String text) {
+    public TrainNotFoundException(String text) {
         super(text);
     }
 

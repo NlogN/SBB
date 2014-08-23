@@ -2,17 +2,15 @@ package ru.sbb;
 
 
 import ru.sbb.entity.Passenger;
-import ru.sbb.exception.BuyTicketExeption;
-import ru.sbb.exception.StationNotFoundExeption;
-import ru.sbb.exception.TrainNotFoundExeption;
+import ru.sbb.exception.BuyTicketException;
+import ru.sbb.exception.StationNotFoundException;
+import ru.sbb.exception.TrainNotFoundException;
 import ru.sbb.request.*;
 import ru.sbb.service.ClientService;
 import ru.sbb.service.ManagerService;
 
 import java.io.*;
 import java.net.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.logging.Logger;
 
 /**
@@ -120,7 +118,7 @@ public class Server {
         String res = null;
         try {
             res = ClientService.getInstance().getStationSchedule(request.getStationName());
-        } catch (StationNotFoundExeption stationNotFoundExeption) {
+        } catch (StationNotFoundException stationNotFoundExeption) {
             res = stationNotFoundExeption.getMessage();
         }
         System.out.println(res);
@@ -159,10 +157,10 @@ public class Server {
             try {
                 ManagerService.getInstance().addScheduleRecord(request.getStationName(), request.getTrainNumber(), request.getTime(), request.getOffset());
                 res = "shedule record added";
-            } catch (StationNotFoundExeption stationNotFoundExeption) {
-                res = stationNotFoundExeption.getMessage();
-            } catch (TrainNotFoundExeption trainNotFoundExeption) {
-                res = trainNotFoundExeption.getMessage();
+            } catch (StationNotFoundException stationNotFoundException) {
+                res = stationNotFoundException.getMessage();
+            } catch (TrainNotFoundException trainNotFoundException) {
+                res = trainNotFoundException.getMessage();
             }
 
         } else {
@@ -207,10 +205,10 @@ public class Server {
         try {
             ClientService.getInstance().buyTicket(request.getTrainNumber(), request.getStationName(), passenger, request.getDateOfRace());
             send(sockAddr, output, new Message("operation was successful"));
-        } catch (BuyTicketExeption buyTicketExeption) {
-            send(sockAddr, output, new Message("you can not buy a ticket: \n " + buyTicketExeption.getMessage()));
-        } catch (TrainNotFoundExeption trainNotFoundExeption) {
-            send(sockAddr, output, new Message("you can not buy a ticket: \n " + trainNotFoundExeption.getMessage()));
+        } catch (BuyTicketException buyTicketException) {
+            send(sockAddr, output, new Message("you can not buy a ticket: \n " + buyTicketException.getMessage()));
+        } catch (TrainNotFoundException trainNotFoundException) {
+            send(sockAddr, output, new Message("you can not buy a ticket: \n " + trainNotFoundException.getMessage()));
         }
 
     }

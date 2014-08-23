@@ -2,11 +2,8 @@ package ru.sbb.dao;
 
 import ru.sbb.DateBuilder;
 import ru.sbb.SbbEntityManager;
-import ru.sbb.entity.Passenger;
 import ru.sbb.entity.ScheduleRecord;
-import ru.sbb.entity.Ticket;
 import ru.sbb.entity.Train;
-import ru.sbb.exception.TrainNotFoundExeption;
 
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;

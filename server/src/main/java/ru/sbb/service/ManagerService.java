@@ -3,8 +3,8 @@ package ru.sbb.service;
 import ru.sbb.dao.*;
 import ru.sbb.entity.Passenger;
 import ru.sbb.entity.Train;
-import ru.sbb.exception.StationNotFoundExeption;
-import ru.sbb.exception.TrainNotFoundExeption;
+import ru.sbb.exception.StationNotFoundException;
+import ru.sbb.exception.TrainNotFoundException;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -58,7 +58,7 @@ public class ManagerService {
         stationDAO.addStation(name);
     }
 
-    public void addScheduleRecord(String stationName, int trainNumber, Date time, int offset) throws StationNotFoundExeption, TrainNotFoundExeption {
+    public void addScheduleRecord(String stationName, int trainNumber, Date time, int offset) throws StationNotFoundException, TrainNotFoundException {
         scheduleRecordDAO.addScheduleRecord(stationName, trainNumber, time, offset);
     }
 

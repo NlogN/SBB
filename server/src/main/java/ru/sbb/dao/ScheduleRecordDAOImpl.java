@@ -4,8 +4,8 @@ import ru.sbb.SbbEntityManager;
 import ru.sbb.entity.ScheduleRecord;
 import ru.sbb.entity.Station;
 import ru.sbb.entity.Train;
-import ru.sbb.exception.StationNotFoundExeption;
-import ru.sbb.exception.TrainNotFoundExeption;
+import ru.sbb.exception.StationNotFoundException;
+import ru.sbb.exception.TrainNotFoundException;
 
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
@@ -20,18 +20,18 @@ import java.util.List;
 public class ScheduleRecordDAOImpl implements ScheduleRecordDAO {
 
     @Override
-    public void addScheduleRecord(String stationName, int trainNumber, Date time, int offset) throws StationNotFoundExeption, TrainNotFoundExeption {
+    public void addScheduleRecord(String stationName, int trainNumber, Date time, int offset) throws StationNotFoundException, TrainNotFoundException {
         Query stationQuery = SbbEntityManager.getInstance().getEntityManager().createQuery("SELECT st FROM ru.sbb.entity.Station st where st.name =:stName");
         stationQuery.setParameter("stName", stationName);
         List<Station> stationList = stationQuery.getResultList();
         if (stationList.isEmpty()) {
-            throw new StationNotFoundExeption("Station not found!");
+            throw new StationNotFoundException("Station not found!");
         } else{
             Query trainQuery = SbbEntityManager.getInstance().getEntityManager().createQuery("SELECT tr FROM ru.sbb.entity.Train tr where tr.number =:trNum");
             trainQuery.setParameter("trNum", trainNumber);
             List<Train> trainList = trainQuery.getResultList();
             if (trainList.isEmpty()) {
-                throw new TrainNotFoundExeption("Train not found!");
+                throw new TrainNotFoundException("Train not found!");
             } else{
                 EntityTransaction transaction = SbbEntityManager.getInstance().getEntityManager().getTransaction();
                 try {
@@ -51,12 +51,12 @@ public class ScheduleRecordDAOImpl implements ScheduleRecordDAO {
     }
 
 
-    public List<ScheduleRecord> getStationScheduleRecords(String stationName) throws StationNotFoundExeption {
+    public List<ScheduleRecord> getStationScheduleRecords(String stationName) throws StationNotFoundException {
         Query query = SbbEntityManager.getInstance().getEntityManager().createQuery("SELECT st FROM ru.sbb.entity.Station st where st.name =:stName");
         query.setParameter("stName", stationName);
         List<Station> list = query.getResultList();
         if (list.isEmpty()) {
-            throw new StationNotFoundExeption("Station not found!");
+            throw new StationNotFoundException("Station not found!");
         } else {
             List<ScheduleRecord> scheduleList = list.get(0).getScheduleList();
             return scheduleList;

@@ -5,9 +5,9 @@ package ru.sbb.exception;
  * User: Ilya Makeev
  * Date: 24.08.14
  */
-public class BuyTicketExeption extends Exception {
+public class BuyTicketException extends Exception {
 
-    public BuyTicketExeption(String text) {
+    public BuyTicketException(String text) {
         super(text);
     }
 

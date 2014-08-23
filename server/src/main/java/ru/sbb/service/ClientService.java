@@ -4,9 +4,9 @@ package ru.sbb.service;
 import ru.sbb.DateBuilder;
 import ru.sbb.dao.*;
 import ru.sbb.entity.*;
-import ru.sbb.exception.BuyTicketExeption;
-import ru.sbb.exception.StationNotFoundExeption;
-import ru.sbb.exception.TrainNotFoundExeption;
+import ru.sbb.exception.BuyTicketException;
+import ru.sbb.exception.StationNotFoundException;
+import ru.sbb.exception.TrainNotFoundException;
 
 import java.util.List;
 
@@ -45,7 +45,7 @@ public class ClientService {
     }
 
 
-    public String getStationSchedule(String stationName) throws StationNotFoundExeption {
+    public String getStationSchedule(String stationName) throws StationNotFoundException {
         List<ScheduleRecord> scheduleList = scheduleRecordDAO.getStationScheduleRecords(stationName);
         if (scheduleList.isEmpty()) {
             return "no data";
@@ -58,21 +58,21 @@ public class ClientService {
         }
     }
 
-    public void buyTicket(int trainNum, String stationName, Passenger passenger, java.util.Date dateOfRace) throws BuyTicketExeption, TrainNotFoundExeption {
+    public void buyTicket(int trainNum, String stationName, Passenger passenger, java.util.Date dateOfRace) throws BuyTicketException, TrainNotFoundException {
         List<Train> list = trainDAO.getTrainByNum(trainNum);
         if (list.isEmpty()) {
-            throw new TrainNotFoundExeption("Train not found!");
+            throw new TrainNotFoundException("Train not found!");
         } else {
             Train train = list.get(0);
             if (checkStationVisit(train, stationName, dateOfRace)) {
                 if (!checkStartTime(train, stationName)) {
-                    throw new BuyTicketExeption("registration on this train is closed");
+                    throw new BuyTicketException("registration on this train is closed");
                 } else {
                     if (!checkSamePassengerNotReg(train, passenger.getName(), passenger.getSurname(), passenger.getDate())) {
-                        throw new BuyTicketExeption("such passenger is already registered");
+                        throw new BuyTicketException("such passenger is already registered");
                     } else {
                         if (!checkNotFilledState(train, dateOfRace)) {
-                            throw new BuyTicketExeption("no empty seats");
+                            throw new BuyTicketException("no empty seats");
                         } else {
                             ticketDAO.addTicket(passenger, train, dateOfRace);
                         }
@@ -80,7 +80,7 @@ public class ClientService {
                     }
                 }
             } else {
-                throw new BuyTicketExeption("train not visit this station in this day");
+                throw new BuyTicketException("train not visit this station in this day");
             }
 
         }

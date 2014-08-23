@@ -5,9 +5,9 @@ package ru.sbb.exception;
  * User: Ilya Makeev
  * Date: 24.08.14
  */
-public class StationNotFoundExeption extends Exception {
+public class StationNotFoundException extends Exception {
 
-    public StationNotFoundExeption(String text) {
+    public StationNotFoundException(String text) {
         super(text);
     }
 
