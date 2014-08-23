@@ -1,5 +1,7 @@
 package ru.sbb.request;
 
+import java.util.Date;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Ilya Makeev
@@ -9,11 +11,11 @@ public class BuyTicketRequest extends Request {
     private String name;
     private String surname;
     private int trainNumber;
-    private String dayOfBirth;
+    private Date dayOfBirth;
     private String stationName;
-    private String dateOfRace;
+    private Date dateOfRace;
 
-    public BuyTicketRequest(String name, String surname, String dayOfBirth, int trainNumber, String stationName, String dateOfRace) {
+    public BuyTicketRequest(String name, String surname, Date dayOfBirth, int trainNumber, String stationName, Date dateOfRace) {
         super(RequestType.BUY_TICKET);
         this.name = name;
         this.surname = surname;
@@ -35,7 +37,7 @@ public class BuyTicketRequest extends Request {
         return trainNumber;
     }
 
-    public String getDayOfBirth() {
+    public Date getDayOfBirth() {
         return dayOfBirth;
     }
 
@@ -43,7 +45,7 @@ public class BuyTicketRequest extends Request {
         return stationName;
     }
 
-    public String getDateOfRace() {
+    public Date getDateOfRace() {
         return dateOfRace;
     }
 

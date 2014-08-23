@@ -19,8 +19,6 @@ import java.util.Date;
 public class AppFrame extends JFrame {
     Client client;
 
-
-
     public AppFrame() {
 
         super("sbb");
@@ -28,7 +26,7 @@ public class AppFrame extends JFrame {
             try {
                 client  = new Client();
             } catch (IOException e) {
-               e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+               e.printStackTrace();
             }
 
 
@@ -172,17 +170,19 @@ public class AppFrame extends JFrame {
         button1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    BuyTicketRequest request = new BuyTicketRequest(n1.getText(),n2.getText(),n3.getText(),Integer.parseInt(n7.getText()),n6.getText(), n4.getText());
+                    Date dateOfBirth  = DateBuilder.createDate(n3.getText());
+                    Date dateOfRace  = DateBuilder.createDate(n4.getText());
+                    BuyTicketRequest request = new BuyTicketRequest(n1.getText(),n2.getText(),dateOfBirth,Integer.parseInt(n7.getText()),n6.getText(), dateOfRace);
                     System.out.println(request);
                     client.send(request);
                     ta.setText("");
                     ta.append(client.receive());
-
                 } catch (IOException e1) {
                     e1.printStackTrace();
+                } catch (ParseException e1) {
+                    ta.setText("");
+                    ta.append("incorrect date format");
                 }
-
-
             }
         });
 

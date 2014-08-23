@@ -6,6 +6,7 @@ import ru.sbb.entity.Passenger;
 import ru.sbb.entity.ScheduleRecord;
 import ru.sbb.entity.Ticket;
 import ru.sbb.entity.Train;
+import ru.sbb.exception.TrainNotFoundExeption;
 
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
@@ -35,13 +36,10 @@ public class TrainDAOImpl implements TrainDAO{
     }
 
     @Override
-    public List<Train> getTrainByNum(int trainNum) {
+    public List<Train> getTrainByNum(int trainNum){
         Query query = SbbEntityManager.getInstance().getEntityManager().createQuery("SELECT tr FROM ru.sbb.entity.Train tr where tr.number =:trNum");
         query.setParameter("trNum", trainNum);
         List<Train> list = query.getResultList();
-        if (list.isEmpty()) {
-            System.out.println("Train not found!");
-        }
         return list;
     }
 

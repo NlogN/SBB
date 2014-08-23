@@ -4,6 +4,9 @@ package ru.sbb.service;
 import ru.sbb.DateBuilder;
 import ru.sbb.dao.*;
 import ru.sbb.entity.*;
+import ru.sbb.exception.BuyTicketExeption;
+import ru.sbb.exception.StationNotFoundExeption;
+import ru.sbb.exception.TrainNotFoundExeption;
 
 import java.util.List;
 
@@ -42,38 +45,34 @@ public class ClientService {
     }
 
 
-    public String getStationSchedule(String stationName) {
+    public String getStationSchedule(String stationName) throws StationNotFoundExeption {
         List<ScheduleRecord> scheduleList = scheduleRecordDAO.getStationScheduleRecords(stationName);
         if (scheduleList.isEmpty()) {
             return "no data";
         } else {
             StringBuffer sb = new StringBuffer();
             for (ScheduleRecord schedule : scheduleList) {
-                sb.append("train № "+schedule.getTrain().getNumber() + "    time: " + schedule.getTime() + "; \n");
+                sb.append("train "+schedule.getTrain().getNumber() + "    time: " + schedule.getTime() + "; \n");
             }
             return sb.toString();
         }
     }
 
-    public boolean buyTicket(int trainNum, String stationName, Passenger passenger, java.util.Date dateOfRace) {
+    public void buyTicket(int trainNum, String stationName, Passenger passenger, java.util.Date dateOfRace) throws BuyTicketExeption, TrainNotFoundExeption {
         List<Train> list = trainDAO.getTrainByNum(trainNum);
         if (list.isEmpty()) {
-            System.out.println("Train not found!");
-            return false;
+            throw new TrainNotFoundExeption("Train not found!");
         } else {
             Train train = list.get(0);
             if (checkStationVisit(train, stationName, dateOfRace)) {
                 if (!checkStartTime(train, stationName)) {
-                    System.out.println("registration on this train is closed");
-                    return false;
+                    throw new BuyTicketExeption("registration on this train is closed");
                 } else {
                     if (!checkSamePassengerNotReg(train, passenger.getName(), passenger.getSurname(), passenger.getDate())) {
-                        System.out.println("such passenger is already registered");
-                        return false;
+                        throw new BuyTicketExeption("such passenger is already registered");
                     } else {
                         if (!checkNotFilledState(train, dateOfRace)) {
-                            System.out.println("no empty seats");
-                            return false;
+                            throw new BuyTicketExeption("no empty seats");
                         } else {
                             ticketDAO.addTicket(passenger, train, dateOfRace);
                         }
@@ -81,22 +80,17 @@ public class ClientService {
                     }
                 }
             } else {
-                System.out.println("train not visit this station in this day");
-                return false;
+                throw new BuyTicketExeption("train not visit this station in this day");
             }
 
         }
-
-        return true;
     }
 
     boolean checkStationVisit(Train train, String stationName, java.util.Date dateOfRace) {
         List<ScheduleRecord> scheduleList = train.getScheduleList();
         for (ScheduleRecord schedule : scheduleList) {
             if (schedule.getStation().getName().equals(stationName)) {
-//                System.out.println(schedule.getUnixTime());
-//                System.out.println(DateBuilder.getUnixTime(dateOfRace));
-//                System.out.println(schedule.getUnixTime() - DateBuilder.getUnixTime(dateOfRace));
+
                 if ((schedule.getUnixTime()>DateBuilder.getUnixTime(dateOfRace))&&(schedule.getUnixTime() < DateBuilder.getUnixTime(dateOfRace)+86400)) {
                     return true;
                 }
@@ -110,9 +104,7 @@ public class ClientService {
         List<ScheduleRecord> scheduleList = train.getScheduleList();
         for (ScheduleRecord schedule : scheduleList) {
             if(schedule.getStation().getName().equals(stationName)){
-//                System.out.println(schedule.getUnixTime());
-//                System.out.println(currentTime);
-//                System.out.println(schedule.getUnixTime() - currentTime);
+
                 if ((schedule.getUnixTime() > (currentTime+360)) ) {
                     return true;
                 }

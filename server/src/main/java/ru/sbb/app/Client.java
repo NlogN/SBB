@@ -51,17 +51,17 @@ public class Client {
         System.out.println("Local socket address is " + sock.getLocalSocketAddress());
     }
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
-
-            Client client = new Client();
-            client.send(new GetStationScheduleRequest("Moskow"));
-//            ObjectInputStream input = new ObjectInputStream(new BufferedInputStream(client.getSock().getInputStream()));
-           client.receive();
-        client.send(new GetTrainPassengersRequest(123,"123"));
-        client.receive();
-           client.close();
-
-    }
+//    public static void main(String[] args) throws IOException, ClassNotFoundException {
+//
+//            Client client = new Client();
+//            client.send(new GetStationScheduleRequest("Moskow"));
+////            ObjectInputStream input = new ObjectInputStream(new BufferedInputStream(client.getSock().getInputStream()));
+//           client.receive();
+//        client.send(new GetTrainPassengersRequest(123,"123"));
+//        client.receive();
+//           client.close();
+//
+//    }
 
     public void send(Request m) throws IOException {
         //System.out.println("Sending a message to " + sockAddr + ": " + m);

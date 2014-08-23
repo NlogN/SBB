@@ -37,14 +37,13 @@ public class DateBuilder {
         return date;
     }
 
+    public static java.util.Date createDate(String s) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        Date date = sdf.parse(s);
+        return date;
+    }
+
     public static java.util.Date createDate(int year, int month, int day) {
-//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
-//        java.util.Date utilDate = null;
-//        try {
-//            utilDate = formatter.parse(year + "/" + month + "/" + day);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
         return createDate(year,month,day,0,0,0);
     }
 
