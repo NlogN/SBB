@@ -10,6 +10,7 @@ public class ScheduleRecord {
 
     @Id
     @Column(name = "schedule_id")
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private int scheduleId;
 
     @ManyToOne

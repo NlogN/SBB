@@ -35,14 +35,17 @@ public class TicketDAOImpl implements TicketDAO {
             newTicket.setTrain(train);
             newTicket.setPassenger(newPassenger);
 
-           // System.out.println("Date = "+newTicket.getDate().toString());
+            List<Ticket> ticketList1 = train.getTicketList();
+            ticketList1.add(newTicket);
+            train.setTicketList(ticketList1);
+
+            newTicket.setTrain(train);
 
             List<Ticket> ticketList = new ArrayList<Ticket>();
             ticketList.add(newTicket);
             newPassenger.setTicketList(ticketList);
 
             entityManager.persist(newPassenger);
-            entityManager.persist(newTicket);
             transaction.commit();
         } finally {
             if (transaction.isActive()) {

@@ -7,18 +7,17 @@ import java.io.Serializable;
  * User: Ilya Makeev
  * DateBuilder: 19.08.14
  */
-public class GetStationScheduleRequest extends Request  {
+public class GetStationScheduleRequest extends Request {
     private final String stationName;
 
-    public GetStationScheduleRequest(String stationName){
+    public GetStationScheduleRequest(String stationName) {
         super(RequestType.GET_STATION_SCHEDULE);
-        this.stationName=stationName;
+        this.stationName = stationName;
     }
 
-    public String getStationName(){
+    public String getStationName() {
         return stationName;
     }
-
 
 
     public String toString() {

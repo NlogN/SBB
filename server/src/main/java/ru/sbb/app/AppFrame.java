@@ -23,11 +23,11 @@ public class AppFrame extends JFrame {
 
         super("sbb");
 
-            try {
-                client  = new Client();
-            } catch (IOException e) {
-               e.printStackTrace();
-            }
+        try {
+            client = new Client();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -48,7 +48,7 @@ public class AppFrame extends JFrame {
 
 
         tabbedPane1.addTab("train search", getTrainByRouteRequestPanel());
-        tabbedPane1.addTab("station schedule", getStationScheduleRequestPanel() );
+        tabbedPane1.addTab("station schedule", getStationScheduleRequestPanel());
         tabbedPane1.addTab("buy ticket", getBuyTicketRequestPanel());
         content1.add(tabbedPane1, BorderLayout.CENTER);
         content1.add(tabbedPane1);
@@ -66,12 +66,12 @@ public class AppFrame extends JFrame {
         tabbedPane2.addTab("add station", getAddStationRequestPanel());
         tabbedPane2.addTab("add schedule", getAddSchedulRecordRequestPanel());
         tabbedPane2.addTab("train review", getAllTrainsPanel());
-        tabbedPane2.addTab("passenger review",getPassengersByTrainPanel() );
+        tabbedPane2.addTab("passenger review", getPassengersByTrainPanel());
 
         content2.add(tabbedPane2);
 
 
-        tabbedPane.addTab("Мanager", content2);
+        tabbedPane.addTab("Manager", content2);
 
 
         content.add(tabbedPane, BorderLayout.CENTER);
@@ -84,7 +84,7 @@ public class AppFrame extends JFrame {
         setVisible(true);
     }
 
-    JPanel getTrainByRouteRequestPanel(){
+    JPanel getTrainByRouteRequestPanel() {
         JPanel jPanel = new JPanel();
         JPanel jPanel4 = new JPanel();
 
@@ -110,9 +110,9 @@ public class AppFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     try {
-                        Date time1  = DateBuilder.createDateTime(n3.getText());
-                        Date time2  = DateBuilder.createDateTime(n4.getText());
-                        GetTrainsByRouteRequest request = new GetTrainsByRouteRequest(n1.getText(),n2.getText(),time1,time2);
+                        Date time1 = DateBuilder.createDateTime(n3.getText());
+                        Date time2 = DateBuilder.createDateTime(n4.getText());
+                        GetTrainsByRouteRequest request = new GetTrainsByRouteRequest(n1.getText(), n2.getText(), time1, time2);
                         System.out.println(request);
                         client.send(request);
                         ta.setText("");
@@ -145,7 +145,7 @@ public class AppFrame extends JFrame {
         return jPanel;
     }
 
-    JPanel getBuyTicketRequestPanel(){
+    JPanel getBuyTicketRequestPanel() {
         JPanel jPanel = new JPanel();
         JPanel jPanel4 = new JPanel();
 
@@ -170,9 +170,9 @@ public class AppFrame extends JFrame {
         button1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Date dateOfBirth  = DateBuilder.createDate(n3.getText());
-                    Date dateOfRace  = DateBuilder.createDate(n4.getText());
-                    BuyTicketRequest request = new BuyTicketRequest(n1.getText(),n2.getText(),dateOfBirth,Integer.parseInt(n7.getText()),n6.getText(), dateOfRace);
+                    Date dateOfBirth = DateBuilder.createDate(n3.getText());
+                    Date dateOfRace = DateBuilder.createDate(n4.getText());
+                    BuyTicketRequest request = new BuyTicketRequest(n1.getText(), n2.getText(), dateOfBirth, Integer.parseInt(n7.getText()), n6.getText(), dateOfRace);
                     System.out.println(request);
                     client.send(request);
                     ta.setText("");
@@ -206,7 +206,7 @@ public class AppFrame extends JFrame {
         return jPanel;
     }
 
-    JPanel getAddTrainRequestPanel(){
+    JPanel getAddTrainRequestPanel() {
         JPanel jPanel = new JPanel();
         JPanel jPanel4 = new JPanel();
 
@@ -224,7 +224,7 @@ public class AppFrame extends JFrame {
         button1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    AddTrainRequest request = new AddTrainRequest(Integer.parseInt(n1.getText()),Integer.parseInt(n2.getText()),n3.getText());
+                    AddTrainRequest request = new AddTrainRequest(Integer.parseInt(n1.getText()), Integer.parseInt(n2.getText()), n3.getText());
                     System.out.println(request);
                     client.send(request);
                     ta.setText("");
@@ -251,7 +251,7 @@ public class AppFrame extends JFrame {
         return jPanel;
     }
 
-    JPanel getAddSchedulRecordRequestPanel(){
+    JPanel getAddSchedulRecordRequestPanel() {
         JPanel jPanel = new JPanel();
         JPanel jPanel4 = new JPanel();
 
@@ -279,8 +279,8 @@ public class AppFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     try {
-                        Date time  = DateBuilder.createDateTime(n3.getText());
-                        AddScheduleRecordRequest request = new AddScheduleRecordRequest(n1.getText(),Integer.parseInt(n2.getText()),time,Integer.parseInt(n4.getText()),n5.getText());
+                        Date time = DateBuilder.createDateTime(n3.getText());
+                        AddScheduleRecordRequest request = new AddScheduleRecordRequest(n1.getText(), Integer.parseInt(n2.getText()), time, Integer.parseInt(n4.getText()), n5.getText());
                         System.out.println(request);
                         client.send(request);
                         ta.setText("");
@@ -315,7 +315,7 @@ public class AppFrame extends JFrame {
         return jPanel;
     }
 
-    JPanel getAddStationRequestPanel(){
+    JPanel getAddStationRequestPanel() {
         JPanel jPanel = new JPanel();
         JPanel jPanel4 = new JPanel();
 
@@ -332,7 +332,7 @@ public class AppFrame extends JFrame {
         button1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    AddStationRequest request = new AddStationRequest(n1.getText(),n3.getText());
+                    AddStationRequest request = new AddStationRequest(n1.getText(), n3.getText());
                     System.out.println(request);
                     client.send(request);
                     ta.setText("");
@@ -357,7 +357,7 @@ public class AppFrame extends JFrame {
         return jPanel;
     }
 
-    JPanel getStationScheduleRequestPanel(){
+    JPanel getStationScheduleRequestPanel() {
         JPanel jPanel11 = new JPanel();
         JPanel jPanel = new JPanel();
         jPanel.setLayout(new GridLayout(2, 1));
@@ -399,7 +399,7 @@ public class AppFrame extends JFrame {
         return jPanel11;
     }
 
-    JPanel getPassengersByTrainPanel(){
+    JPanel getPassengersByTrainPanel() {
         JPanel jPanel11 = new JPanel();
         JPanel jPanel = new JPanel();
         jPanel.setLayout(new GridLayout(2, 1));
@@ -416,7 +416,7 @@ public class AppFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
 
-                    GetTrainPassengersRequest request = new GetTrainPassengersRequest(Integer.parseInt(n1.getText()),n2.getText());
+                    GetTrainPassengersRequest request = new GetTrainPassengersRequest(Integer.parseInt(n1.getText()), n2.getText());
                     System.out.println(request);
                     client.send(request);
                     ta.setText("");
@@ -425,7 +425,6 @@ public class AppFrame extends JFrame {
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
-
 
 
             }
@@ -445,7 +444,7 @@ public class AppFrame extends JFrame {
         return jPanel11;
     }
 
-    JPanel getAllTrainsPanel(){
+    JPanel getAllTrainsPanel() {
         JPanel jPanel11 = new JPanel();
         JPanel jPanel = new JPanel();
         jPanel.setLayout(new GridLayout(2, 1));

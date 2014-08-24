@@ -10,12 +10,12 @@ import java.io.Serializable;
 public class Request implements Serializable {
     private final RequestType type;
 
-    Request(RequestType type){
-        this.type=type;
+    Request(RequestType type) {
+        this.type = type;
     }
 
-    public RequestType getType(){
-           return type;
+    public RequestType getType() {
+        return type;
     }
 
 }

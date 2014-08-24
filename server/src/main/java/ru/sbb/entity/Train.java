@@ -69,29 +69,6 @@ public class Train {
         this.scheduleList = scheduleList;
     }
 
-//    @Override
-//    public String toString() {
-//        return "ru.sbb.entity.Train{" +
-//                "id=" + train_id +
-//                ", number='" + number + '\'' +
-//                ", capacity='" + capacity +
-//                '}';
-//    }
-
-//    @Override
-//    public String toString() {
-//        StringBuffer sb = new StringBuffer();
-//        for (ru.sbb.entity.TicketDAO ticket : ticketList) {
-//            sb.append(ticket.getPassenger().getName() + " ");
-//        }
-//
-//        return "ru.sbb.entity.Train{" +
-//                "id=" + trainId +
-//                ", number='" + number + '\'' +
-//                ", capacity='" + capacity +
-//                ", ticketInfo='" + sb.toString() +
-//                '}';
-//    }
 
     @Override
     public String toString() {

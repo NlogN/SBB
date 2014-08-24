@@ -8,18 +8,18 @@ import java.util.Date;
  * DateBuilder: 19.08.14
  */
 
-public class GetTrainsByRouteRequest extends Request{
+public class GetTrainsByRouteRequest extends Request {
     private String stationAName;
     private String stationBName;
     private Date lowerBound;
     private Date upperBound;
 
-    public GetTrainsByRouteRequest(String stationAName, String stationBName, Date lowerBound, Date upperBound){
+    public GetTrainsByRouteRequest(String stationAName, String stationBName, Date lowerBound, Date upperBound) {
         super(RequestType.TRAIN_BY_ROUTE);
-        this.stationAName=stationAName;
-        this.stationBName=stationBName;
-        this.lowerBound=lowerBound;
-        this.upperBound=upperBound;
+        this.stationAName = stationAName;
+        this.stationBName = stationBName;
+        this.lowerBound = lowerBound;
+        this.upperBound = upperBound;
     }
 
 

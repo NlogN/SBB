@@ -7,24 +7,23 @@ import java.io.Serializable;
  * User: Ilya Makeev
  * DateBuilder: 19.08.14
  */
-public class GetTrainPassengersRequest extends Request  {
+public class GetTrainPassengersRequest extends Request {
     private final int trainNum;
     private String psw;
 
-    public GetTrainPassengersRequest(int num, String psw){
+    public GetTrainPassengersRequest(int num, String psw) {
         super(RequestType.GET_TRAIN_PASSENGERS);
-        this.trainNum =num;
+        this.trainNum = num;
         this.psw = psw;
     }
 
-    public int getTrainNum(){
+    public int getTrainNum() {
         return trainNum;
     }
 
-    public String getPassword(){
+    public String getPassword() {
         return psw;
     }
-
 
 
     public String toString() {

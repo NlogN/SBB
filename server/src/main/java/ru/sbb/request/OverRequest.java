@@ -10,12 +10,12 @@ import java.io.Serializable;
 public class OverRequest extends Request implements Serializable {
     private final String text;
 
-    public OverRequest(String text){
+    public OverRequest(String text) {
         super(RequestType.OVER);
-        this.text=text;
+        this.text = text;
     }
 
-    public String getText(){
+    public String getText() {
         return text;
     }
 

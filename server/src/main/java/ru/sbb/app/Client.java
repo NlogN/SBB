@@ -19,7 +19,6 @@ public class Client {
     private ObjectInputStream input;
 
 
-
     void close() throws IOException {
         sock.close();
     }

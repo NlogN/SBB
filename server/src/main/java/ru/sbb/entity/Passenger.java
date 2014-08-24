@@ -76,9 +76,9 @@ public class Passenger {
     @Override
     public String toString() {
         return "ru.sbb.entity.Passenger{" +
-                "id=" + passengerId +
-                ", name='" + name + '\'' +
-                ", surname='" + surname +
+                "id =" + passengerId +
+                ", name ='" + name + '\'' +
+                ", surname ='" + surname +
                 '}';
     }
 }

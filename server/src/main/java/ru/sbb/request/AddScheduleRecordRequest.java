@@ -7,20 +7,20 @@ import java.util.Date;
  * User: Ilya Makeev
  * DateBuilder: 19.08.14
  */
-public class AddScheduleRecordRequest extends Request{
+public class AddScheduleRecordRequest extends Request {
     private String psw;
     private String stationName;
     private int trainNumber;
     private Date time;
     private int offset;
 
-    public AddScheduleRecordRequest(String stationName,int trainNumber, Date time, int offset, String psw){
+    public AddScheduleRecordRequest(String stationName, int trainNumber, Date time, int offset, String psw) {
         super(RequestType.ADD_SHEDULE_RECORD);
         this.psw = psw;
-        this.stationName=stationName;
-        this.trainNumber=trainNumber;
-        this.time=time;
-        this.offset=offset;
+        this.stationName = stationName;
+        this.trainNumber = trainNumber;
+        this.time = time;
+        this.offset = offset;
     }
 
     public String getPassword() {

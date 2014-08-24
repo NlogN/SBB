@@ -35,6 +35,8 @@ public class Server {
         this.managerService = managerService;
     }
 
+
+
     public static void main(String[] args) throws IOException {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("sbb_unit");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -147,7 +149,7 @@ public class Server {
 
     void getStationScheduleRequestMethod(SocketAddress sockAddr, Request req, ObjectOutputStream output) throws IOException {
         GetStationScheduleRequest request = (GetStationScheduleRequest) req;
-        String res = null;
+        String res;
         try {
             res = clientService.getStationSchedule(request.getStationName());
         } catch (StationNotFoundException stationNotFoundExeption) {

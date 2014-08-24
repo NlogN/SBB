@@ -5,22 +5,22 @@ package ru.sbb.request;
  * User: Ilya Makeev
  * DateBuilder: 19.08.14
  */
-public class AddStationRequest extends Request{
+public class AddStationRequest extends Request {
     private String psw;
     private String name;
 
 
-    public AddStationRequest(String name, String psw){
+    public AddStationRequest(String name, String psw) {
         super(RequestType.ADD_STATION);
         this.psw = psw;
-        this.name=name;
+        this.name = name;
     }
 
-    public String getPassword(){
+    public String getPassword() {
         return psw;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 

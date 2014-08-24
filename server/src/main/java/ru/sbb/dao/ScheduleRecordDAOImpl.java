@@ -10,6 +10,7 @@ import ru.sbb.exception.TrainNotFoundException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -42,11 +43,21 @@ public class ScheduleRecordDAOImpl implements ScheduleRecordDAO {
                 EntityTransaction transaction = entityManager.getTransaction();
                 try {
                     transaction.begin();
+                    Station station = stationList.get(0);
                     ScheduleRecord newSchedule = new ScheduleRecord();
+
+                    List<ScheduleRecord> stationScheduleRecords = station.getScheduleList();
+                    if(stationScheduleRecords==null){
+                        stationScheduleRecords= new ArrayList<ScheduleRecord>();
+                    }
+                    stationScheduleRecords.add(newSchedule);
+                    station.setScheduleList(stationScheduleRecords);
+
                     newSchedule.setTrain(trainList.get(0));
-                    newSchedule.setStation(stationList.get(0));
+                    newSchedule.setStation(station);
                     newSchedule.setOffset(offset);
                     newSchedule.setTime(time);
+
                     entityManager.persist(newSchedule);
                     transaction.commit();
                 } finally {
@@ -65,6 +76,9 @@ public class ScheduleRecordDAOImpl implements ScheduleRecordDAO {
             throw new StationNotFoundException("Station not found!");
         } else {
             List<ScheduleRecord> scheduleList = list.get(0).getScheduleList();
+            if(scheduleList==null){
+                return new ArrayList<ScheduleRecord>();
+            }
             return scheduleList;
         }
     }

@@ -1,9 +1,14 @@
 package ru.sbb.test;
 
 
-import ru.sbb.request.*;
+import ru.sbb.request.GetStationScheduleRequest;
+import ru.sbb.request.OverRequest;
+import ru.sbb.request.Request;
+import ru.sbb.request.Response;
+
 import java.io.*;
-import java.net.*;
+import java.net.Socket;
+import java.net.SocketAddress;
 
 /**
  * Created with IntelliJ IDEA.
@@ -49,10 +54,11 @@ public class TestClient {
         output.flush();
     }
 
-    private static void receive(SocketAddress sockAddr, ObjectInputStream input) throws IOException, ClassNotFoundException {
+    private static String receive(SocketAddress sockAddr, ObjectInputStream input) throws IOException, ClassNotFoundException {
         System.out.println("Receiving a message from " + sockAddr + ": ");
         Response m = (Response) input.readObject();
         System.out.println(m.getText());
+        return  m.getText();
     }
 
 }
