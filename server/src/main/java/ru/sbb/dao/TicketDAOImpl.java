@@ -1,7 +1,6 @@
 package ru.sbb.dao;
 
 
-
 import ru.sbb.entity.Passenger;
 import ru.sbb.entity.Ticket;
 import ru.sbb.entity.Train;
@@ -20,8 +19,8 @@ import java.util.List;
 public class TicketDAOImpl implements TicketDAO {
     private EntityManager entityManager;
 
-    public TicketDAOImpl(EntityManager entityManager){
-        this.entityManager=entityManager;
+    public TicketDAOImpl(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
 
     @Override
@@ -36,6 +35,9 @@ public class TicketDAOImpl implements TicketDAO {
             newTicket.setPassenger(newPassenger);
 
             List<Ticket> trainTicketList = train.getTicketList();
+            if (trainTicketList == null) {
+                trainTicketList = new ArrayList<Ticket>();
+            }
             trainTicketList.add(newTicket);
             train.setTicketList(trainTicketList);
 
@@ -62,7 +64,6 @@ public class TicketDAOImpl implements TicketDAO {
         List<Ticket> list = query.getResultList();
         return list;
     }
-
 
 
 }

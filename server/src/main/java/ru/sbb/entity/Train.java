@@ -3,7 +3,7 @@ package ru.sbb.entity;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
+@Entity(name = "ru.sbb.entity.Train")
 @Table(name = "train")
 public class Train {
 
