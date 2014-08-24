@@ -2,6 +2,7 @@ package ru.sbb.dao;
 
 
 import ru.sbb.entity.Station;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
@@ -13,8 +14,8 @@ import javax.persistence.EntityTransaction;
 public class StationDAOImpl implements StationDAO {
     private EntityManager entityManager;
 
-    public StationDAOImpl(EntityManager entityManager){
-        this.entityManager=entityManager;
+    public StationDAOImpl(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
 
     @Override

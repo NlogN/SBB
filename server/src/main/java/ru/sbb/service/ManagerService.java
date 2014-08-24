@@ -61,7 +61,7 @@ public class ManagerService {
         scheduleRecordDAO.addScheduleRecord(stationName, trainNumber, time, offset);
     }
 
-    public String getPassengersByTrainInfo(int trainNum) {
+    public String getPassengersInfoByTrainNum(int trainNum) {
         List<Passenger> passengerList = passengerDAO.getPassengersByTrain(trainNum);
         if (passengerList.isEmpty()) {
             return "no data";

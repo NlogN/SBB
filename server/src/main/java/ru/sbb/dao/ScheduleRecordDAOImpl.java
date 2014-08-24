@@ -22,8 +22,8 @@ import java.util.List;
 public class ScheduleRecordDAOImpl implements ScheduleRecordDAO {
     private EntityManager entityManager;
 
-    public ScheduleRecordDAOImpl(EntityManager entityManager){
-        this.entityManager=entityManager;
+    public ScheduleRecordDAOImpl(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
 
     @Override
@@ -33,27 +33,36 @@ public class ScheduleRecordDAOImpl implements ScheduleRecordDAO {
         List<Station> stationList = stationQuery.getResultList();
         if (stationList.isEmpty()) {
             throw new StationNotFoundException("Station not found!");
-        } else{
+        } else {
             Query trainQuery = entityManager.createQuery("SELECT tr FROM ru.sbb.entity.Train tr where tr.number =:trNum");
             trainQuery.setParameter("trNum", trainNumber);
             List<Train> trainList = trainQuery.getResultList();
             if (trainList.isEmpty()) {
                 throw new TrainNotFoundException("Train not found!");
-            } else{
+            } else {
                 EntityTransaction transaction = entityManager.getTransaction();
                 try {
+
                     transaction.begin();
+                    Train train = trainList.get(0);
                     Station station = stationList.get(0);
                     ScheduleRecord newSchedule = new ScheduleRecord();
 
                     List<ScheduleRecord> stationScheduleRecords = station.getScheduleList();
-                    if(stationScheduleRecords==null){
-                        stationScheduleRecords= new ArrayList<ScheduleRecord>();
+                    if (stationScheduleRecords == null) {
+                        stationScheduleRecords = new ArrayList<ScheduleRecord>();
                     }
                     stationScheduleRecords.add(newSchedule);
                     station.setScheduleList(stationScheduleRecords);
 
-                    newSchedule.setTrain(trainList.get(0));
+                    List<ScheduleRecord> trainScheduleRecords = train.getScheduleList();
+                    if (trainScheduleRecords == null) {
+                        trainScheduleRecords = new ArrayList<ScheduleRecord>();
+                    }
+                    trainScheduleRecords.add(newSchedule);
+                    train.setScheduleList(trainScheduleRecords);
+
+                    newSchedule.setTrain(train);
                     newSchedule.setStation(station);
                     newSchedule.setOffset(offset);
                     newSchedule.setTime(time);
@@ -76,7 +85,7 @@ public class ScheduleRecordDAOImpl implements ScheduleRecordDAO {
             throw new StationNotFoundException("Station not found!");
         } else {
             List<ScheduleRecord> scheduleList = list.get(0).getScheduleList();
-            if(scheduleList==null){
+            if (scheduleList == null) {
                 return new ArrayList<ScheduleRecord>();
             }
             return scheduleList;

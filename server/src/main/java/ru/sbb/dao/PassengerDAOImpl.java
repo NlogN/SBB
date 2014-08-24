@@ -15,8 +15,8 @@ import java.util.List;
 public class PassengerDAOImpl implements PassengerDAO {
     private EntityManager entityManager;
 
-    public PassengerDAOImpl(EntityManager entityManager){
-        this.entityManager=entityManager;
+    public PassengerDAOImpl(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
 
     @Override

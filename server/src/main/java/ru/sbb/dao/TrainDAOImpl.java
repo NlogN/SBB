@@ -15,11 +15,11 @@ import java.util.List;
  * User: Ilya Makeev
  * Date: 21.08.14
  */
-public class TrainDAOImpl implements TrainDAO{
+public class TrainDAOImpl implements TrainDAO {
     private EntityManager entityManager;
 
-    public TrainDAOImpl(EntityManager entityManager){
-        this.entityManager=entityManager;
+    public TrainDAOImpl(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
 
     @Override
@@ -38,7 +38,7 @@ public class TrainDAOImpl implements TrainDAO{
     }
 
     @Override
-    public List<Train> getTrainByNum(int trainNum){
+    public List<Train> getTrainByNum(int trainNum) {
         Query query = entityManager.createQuery("SELECT tr FROM ru.sbb.entity.Train tr where tr.number =:trNum");
         query.setParameter("trNum", trainNum);
         List<Train> list = query.getResultList();
@@ -59,7 +59,7 @@ public class TrainDAOImpl implements TrainDAO{
     }
 
 
-     boolean checkTrainRoute(Train train, java.util.Date lowerBound, java.util.Date upperBound, String stationAName, String stationBName) {
+    boolean checkTrainRoute(Train train, java.util.Date lowerBound, java.util.Date upperBound, String stationAName, String stationBName) {
         List<ScheduleRecord> scheduleList = train.getScheduleList();
         ScheduleRecord scheduleA = null;
         ScheduleRecord scheduleB = null;

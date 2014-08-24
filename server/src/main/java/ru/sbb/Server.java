@@ -111,12 +111,11 @@ public class Server {
                                         break;
                                     }
                                     default:
-                                        System.out.println();
                                         send(sockAddr, output, new Response(""));
                                         break;
                                 }
                             } catch (EOFException e) {
-                                log.info("End of stream");
+                                log.info("End of inputStream");
                                 break;
                             }
                         }
@@ -163,7 +162,7 @@ public class Server {
         GetTrainPassengersRequest request = (GetTrainPassengersRequest) req;
         String res;
         if (regService.checkPassword(request.getPassword())) {
-            res = managerService.getPassengersByTrainInfo(request.getTrainNum());
+            res = managerService.getPassengersInfoByTrainNum(request.getTrainNum());
         } else {
             res = "incorrect password";
         }

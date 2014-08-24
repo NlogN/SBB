@@ -35,9 +35,9 @@ public class TicketDAOImpl implements TicketDAO {
             newTicket.setTrain(train);
             newTicket.setPassenger(newPassenger);
 
-            List<Ticket> ticketList1 = train.getTicketList();
-            ticketList1.add(newTicket);
-            train.setTicketList(ticketList1);
+            List<Ticket> trainTicketList = train.getTicketList();
+            trainTicketList.add(newTicket);
+            train.setTicketList(trainTicketList);
 
             newTicket.setTrain(train);
 
@@ -55,7 +55,7 @@ public class TicketDAOImpl implements TicketDAO {
     }
 
     @Override
-    public List<Ticket> getTicketByDayAndTrain(Train train, java.util.Date dateOfRace) {
+    public List<Ticket> getTicketsByDayAndTrain(Train train, java.util.Date dateOfRace) {
         Query query = entityManager.createQuery("SELECT tic FROM ru.sbb.entity.Ticket tic where tic.train.number =:trNum and tic.date =:day");
         query.setParameter("trNum", train.getNumber());
         query.setParameter("day", dateOfRace);

@@ -1,6 +1,6 @@
 package ru.sbb.request;
 
-import java.io.Serializable;
+
 
 /**
  * Created with IntelliJ IDEA.

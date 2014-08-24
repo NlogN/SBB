@@ -19,9 +19,6 @@ public class Client {
     private ObjectInputStream input;
 
 
-    void close() throws IOException {
-        sock.close();
-    }
 
     public Client() throws IOException {
         try {
@@ -49,9 +46,8 @@ public class Client {
 
     public String receive() throws IOException {
         System.out.print("Receiving a message from " + sockAddr + ": ");
-        Response m = null;
         try {
-            m = (Response) input.readObject();
+            Response m = (Response) input.readObject();
             System.out.println(m);
             return m.toString();
         } catch (ClassNotFoundException e) {

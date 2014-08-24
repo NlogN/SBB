@@ -15,6 +15,6 @@ public interface TicketDAO {
 
     public void addTicket(Passenger newPassenger, Train train, java.util.Date dateOfRace);
 
-    public List<Ticket> getTicketByDayAndTrain(Train train, java.util.Date dateOfRace);
+    public List<Ticket> getTicketsByDayAndTrain(Train train, java.util.Date dateOfRace);
 
 }
