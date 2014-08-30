@@ -13,15 +13,15 @@ import java.util.Date;
 public class DateBuilder {
 
     public static long getCurrentTime() {
-        java.util.Date date = new java.util.Date();
+        Date date = new Date();
         return date.getTime() / 1000;
     }
 
-    public static long getUnixTime(java.util.Date date) {
+    public static long getUnixTime(Date date) {
         return date.getTime() / 1000;
     }
 
-    public static java.util.Date createDate(int year, int month, int day, int hourofday, int minute, int second) {
+    public static Date createDate(int year, int month, int day, int hourofday, int minute, int second) {
         if (day == 0 && month == 0 && year == 0) {
             return null;
         }
@@ -31,19 +31,19 @@ public class DateBuilder {
         return cal.getTime();
     }
 
-    public static java.util.Date createDateTime(String s) throws ParseException {
+    public static Date createDateTime(String s) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = sdf.parse(s);
         return date;
     }
 
-    public static java.util.Date createDate(String s) throws ParseException {
+    public static Date createDate(String s) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         Date date = sdf.parse(s);
         return date;
     }
 
-    public static java.util.Date createDate(int year, int month, int day) {
+    public static Date createDate(int year, int month, int day) {
         return createDate(year, month, day, 0, 0, 0);
     }
 

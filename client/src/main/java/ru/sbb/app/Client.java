@@ -1,10 +1,9 @@
 package ru.sbb.app;
 
-import ru.sbb.request.*;
-
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketAddress;
+import ru.sbb.request.*;
 
 /**
  * Created with IntelliJ IDEA.

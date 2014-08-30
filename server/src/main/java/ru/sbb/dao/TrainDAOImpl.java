@@ -1,6 +1,5 @@
 package ru.sbb.dao;
 
-import ru.sbb.DateBuilder;
 import ru.sbb.entity.ScheduleRecord;
 import ru.sbb.entity.Train;
 
@@ -9,6 +8,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
+import ru.sbb.DateBuilder;
 
 /**
  * Created with IntelliJ IDEA.

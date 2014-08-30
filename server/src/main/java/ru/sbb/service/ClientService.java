@@ -1,12 +1,17 @@
 package ru.sbb.service;
 
 
-import ru.sbb.DateBuilder;
-import ru.sbb.dao.*;
-import ru.sbb.entity.*;
+import ru.sbb.dao.ScheduleRecordDAO;
+import ru.sbb.dao.TicketDAO;
+import ru.sbb.dao.TrainDAO;
+import ru.sbb.entity.Passenger;
+import ru.sbb.entity.ScheduleRecord;
+import ru.sbb.entity.Ticket;
+import ru.sbb.entity.Train;
 import ru.sbb.exception.BuyTicketException;
 import ru.sbb.exception.StationNotFoundException;
 import ru.sbb.exception.TrainNotFoundException;
+import ru.sbb.DateBuilder;
 
 import java.util.List;
 

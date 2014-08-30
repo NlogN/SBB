@@ -1,8 +1,5 @@
 package ru.sbb.app;
 
-import ru.sbb.DateBuilder;
-import ru.sbb.request.*;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,6 +7,8 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
+import ru.sbb.DateBuilder;
+import ru.sbb.request.*;
 
 /**
  * Created with IntelliJ IDEA.

@@ -1,6 +1,9 @@
 package ru.sbb.service;
 
-import ru.sbb.dao.*;
+import ru.sbb.dao.PassengerDAO;
+import ru.sbb.dao.ScheduleRecordDAO;
+import ru.sbb.dao.StationDAO;
+import ru.sbb.dao.TrainDAO;
 import ru.sbb.entity.Passenger;
 import ru.sbb.entity.Train;
 import ru.sbb.exception.StationNotFoundException;

@@ -6,15 +6,18 @@ import ru.sbb.entity.Passenger;
 import ru.sbb.exception.BuyTicketException;
 import ru.sbb.exception.StationNotFoundException;
 import ru.sbb.exception.TrainNotFoundException;
-import ru.sbb.request.*;
+import ru.sbb.request.Request;
 import ru.sbb.service.ClientService;
 import ru.sbb.service.ManagerService;
+import ru.sbb.request.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.io.*;
-import java.net.*;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.SocketAddress;
 import java.util.logging.Logger;
 
 /**
