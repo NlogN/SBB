@@ -76,7 +76,7 @@ public class ScheduleRecordDAOImpl implements ScheduleRecordDAO {
         }
     }
 
-
+    @Override
     public List<ScheduleRecord> getStationScheduleRecords(String stationName) throws StationNotFoundException {
         Query query = entityManager.createQuery("SELECT st FROM ru.sbb.entity.Station st where st.name =:stName");
         query.setParameter("stName", stationName);
@@ -90,5 +90,22 @@ public class ScheduleRecordDAOImpl implements ScheduleRecordDAO {
             }
             return scheduleList;
         }
+    }
+
+    @Override
+    public List<ScheduleRecord> findScheduleRecordsByStationNameAndTrain(Train train, String stationName) {
+        List<ScheduleRecord> trainScheduleList = train.getScheduleList();
+        if (trainScheduleList != null) {
+            List<ScheduleRecord> scheduleRecordList = new ArrayList<ScheduleRecord>();
+            for (ScheduleRecord schedule : trainScheduleList) {
+                if (schedule.getStation().getName().equals(stationName)) {
+                    scheduleRecordList.add(schedule);
+                }
+            }
+            return scheduleRecordList;
+        } else {
+            return new ArrayList<ScheduleRecord>();
+        }
+
     }
 }

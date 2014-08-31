@@ -18,7 +18,9 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketAddress;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
 
 /**
  * Created with IntelliJ IDEA.
@@ -30,7 +32,7 @@ public class Server {
     private ClientService clientService;
     private ManagerService managerService;
     private final RegistrationService regService = new RegistrationService();
-    static Logger log = Logger.getLogger(Server.class.getName());
+    private static Logger log = Logger.getLogger(Server.class);
 
 
     Server(ClientService clientService, ManagerService managerService) {
@@ -41,6 +43,8 @@ public class Server {
 
 
     public static void main(String[] args) throws IOException {
+        PropertyConfigurator.configure("server\\src\\main\\resources\\META-INF\\log4j.properties");
+
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("sbb_unit");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
@@ -50,7 +54,7 @@ public class Server {
         PassengerDAO passengerDAO = new PassengerDAOImpl(entityManager);
         StationDAO stationDAO = new StationDAOImpl(entityManager);
 
-        ClientService clientService = new ClientService(ticketDAO, trainDAO, scheduleRecordDAO);
+        ClientService clientService = new ClientService(ticketDAO, trainDAO, scheduleRecordDAO, passengerDAO);
         ManagerService managerService = new ManagerService(passengerDAO, trainDAO, stationDAO, scheduleRecordDAO);
 
         Server server = new Server(clientService, managerService);
@@ -155,7 +159,7 @@ public class Server {
         try {
             res = clientService.getStationSchedule(request.getStationName());
         } catch (StationNotFoundException stationNotFoundExeption) {
-            res = stationNotFoundExeption.getMessage();
+            res = "No schedule found";
         }
 
         send(sockAddr, output, new Response(res));

@@ -1,6 +1,7 @@
 package ru.sbb.service;
 
 
+import ru.sbb.dao.PassengerDAO;
 import ru.sbb.dao.ScheduleRecordDAO;
 import ru.sbb.dao.TicketDAO;
 import ru.sbb.dao.TrainDAO;
@@ -24,11 +25,13 @@ public class ClientService {
     private TicketDAO ticketDAO;
     private ScheduleRecordDAO scheduleRecordDAO;
     private TrainDAO trainDAO;
+    private PassengerDAO passengerDAO;
 
-    public ClientService(TicketDAO ticketDAO, TrainDAO trainDAO, ScheduleRecordDAO scheduleRecordDAO) {
+    public ClientService(TicketDAO ticketDAO, TrainDAO trainDAO, ScheduleRecordDAO scheduleRecordDAO, PassengerDAO passengerDAO) {
         this.scheduleRecordDAO = scheduleRecordDAO;
         this.trainDAO = trainDAO;
         this.ticketDAO = ticketDAO;
+        this.passengerDAO = passengerDAO;
     }
 
 
@@ -88,14 +91,11 @@ public class ClientService {
     }
 
     boolean checkStationVisit(Train train, String stationName, java.util.Date dateOfRace) {
-        List<ScheduleRecord> scheduleList = train.getScheduleList();
-        if (scheduleList != null) {
+        List<ScheduleRecord> scheduleList = scheduleRecordDAO.findScheduleRecordsByStationNameAndTrain(train, stationName);
+        if (!scheduleList.isEmpty()) {
             for (ScheduleRecord schedule : scheduleList) {
-                if (schedule.getStation().getName().equals(stationName)) {
-
-                    if ((schedule.getUnixTime() > DateBuilder.getUnixTime(dateOfRace)) && (schedule.getUnixTime() < DateBuilder.getUnixTime(dateOfRace) + 86400)) {
-                        return true;
-                    }
+                if ((schedule.getUnixTime() > DateBuilder.getUnixTime(dateOfRace)) && (schedule.getUnixTime() < DateBuilder.getUnixTime(dateOfRace) + 86400)) {
+                    return true;
                 }
             }
         }
@@ -104,16 +104,12 @@ public class ClientService {
 
     boolean checkStartTime(Train train, String stationName) {
         long currentTime = DateBuilder.getCurrentTime();
-        List<ScheduleRecord> scheduleList = train.getScheduleList();
-        if (scheduleList != null) {
+        List<ScheduleRecord> scheduleList = scheduleRecordDAO.findScheduleRecordsByStationNameAndTrain(train, stationName);
+        if (!scheduleList.isEmpty()) {
             for (ScheduleRecord schedule : scheduleList) {
-                if (schedule.getStation().getName().equals(stationName)) {
-
-                    if ((schedule.getUnixTime() > (currentTime + 360))) {
-                        return true;
-                    }
+                if ((schedule.getUnixTime() > (currentTime + 360))) {
+                    return true;
                 }
-
             }
         }
         return false;
@@ -125,16 +121,8 @@ public class ClientService {
     }
 
     boolean checkSamePassengerNotReg(Train train, String name, String surname, java.util.Date birthday) {
-        List<Ticket> ticketList = train.getTicketList();
-        if (ticketList != null) {
-            for (Ticket ticket : ticketList) {
-                Passenger passenger = ticket.getPassenger();
-                if (passenger.getName().equals(name) && passenger.getSurname().equals(surname) && passenger.getDate().equals(birthday)) {
-                    return false;
-                }
-            }
-        }
-        return true;
+        List<Passenger> passengerList = passengerDAO.getPassengersByInfo(train, name, surname, birthday);
+        return passengerList.isEmpty();
     }
 
 

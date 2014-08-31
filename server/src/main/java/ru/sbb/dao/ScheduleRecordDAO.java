@@ -1,6 +1,7 @@
 package ru.sbb.dao;
 
 import ru.sbb.entity.ScheduleRecord;
+import ru.sbb.entity.Train;
 import ru.sbb.exception.StationNotFoundException;
 import ru.sbb.exception.TrainNotFoundException;
 
@@ -16,4 +17,7 @@ public interface ScheduleRecordDAO {
     void addScheduleRecord(String stationName, int trainNumber, Date time, int offset) throws StationNotFoundException, TrainNotFoundException;
 
     List<ScheduleRecord> getStationScheduleRecords(String stationName) throws StationNotFoundException;
+
+    public List<ScheduleRecord> findScheduleRecordsByStationNameAndTrain(Train train, String stationName);
+
 }

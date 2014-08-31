@@ -59,7 +59,7 @@ public class TrainDAOImpl implements TrainDAO {
     }
 
 
-    boolean checkTrainRoute(Train train, java.util.Date lowerBound, java.util.Date upperBound, String stationAName, String stationBName) {
+    public boolean checkTrainRoute(Train train, java.util.Date lowerBound, java.util.Date upperBound, String stationAName, String stationBName) {
         List<ScheduleRecord> scheduleList = train.getScheduleList();
         ScheduleRecord scheduleA = null;
         ScheduleRecord scheduleB = null;
