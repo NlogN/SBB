@@ -32,7 +32,7 @@ public class Server {
     private ClientService clientService;
     private ManagerService managerService;
     private final RegistrationService regService = new RegistrationService();
-    private static Logger log = Logger.getLogger(Server.class);
+    public static Logger log = Logger.getLogger(Server.class);
 
 
     Server(ClientService clientService, ManagerService managerService) {
