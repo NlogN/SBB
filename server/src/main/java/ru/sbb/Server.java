@@ -18,6 +18,7 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketAddress;
+
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
@@ -34,15 +35,11 @@ public class Server {
     private final RegistrationService regService = new RegistrationService();
     public static Logger log = Logger.getLogger(Server.class);
 
-
-    Server(ClientService clientService, ManagerService managerService) {
-        this.clientService = clientService;
-        this.managerService = managerService;
+    public ManagerService getManagerService(){
+        return managerService;
     }
 
-
-
-    public static void main(String[] args) throws IOException {
+    public Server(){
         PropertyConfigurator.configure("server\\src\\main\\resources\\META-INF\\log4j.properties");
 
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("sbb_unit");
@@ -56,10 +53,24 @@ public class Server {
 
         ClientService clientService = new ClientService(ticketDAO, trainDAO, scheduleRecordDAO, passengerDAO);
         ManagerService managerService = new ManagerService(passengerDAO, trainDAO, stationDAO, scheduleRecordDAO);
+        this.clientService = clientService;
+        this.managerService = managerService;
+    }
 
-        Server server = new Server(clientService, managerService);
+
+//    Server(ClientService clientService, ManagerService managerService) {
+//        this.clientService = clientService;
+//        this.managerService = managerService;
+//    }
+
+//    public void init() {
+//
+//    }
+
+    public static void main(String[] args) throws IOException {
+        Server server = new Server();
+      //  server.init();
         server.start();
-
     }
 
 
