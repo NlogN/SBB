@@ -1,5 +1,3 @@
-
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import java.io.Serializable;
@@ -15,12 +13,12 @@ public class TrainBean implements Serializable {
     private String trains = "train nums";
 
     public void setTrains(String trains) {
-       // ManagerService managerService = new Server().getManagerService();
-       // this.trains = managerService.getTrainNumbers();
+        // ManagerService managerService = new Server().getManagerService();
+        // this.trains = managerService.getTrainNumbers();
     }
 
     public String getTrains() {
-       return trains;
+        return trains;
     }
 
 }
