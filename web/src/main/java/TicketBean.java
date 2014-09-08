@@ -1,7 +1,18 @@
 
 
+
+
 public class TicketBean {
     private String name;
+    private String num;
+
+    public String getNum() {
+        return num;
+    }
+
+    public void setNum(String num) {
+        this.num = num;
+    }
 
     public String getName() {
         return name;
@@ -12,7 +23,7 @@ public class TicketBean {
     }
 
     public String getOperationResult() {
-        return "train " + name + " buy ticket operation result";
+        return "train " + num + " passenger " + name + " buy ticket operation result";
     }
 
 }
