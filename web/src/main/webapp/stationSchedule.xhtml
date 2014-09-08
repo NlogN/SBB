@@ -6,12 +6,17 @@
 <body>
 <ui:composition template="layout.xhtml">
     <ui:define name="windowTitle">
-        home
+        station
     </ui:define>
 
     <ui:define name="content">
-     start page info
+        <div>
+            <ui:insert name="heading">
+                <ui:include src="stationScheduleForm.xhtml"/>
+            </ui:insert>
+        </div>
     </ui:define>
 </ui:composition>
 </body>
 </html>
+
