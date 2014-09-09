@@ -22,9 +22,13 @@ import java.util.List;
 public class ScheduleRecordDAOImpl implements ScheduleRecordDAO {
     private EntityManager entityManager;
 
-    public ScheduleRecordDAOImpl(EntityManager entityManager) {
+    public void setEntityManager(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
+
+//    public ScheduleRecordDAOImpl(EntityManager entityManager) {
+//        this.entityManager = entityManager;
+//    }
 
     @Override
     public void addScheduleRecord(String stationName, int trainNumber, Date time, int offset) throws StationNotFoundException, TrainNotFoundException {

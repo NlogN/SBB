@@ -27,12 +27,29 @@ public class ClientService {
     private TrainDAO trainDAO;
     private PassengerDAO passengerDAO;
 
-    public ClientService(TicketDAO ticketDAO, TrainDAO trainDAO, ScheduleRecordDAO scheduleRecordDAO, PassengerDAO passengerDAO) {
-        this.scheduleRecordDAO = scheduleRecordDAO;
-        this.trainDAO = trainDAO;
+    public void setTicketDAO(TicketDAO ticketDAO) {
         this.ticketDAO = ticketDAO;
+    }
+
+    public void setScheduleRecordDAO(ScheduleRecordDAO scheduleRecordDAO) {
+        this.scheduleRecordDAO = scheduleRecordDAO;
+    }
+
+    public void setTrainDAO(TrainDAO trainDAO) {
+        this.trainDAO = trainDAO;
+    }
+
+    public void setPassengerDAO(PassengerDAO passengerDAO) {
         this.passengerDAO = passengerDAO;
     }
+
+
+//    public ClientService(TicketDAO ticketDAO, TrainDAO trainDAO, ScheduleRecordDAO scheduleRecordDAO, PassengerDAO passengerDAO) {
+//        this.scheduleRecordDAO = scheduleRecordDAO;
+//        this.trainDAO = trainDAO;
+//        this.ticketDAO = ticketDAO;
+//        this.passengerDAO = passengerDAO;
+//    }
 
 
     public String getTrainsByRoute(java.util.Date lowerBound, java.util.Date upperBound, String stationAName, String stationBName) {

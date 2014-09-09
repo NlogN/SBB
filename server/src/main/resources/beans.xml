@@ -9,6 +9,25 @@
         <property name="entityManager" ref="entityManager"/>
     </bean>
 
+    <bean id="scheduleRecordDAO" class="ru.sbb.dao.ScheduleRecordDAOImpl">
+        <property name="entityManager" ref="entityManager"/>
+    </bean>
+
+    <bean id="ticketDAO" class="ru.sbb.dao.TicketDAOImpl">
+        <property name="entityManager" ref="entityManager"/>
+    </bean>
+
+    <bean id="trainDAO" class="ru.sbb.dao.TrainDAOImpl">
+        <property name="entityManager" ref="entityManager"/>
+    </bean>
+
+    <bean id="clientService" class="ru.sbb.service.ClientService">
+        <property name="ticketDAO" ref="ticketDAO"/>
+        <property name="trainDAO" ref="trainDAO"/>
+        <property name="scheduleRecordDAO" ref="scheduleRecordDAO"/>
+        <property name="passengerDAO" ref="passengerDAO"/>
+    </bean>
+
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
         <property name="persistenceUnitName" value="sbb_unit"/>
     </bean>

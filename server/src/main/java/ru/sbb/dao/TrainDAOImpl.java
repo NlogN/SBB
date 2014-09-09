@@ -18,9 +18,13 @@ import ru.sbb.DateBuilder;
 public class TrainDAOImpl implements TrainDAO {
     private EntityManager entityManager;
 
-    public TrainDAOImpl(EntityManager entityManager) {
+    public void setEntityManager(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
+
+//    public TrainDAOImpl(EntityManager entityManager) {
+//        this.entityManager = entityManager;
+//    }
 
     @Override
     public void addTrain(int number, int capacity) {

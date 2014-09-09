@@ -7,7 +7,10 @@ import java.util.Date;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+
 import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.sbb.dao.*;
 import ru.sbb.entity.Passenger;
 import ru.sbb.exception.BuyTicketException;
@@ -24,13 +27,19 @@ import static junit.framework.TestCase.assertTrue;
  * Date: 02.09.14
  */
 public class ClientServiceTest {
-    EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("sbb_unit");
-    EntityManager entityManager = entityManagerFactory.createEntityManager();
-    TrainDAO trainDAO = new TrainDAOImpl(entityManager);
-    TicketDAO ticketDAO = new TicketDAOImpl(entityManager);
-    ScheduleRecordDAO scheduleRecordDAO = new ScheduleRecordDAOImpl(entityManager);
-    PassengerDAO passengerDAO = new PassengerDAOImpl();
-    ClientService clientService = new ClientService(ticketDAO, trainDAO, scheduleRecordDAO, passengerDAO);
+    //    EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("sbb_unit");
+//    EntityManager entityManager = entityManagerFactory.createEntityManager();
+//
+//    TrainDAO trainDAO = new TrainDAOImpl(entityManager);
+//    TicketDAO ticketDAO = new TicketDAOImpl(entityManager);
+//    ScheduleRecordDAO scheduleRecordDAO = new ScheduleRecordDAOImpl(entityManager);
+//    PassengerDAO passengerDAO = new PassengerDAOImpl();
+//
+//    ClientService clientService = new ClientService(ticketDAO, trainDAO, scheduleRecordDAO, passengerDAO);
+    ApplicationContext context =
+            new ClassPathXmlApplicationContext("beans.xml");
+
+    ClientService clientService = (ClientService) context.getBean("clientService");
 
 
     @Test(expected = StationNotFoundException.class)

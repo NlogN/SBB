@@ -19,9 +19,13 @@ import java.util.List;
 public class TicketDAOImpl implements TicketDAO {
     private EntityManager entityManager;
 
-    public TicketDAOImpl(EntityManager entityManager) {
+    public void setEntityManager(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
+
+//    public TicketDAOImpl(EntityManager entityManager) {
+//        this.entityManager = entityManager;
+//    }
 
     @Override
     public void addTicket(Passenger newPassenger, Train train, java.util.Date dateOfRace) {
