@@ -1,11 +1,13 @@
 package ru.sbb.dao;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import ru.sbb.entity.Passenger;
 import ru.sbb.entity.Ticket;
 import ru.sbb.entity.Train;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +18,20 @@ import java.util.List;
  * Date: 21.08.14
  */
 public class PassengerDAOImpl implements PassengerDAO {
+
     private EntityManager entityManager;
 
-    public PassengerDAOImpl(EntityManager entityManager) {
-        this.entityManager = entityManager;
+    public void setEntityManager(EntityManager entityManager){
+        this.entityManager=entityManager;
     }
+
+    public EntityManager getEntityManager(){
+        return entityManager;
+    }
+
+//    public PassengerDAOImpl(EntityManager entityManager) {
+//        this.entityManager = entityManager;
+//    }
 
     @Override
     public List<Passenger> getPassengersByTrain(int trainNum) {

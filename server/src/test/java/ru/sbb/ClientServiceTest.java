@@ -29,7 +29,7 @@ public class ClientServiceTest {
     TrainDAO trainDAO = new TrainDAOImpl(entityManager);
     TicketDAO ticketDAO = new TicketDAOImpl(entityManager);
     ScheduleRecordDAO scheduleRecordDAO = new ScheduleRecordDAOImpl(entityManager);
-    PassengerDAO passengerDAO = new PassengerDAOImpl(entityManager);
+    PassengerDAO passengerDAO = new PassengerDAOImpl();
     ClientService clientService = new ClientService(ticketDAO, trainDAO, scheduleRecordDAO, passengerDAO);
 
 

@@ -25,7 +25,7 @@ public class ManagerServiceTest {
 
     TrainDAO trainDAO = new TrainDAOImpl(entityManager);
     ScheduleRecordDAO scheduleRecordDAO = new ScheduleRecordDAOImpl(entityManager);
-    PassengerDAO passengerDAO = new PassengerDAOImpl(entityManager);
+    PassengerDAO passengerDAO = new PassengerDAOImpl();
     StationDAO stationDAO = new StationDAOImpl(entityManager);
     ManagerService managerService = new ManagerService(passengerDAO, trainDAO, stationDAO, scheduleRecordDAO);
 
