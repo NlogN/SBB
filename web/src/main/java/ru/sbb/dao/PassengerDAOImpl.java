@@ -11,11 +11,15 @@ import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Named;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Ilya Makeev
  * Date: 21.08.14
  */
+
+//@Named
 public class PassengerDAOImpl implements PassengerDAO {
     private EntityManager entityManager;
 

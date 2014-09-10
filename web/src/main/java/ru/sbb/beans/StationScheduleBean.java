@@ -2,6 +2,7 @@ package ru.sbb.beans;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import ru.sbb.dao.ScheduleRecordDAO;
 import ru.sbb.dao.ScheduleRecordDAOImpl;
 import ru.sbb.entity.ScheduleRecord;
 import ru.sbb.exception.StationNotFoundException;
@@ -11,9 +12,22 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+import org.springframework.context.annotation.Scope;
+
+//@Named
+//@Scope("session")
 public class StationScheduleBean {
 
     private String name;
+
+   // @Inject
+    ScheduleRecordDAO scheduleRecordDAOImpl;
+
+    public void setScheduleRecordDAOImpl(ScheduleRecordDAO scheduleRecordDAOImpl){
+        this.scheduleRecordDAOImpl=scheduleRecordDAOImpl;
+    }
 
     public String getName() {
         return name;
@@ -39,18 +53,18 @@ public class StationScheduleBean {
 //        if (name==null){
 //            name="";
 //        }
-//        try {
-//           // String result = clientService.getStationSchedule(name);
-//            String result = "";
-//            List<ScheduleRecord> recordList = scheduleRecordDAO.getStationScheduleRecords(name);
-//            for (ScheduleRecord record:recordList){
-//                result+=record.toString()+" ";
-//            }
-//            return result;
-//        } catch (StationNotFoundException e) {
-//            return "Station Not Found";
-//        }
-       return "Schedule of station " + name;
+        try {
+           // String result = clientService.getStationSchedule(name);
+            String result = "";
+            List<ScheduleRecord> recordList = scheduleRecordDAOImpl.getStationScheduleRecords(name);
+            for (ScheduleRecord record:recordList){
+                result+=record.toString()+" ";
+            }
+            return result;
+        } catch (StationNotFoundException e) {
+            return "Station Not Found";
+        }
+      // return "Schedule of station " + name;
     }
 
 
