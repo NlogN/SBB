@@ -1,17 +1,6 @@
 package ru.sbb;
 
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ru.sbb.dao.PassengerDAOImpl;
-import ru.sbb.entity.Passenger;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import java.util.List;
-
-
 /**
  * Created with IntelliJ IDEA.
  * User: Ilya Makeev

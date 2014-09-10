@@ -6,7 +6,7 @@
 
     <persistence-unit name="sbb_unit" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
-        <!--<mapping-file>META-INF/persistence.xml</mapping-file>-->
+        <mapping-file>META-INF/persistence.xml</mapping-file>
         <!--<class>PersistenceExample.Student</class>-->
         <!--><class>PersistenceExample.MyEntity2</class><-->
         <properties>

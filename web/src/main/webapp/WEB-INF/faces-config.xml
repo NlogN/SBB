@@ -6,17 +6,17 @@
               version="2.0">
     <managed-bean>
         <managed-bean-name>ticketBean</managed-bean-name>
-        <managed-bean-class>TicketBean</managed-bean-class>
+        <managed-bean-class>ru.sbb.beans.TicketBean</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>stationScheduleBean</managed-bean-name>
-        <managed-bean-class>StationScheduleBean</managed-bean-class>
+        <managed-bean-class>ru.sbb.beans.StationScheduleBean</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>trainBean</managed-bean-name>
-        <managed-bean-class>TrainBean</managed-bean-class>
+        <managed-bean-class>ru.sbb.beans.TrainBean</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
 

@@ -1,5 +1,4 @@
-
-
+package ru.sbb.beans;
 
 
 public class TicketBean {

@@ -4,14 +4,10 @@ package ru.sbb;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ru.sbb.dao.*;
 
 import ru.sbb.exception.StationNotFoundException;
-import ru.sbb.service.ClientService;
 import ru.sbb.service.ManagerService;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+
 import java.io.IOException;
 
 import static junit.framework.TestCase.assertTrue;

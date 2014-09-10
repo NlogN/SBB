@@ -1,7 +1,8 @@
-
+package ru.sbb.beans;
 
 public class TrainBean {
     private String name;
+
 
     public String getName() {
         return name;

@@ -1,18 +1,9 @@
 package ru.sbb;
 
 
-import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ru.sbb.entity.Passenger;
-import ru.sbb.exception.BuyTicketException;
 import ru.sbb.exception.StationNotFoundException;
-import ru.sbb.exception.TrainNotFoundException;
-import ru.sbb.service.ClientService;
 
-import java.io.IOException;
 import java.text.ParseException;
-import java.util.Date;
 
 
 /**

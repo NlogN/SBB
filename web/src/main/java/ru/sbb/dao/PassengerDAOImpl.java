@@ -1,15 +1,12 @@
 package ru.sbb.dao;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import ru.sbb.entity.Passenger;
 import ru.sbb.entity.Ticket;
 import ru.sbb.entity.Train;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
