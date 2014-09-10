@@ -26,13 +26,29 @@ public class ManagerService {
     private StationDAO stationDAO;
     private ScheduleRecordDAO scheduleRecordDAO;
 
-
-    public ManagerService(PassengerDAO passengerDAO, TrainDAO trainDAO, StationDAO stationDAO, ScheduleRecordDAO scheduleRecordDAO) {
-        this.scheduleRecordDAO = scheduleRecordDAO;
-        this.passengerDAO = passengerDAO;
-        this.trainDAO = trainDAO;
-        this.stationDAO = stationDAO;
+    public void setStationDAO(StationDAO stationDAO) {
+        this.stationDAO=stationDAO;
     }
+
+    public void setScheduleRecordDAO(ScheduleRecordDAO scheduleRecordDAO) {
+        this.scheduleRecordDAO = scheduleRecordDAO;
+    }
+
+    public void setTrainDAO(TrainDAO trainDAO) {
+        this.trainDAO = trainDAO;
+    }
+
+    public void setPassengerDAO(PassengerDAO passengerDAO) {
+        this.passengerDAO = passengerDAO;
+    }
+
+
+//    public ManagerService(PassengerDAO passengerDAO, TrainDAO trainDAO, StationDAO stationDAO, ScheduleRecordDAO scheduleRecordDAO) {
+//        this.scheduleRecordDAO = scheduleRecordDAO;
+//        this.passengerDAO = passengerDAO;
+//        this.trainDAO = trainDAO;
+//        this.stationDAO = stationDAO;
+//    }
 
 
     public String getTrainNumbers() {

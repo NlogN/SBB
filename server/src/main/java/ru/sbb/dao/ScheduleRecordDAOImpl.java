@@ -8,6 +8,7 @@ import ru.sbb.exception.StationNotFoundException;
 import ru.sbb.exception.TrainNotFoundException;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import java.util.ArrayList;
@@ -22,9 +23,13 @@ import java.util.List;
 public class ScheduleRecordDAOImpl implements ScheduleRecordDAO {
     private EntityManager entityManager;
 
-    public void setEntityManager(EntityManager entityManager) {
-        this.entityManager = entityManager;
+    public void setEntityManager(EntityManagerFactory entityManagerFactory) {
+        this.entityManager = entityManagerFactory.createEntityManager();
     }
+
+//    public void setEntityManager(EntityManager entityManager) {
+//        this.entityManager = entityManager;
+//    }
 
 //    public ScheduleRecordDAOImpl(EntityManager entityManager) {
 //        this.entityManager = entityManager;

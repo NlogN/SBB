@@ -4,6 +4,7 @@ import ru.sbb.entity.ScheduleRecord;
 import ru.sbb.entity.Train;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import java.util.ArrayList;
@@ -18,9 +19,13 @@ import ru.sbb.DateBuilder;
 public class TrainDAOImpl implements TrainDAO {
     private EntityManager entityManager;
 
-    public void setEntityManager(EntityManager entityManager) {
-        this.entityManager = entityManager;
+    public void setEntityManager(EntityManagerFactory entityManagerFactory) {
+        this.entityManager = entityManagerFactory.createEntityManager();
     }
+
+//    public void setEntityManager(EntityManager entityManager) {
+//        this.entityManager = entityManager;
+//    }
 
 //    public TrainDAOImpl(EntityManager entityManager) {
 //        this.entityManager = entityManager;

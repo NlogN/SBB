@@ -2,9 +2,12 @@ package ru.sbb;
 
 
 import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.sbb.dao.*;
 
 import ru.sbb.exception.StationNotFoundException;
+import ru.sbb.service.ClientService;
 import ru.sbb.service.ManagerService;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -20,34 +23,30 @@ import static junit.framework.TestCase.assertTrue;
  * Date: 02.09.14
  */
 public class ManagerServiceTest {
-//    EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("sbb_unit");
-//    EntityManager entityManager = entityManagerFactory.createEntityManager();
-//
-//    TrainDAO trainDAO = new TrainDAOImpl(entityManager);
-//    ScheduleRecordDAO scheduleRecordDAO = new ScheduleRecordDAOImpl(entityManager);
-//    PassengerDAO passengerDAO = new PassengerDAOImpl();
-//    StationDAO stationDAO = new StationDAOImpl(entityManager);
-//    ManagerService managerService = new ManagerService(passengerDAO, trainDAO, stationDAO, scheduleRecordDAO);
-//
-//
-//    @Test
-//    public void testGetTrainNumbers() throws IOException, StationNotFoundException {
-//        String res = managerService.getTrainNumbers();
-//        System.out.println(res);
-//    }
+    ApplicationContext context =
+            new ClassPathXmlApplicationContext("beans.xml");
+
+    ManagerService managerService = (ManagerService) context.getBean("managerService");
 
 
-//    @Test
-//    public void testGetPassengersInfo1() throws IOException, StationNotFoundException {
-//        String res = managerService.getPassengersInfoByTrainNum(123);
-//        System.out.println(res);
-//    }
-//
-//    @Test
-//    public void testGetPassengersInfo2() throws IOException, StationNotFoundException {
-//        String result = managerService.getPassengersInfoByTrainNum(555);
-//        assertTrue(result.equals("no data"));
-//    }
+    @Test
+    public void testGetTrainNumbers() throws IOException, StationNotFoundException {
+        String res = managerService.getTrainNumbers();
+        System.out.println(res);
+    }
+
+
+    @Test
+    public void testGetPassengersInfo1() throws IOException, StationNotFoundException {
+        String res = managerService.getPassengersInfoByTrainNum(123);
+        System.out.println(res);
+    }
+
+    @Test
+    public void testGetPassengersInfo2() throws IOException, StationNotFoundException {
+        String result = managerService.getPassengersInfoByTrainNum(555);
+        assertTrue(result.equals("no data"));
+    }
 
 
 }

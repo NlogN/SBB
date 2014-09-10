@@ -27,15 +27,6 @@ import static junit.framework.TestCase.assertTrue;
  * Date: 02.09.14
  */
 public class ClientServiceTest {
-    //    EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("sbb_unit");
-//    EntityManager entityManager = entityManagerFactory.createEntityManager();
-//
-//    TrainDAO trainDAO = new TrainDAOImpl(entityManager);
-//    TicketDAO ticketDAO = new TicketDAOImpl(entityManager);
-//    ScheduleRecordDAO scheduleRecordDAO = new ScheduleRecordDAOImpl(entityManager);
-//    PassengerDAO passengerDAO = new PassengerDAOImpl();
-//
-//    ClientService clientService = new ClientService(ticketDAO, trainDAO, scheduleRecordDAO, passengerDAO);
     ApplicationContext context =
             new ClassPathXmlApplicationContext("beans.xml");
 

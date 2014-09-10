@@ -8,6 +8,7 @@ import ru.sbb.entity.Ticket;
 import ru.sbb.entity.Train;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.ArrayList;
@@ -21,9 +22,13 @@ import java.util.List;
 public class PassengerDAOImpl implements PassengerDAO {
     private EntityManager entityManager;
 
-    public void setEntityManager(EntityManager entityManager) {
-        this.entityManager = entityManager;
+    public void setEntityManager(EntityManagerFactory entityManagerFactory) {
+        this.entityManager = entityManagerFactory.createEntityManager();
     }
+
+//    public void setEntityManager(EntityManager entityManager) {
+//        this.entityManager = entityManager;
+//    }
 
 //    public EntityManager getEntityManager() {
 //        return entityManager;

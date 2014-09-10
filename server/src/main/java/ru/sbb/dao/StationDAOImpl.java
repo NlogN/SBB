@@ -4,6 +4,7 @@ package ru.sbb.dao;
 import ru.sbb.entity.Station;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 
 /**
@@ -14,9 +15,15 @@ import javax.persistence.EntityTransaction;
 public class StationDAOImpl implements StationDAO {
     private EntityManager entityManager;
 
-    public StationDAOImpl(EntityManager entityManager) {
-        this.entityManager = entityManager;
+    public void setEntityManager(EntityManagerFactory entityManagerFactory) {
+        this.entityManager = entityManagerFactory.createEntityManager();
     }
+
+//    public StationDAOImpl(EntityManager entityManager) {
+//        this.entityManager = entityManager;
+//    }
+
+
 
     @Override
     public void addStation(String name) {
