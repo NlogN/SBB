@@ -11,7 +11,7 @@ import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Named;
+//import javax.inject.Named;
 
 /**
  * Created with IntelliJ IDEA.

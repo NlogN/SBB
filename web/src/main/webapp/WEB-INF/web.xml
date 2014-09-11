@@ -8,10 +8,10 @@
 
     <!-- Add Support for Spring -->
 
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/applicationContext.xml</param-value>
-    </context-param>
+    <!--<context-param>-->
+        <!--<param-name>contextConfigLocation</param-name>-->
+        <!--<param-value>/WEB-INF/applicationContext.xml</param-value>-->
+    <!--</context-param>-->
     <!--<context-param>-->
         <!--<param-name>contextConfigLocation</param-name>-->
         <!--<param-value>-->

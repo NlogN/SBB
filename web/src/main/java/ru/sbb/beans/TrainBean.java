@@ -13,7 +13,7 @@ public class TrainBean {
     }
 
     public String getOperationResult() {
-        return "train with params: " + name;
+        return "Train with params: " + name;
     }
 
 }

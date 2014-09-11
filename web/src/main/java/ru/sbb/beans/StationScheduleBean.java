@@ -12,8 +12,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.inject.Named;
+//import javax.inject.Inject;
+//import javax.inject.Named;
 import org.springframework.context.annotation.Scope;
 
 //@Named
