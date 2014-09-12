@@ -10,6 +10,7 @@
     <packaging>war</packaging>
 
     <build>
+        <finalName>myproj</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -67,10 +68,15 @@
         </dependency>
 
         <!--Spring-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework</groupId>-->
+            <!--<artifactId>spring</artifactId>-->
+            <!--<version>2.5.6</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring</artifactId>
-            <version>2.5.6</version>
+            <artifactId>spring-orm</artifactId>
+            <version>3.2.3.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>

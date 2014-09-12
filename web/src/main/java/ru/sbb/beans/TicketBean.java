@@ -1,7 +1,9 @@
 package ru.sbb.beans;
 
 
-public class TicketBean {
+import java.io.Serializable;
+
+public class TicketBean implements Serializable {
     private String name;
     private String num;
 

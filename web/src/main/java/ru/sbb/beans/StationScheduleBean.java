@@ -10,6 +10,7 @@ import ru.sbb.service.ClientService;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.io.Serializable;
 import java.util.List;
 
 //import javax.inject.Inject;
@@ -18,7 +19,7 @@ import org.springframework.context.annotation.Scope;
 
 //@Named
 //@Scope("session")
-public class StationScheduleBean {
+public class StationScheduleBean implements Serializable {
 
     private String name;
 

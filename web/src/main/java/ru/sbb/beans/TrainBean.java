@@ -1,6 +1,8 @@
 package ru.sbb.beans;
 
-public class TrainBean {
+import java.io.Serializable;
+
+public class TrainBean implements Serializable {
     private String name;
 
 
