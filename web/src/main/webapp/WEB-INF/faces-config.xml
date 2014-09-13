@@ -15,19 +15,29 @@
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
 
-    <managed-bean>
-        <managed-bean-name>trainBean</managed-bean-name>
-        <managed-bean-class>ru.sbb.beans.TrainBean</managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
+    <!--<managed-bean>-->
+        <!--<managed-bean-name>trainBean</managed-bean-name>-->
+        <!--<managed-bean-class>ru.sbb.beans.TrainBean</managed-bean-class>-->
+        <!--<managed-bean-scope>request</managed-bean-scope>-->
+    <!--</managed-bean>-->
 
     <managed-bean>
         <managed-bean-name>stationScheduleBean</managed-bean-name>
         <managed-bean-class>ru.sbb.beans.StationScheduleBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>request</managed-bean-scope>
         <managed-property>
-            <property-name>scheduleRecordDAOImpl</property-name>
-            <value>#{scheduleRecordDAO}</value>
+            <property-name>clientService</property-name>
+            <value>#{clientService}</value>
+        </managed-property>
+    </managed-bean>
+
+    <managed-bean>
+        <managed-bean-name>trainBean</managed-bean-name>
+        <managed-bean-class>ru.sbb.beans.TrainBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>managerService</property-name>
+            <value>#{managerService}</value>
         </managed-property>
     </managed-bean>
 

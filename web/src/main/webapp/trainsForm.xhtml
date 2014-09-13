@@ -17,12 +17,12 @@
 
     <h:form>
 
-        <h:inputText id="name" value="#{stationScheduleBean.name}"></h:inputText>
-        <h:commandButton value="get schedule" actionListener="#{stationScheduleBean.submit}">
-            <f:ajax execute="name" render="output" />
+        <!--<h:inputText id="name" value="#{trainBean.name}"></h:inputText>-->
+        <h:commandButton value="get trains">
+            <f:ajax execute="" render="output" />
         </h:commandButton>
 
-        <h2><h:outputText id="output" value="#{stationScheduleBean.stationSchedule}" /></h2>
+        <h2><h:outputText id="output" value="#{trainBean.trains}" /></h2>
     </h:form>
 </h:body>
 

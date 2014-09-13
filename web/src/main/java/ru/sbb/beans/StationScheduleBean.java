@@ -17,18 +17,18 @@ import java.util.List;
 //import javax.inject.Named;
 import org.springframework.context.annotation.Scope;
 
-//@Named
-//@Scope("session")
+
 public class StationScheduleBean implements Serializable {
 
     private String name;
 
-   // @Inject
-    ScheduleRecordDAO scheduleRecordDAOImpl;
+    ClientService clientService;
 
-    public void setScheduleRecordDAOImpl(ScheduleRecordDAO scheduleRecordDAOImpl){
-        this.scheduleRecordDAOImpl=scheduleRecordDAOImpl;
+    public void setClientService(ClientService clientService){
+        this.clientService=clientService;
     }
+
+
 
     public String getName() {
         return name;
@@ -38,34 +38,17 @@ public class StationScheduleBean implements Serializable {
         this.name = name;
     }
 
-    public String getStationSchedule() {
-//        ApplicationContext context =
-//                new ClassPathXmlApplicationContext("beans.xml");
-//
-//        ClientService clientService = (ClientService) context.getBean("clientService");
+    public void submit() {
+        name = "1"+name;
+    }
 
-//
-//        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("sbb_unit");
-//
-////
-//        ScheduleRecordDAOImpl scheduleRecordDAO = new ScheduleRecordDAOImpl();
-//        scheduleRecordDAO.setEntityManager(entityManagerFactory);
-//
-//        if (name==null){
-//            name="";
-//        }
+    public String getStationSchedule() {
         try {
-           // String result = clientService.getStationSchedule(name);
-            String result = "";
-            List<ScheduleRecord> recordList = scheduleRecordDAOImpl.getStationScheduleRecords(name);
-            for (ScheduleRecord record:recordList){
-                result+=record.toString()+" ";
-            }
-            return result;
+            return clientService.getStationSchedule(name);
         } catch (StationNotFoundException e) {
-            return "Station Not Found";
+            return "Station "+name+" Not Found";
         }
-      // return "Schedule of station " + name;
+
     }
 
 
