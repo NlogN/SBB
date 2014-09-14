@@ -24,10 +24,9 @@ public class StationScheduleBean implements Serializable {
 
     ClientService clientService;
 
-    public void setClientService(ClientService clientService){
-        this.clientService=clientService;
+    public void setClientService(ClientService clientService) {
+        this.clientService = clientService;
     }
-
 
 
     public String getName() {
@@ -39,15 +38,20 @@ public class StationScheduleBean implements Serializable {
     }
 
     public void submit() {
-        name = "1"+name;
+
     }
 
     public String getStationSchedule() {
-        try {
-            return clientService.getStationSchedule(name);
-        } catch (StationNotFoundException e) {
-            return "Station "+name+" Not Found";
+        if (name == null) {
+            return "";
+        } else {
+            try {
+                return clientService.getStationSchedule(name);
+            } catch (StationNotFoundException e) {
+                return "Station " + name + " Not Found";
+            }
         }
+
 
     }
 

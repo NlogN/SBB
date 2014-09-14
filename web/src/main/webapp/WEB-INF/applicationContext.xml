@@ -4,7 +4,6 @@
 http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
 
-    <!-- Beans Declaration -->
     <import resource="classpath:beans.xml"/>
 
 </beans>

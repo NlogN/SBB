@@ -24,7 +24,12 @@ public class TicketBean implements Serializable {
     }
 
     public String getOperationResult() {
-        return "train " + num + " passenger " + name + " buy ticket operation result";
+        if (num == null || name == null) {
+            return "";
+        } else {
+            return "train " + num + " passenger " + name + " buy ticket operation result";
+        }
+
     }
 
 }

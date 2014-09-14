@@ -68,6 +68,11 @@ public class ManagerService {
         }
     }
 
+    public List<Train> getTrains() {
+        List<Train> trainList = trainDAO.getTrains();
+        return trainList;
+    }
+
     public void addTrain(int number, int capacity) {
         trainDAO.addTrain(number, capacity);
     }
