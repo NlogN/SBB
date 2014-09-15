@@ -2,6 +2,7 @@ package ru.sbb.beans;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import ru.sbb.StationScheduleRecord;
 import ru.sbb.dao.ScheduleRecordDAO;
 import ru.sbb.dao.ScheduleRecordDAOImpl;
 import ru.sbb.entity.ScheduleRecord;
@@ -37,20 +38,26 @@ public class StationScheduleBean implements Serializable {
         this.name = name;
     }
 
-    public void submit() {
+//    public void submit() {
+//
+//    }
 
-    }
-
-    public String getStationSchedule() {
-        if (name == null) {
-            return "";
-        } else {
-            try {
-                return clientService.getStationSchedule(name);
-            } catch (StationNotFoundException e) {
-                return "Station " + name + " Not Found";
-            }
+    public List<StationScheduleRecord>  getStationSchedule() {
+        try {
+            return clientService.getStationSchedule(name);
+        } catch (StationNotFoundException e) {
+            e.printStackTrace();
+            return null;
         }
+//        if (name == null) {
+//            return "";
+//        } else {
+//            try {
+//                return clientService.getStationSchedule(name);
+//            } catch (StationNotFoundException e) {
+//                return "Station " + name + " Not Found";
+//            }
+//        }
 
 
     }

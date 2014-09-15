@@ -4,6 +4,7 @@ package ru.sbb;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
@@ -31,14 +32,19 @@ public class ClientServiceTest {
 
     @Test(expected = StationNotFoundException.class)
     public void testGetStationSchedule1() throws IOException, StationNotFoundException {
-        String result = clientService.getStationSchedule("Moskow123");
-        System.out.println(result);
+        List<StationScheduleRecord> recordList = clientService.getStationSchedule("Moskow123");
+        for (StationScheduleRecord record:recordList){
+            System.out.println(record.getTrainNum()+" "+record.getTime());
+        }
+
     }
 
     @Test
     public void testGetStationSchedule2() throws IOException, StationNotFoundException {
-        String result = clientService.getStationSchedule("Moskow");
-        System.out.println(result);
+        List<StationScheduleRecord> recordList = clientService.getStationSchedule("Moskow");
+        for (StationScheduleRecord record:recordList){
+            System.out.println(record.getTrainNum()+" "+record.getTime());
+        }
     }
 
     @Test(expected = BuyTicketException.class)

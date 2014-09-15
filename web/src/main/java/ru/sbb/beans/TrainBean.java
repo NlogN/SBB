@@ -12,7 +12,8 @@ import java.util.List;
 //@ManagedBean(name = "trainBean")
 //@SessionScoped
 public class TrainBean implements Serializable {
-    private String name;
+    private String number;
+    private String capacity;
 
     ManagerService managerService;
 
@@ -20,20 +21,35 @@ public class TrainBean implements Serializable {
         this.managerService = managerService;
     }
 
-
-    public String getName() {
-        return name;
+    public String getNumber() {
+        return number;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNumber(String num) {
+        this.number = num;
+    }
+
+    public void setCapacity(String trainCapacity) {
+//        int capacity = Integer.parseInt(trainCapacity);
+        this.capacity = trainCapacity;
+    }
+
+    public String getCapacity() {
+        return capacity;
     }
 
     public String getOperationResult() {
-        if (name == null) {
+        return "Train with params: " + number;
+    }
+
+    public String addTrain() {
+        if (number == null || capacity == null) {
             return "";
         } else {
-            return "Train with params: " + name;
+            int num = Integer.parseInt(number);
+            int cap = Integer.parseInt(capacity);
+            managerService.addTrain(num, cap);
+            return "train added";
         }
     }
 

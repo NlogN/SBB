@@ -6,7 +6,7 @@
 
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html">
 
 <h:head>
@@ -14,20 +14,12 @@
 </h:head>
 
 <h:body>
-
-    <h:form>
-
-        <h:inputText id="name" value="#{stationScheduleBean.name}"></h:inputText>
-        <h:commandButton value="get schedule" actionListener="#{stationScheduleBean.submit}">
-            <f:ajax execute="name" render="output" />
-        </h:commandButton>
-
-        <h2><h:outputText id="output" value="#{stationScheduleBean.stationSchedule}" /></h2>
-        <!--<div id="output">-->
-            <!--<h:outputText value="#{stationScheduleBean.stationSchedule}" />-->
-        <!--</div>-->
-    </h:form>
-
+    <ui:composition>
+        <h:form>
+            <h:inputText value="#{stationScheduleBean.name}"></h:inputText>
+            <h:commandButton value="get schedule" action="stationScheduleResp"></h:commandButton>
+        </h:form>
+    </ui:composition>
 
 </h:body>
 

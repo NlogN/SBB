@@ -12,14 +12,17 @@
     <ui:define name="content">
         <div>
             <ui:insert name="heading">
-                <ui:include src="stationScheduleForm.xhtml"/>
-                <!--<h:form>-->
-                    <!--<h:inputText value="#{stationScheduleBean.name}"></h:inputText>-->
-                    <!--<h:commandButton value="get schedule" action="stationScheduleResp"></h:commandButton>-->
-                <!--</h:form>-->
+                <ui:include src="addTrainForm.xhtml"/>
             </ui:insert>
         </div>
     </ui:define>
+
+    <ui:define name="responseContent">
+        <div>
+            #{trainBean.addTrain()}
+        </div>
+    </ui:define>
+
 </ui:composition>
 
 

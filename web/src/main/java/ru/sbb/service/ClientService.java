@@ -1,6 +1,7 @@
 package ru.sbb.service;
 
 
+import ru.sbb.StationScheduleRecord;
 import ru.sbb.dao.PassengerDAO;
 import ru.sbb.dao.ScheduleRecordDAO;
 import ru.sbb.dao.TicketDAO;
@@ -14,6 +15,7 @@ import ru.sbb.exception.StationNotFoundException;
 import ru.sbb.exception.TrainNotFoundException;
 import ru.sbb.DateBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -66,18 +68,36 @@ public class ClientService {
     }
 
 
-    public String getStationSchedule(String stationName) throws StationNotFoundException {
+    public List<StationScheduleRecord> getStationSchedule(String stationName) throws StationNotFoundException {
         List<ScheduleRecord> scheduleList = scheduleRecordDAO.getStationScheduleRecords(stationName);
+        List<StationScheduleRecord> recordList = new ArrayList<StationScheduleRecord>();
         if (scheduleList.isEmpty()) {
-            return "no data";
+            return recordList;
         } else {
-            StringBuffer sb = new StringBuffer();
+//            StringBuffer sb = new StringBuffer();
+//            for (ScheduleRecord schedule : scheduleList) {
+//                sb.append("train " + schedule.getTrain().getNumber() + "    time: " + schedule.getTime() + "; \n");
+//            }
+
             for (ScheduleRecord schedule : scheduleList) {
-                sb.append("train " + schedule.getTrain().getNumber() + "    time: " + schedule.getTime() + "; \n");
+                recordList.add(new StationScheduleRecord(Integer.toString(schedule.getTrain().getNumber()),schedule.getTime()));
             }
-            return sb.toString();
+            return recordList;
         }
     }
+
+//    public String getStationSchedule(String stationName) throws StationNotFoundException {
+//        List<ScheduleRecord> scheduleList = scheduleRecordDAO.getStationScheduleRecords(stationName);
+//        if (scheduleList.isEmpty()) {
+//            return "no data";
+//        } else {
+//            StringBuffer sb = new StringBuffer();
+//            for (ScheduleRecord schedule : scheduleList) {
+//                sb.append("train " + schedule.getTrain().getNumber() + "    time: " + schedule.getTime() + "; \n");
+//            }
+//            return sb.toString();
+//        }
+//    }
 
     public void buyTicket(int trainNum, String stationName, Passenger passenger, java.util.Date dateOfRace) throws BuyTicketException, TrainNotFoundException {
         List<Train> list = trainDAO.getTrainByNum(trainNum);

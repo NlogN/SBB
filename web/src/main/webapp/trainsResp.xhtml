@@ -2,24 +2,30 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets">
+
 <head><title>IGNORED</title></head>
 <body>
 <ui:composition template="tamplates/layout.xhtml">
     <ui:define name="windowTitle">
-        station
+        trains
     </ui:define>
 
     <ui:define name="content">
         <div>
             <ui:insert name="heading">
-                <ui:include src="stationScheduleForm.xhtml"/>
-                <!--<h:form>-->
-                    <!--<h:inputText value="#{stationScheduleBean.name}"></h:inputText>-->
-                    <!--<h:commandButton value="get schedule" action="stationScheduleResp"></h:commandButton>-->
-                <!--</h:form>-->
+                <ui:include src="trainsForm.xhtml"/>
             </ui:insert>
         </div>
     </ui:define>
+
+    <ui:define name="responseContent">
+        <div>
+            <ui:insert name="heading">
+                <ui:include src="trainsRes.xhtml"/>
+            </ui:insert>
+        </div>
+    </ui:define>
+
 </ui:composition>
 
 
