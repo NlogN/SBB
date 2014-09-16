@@ -1,0 +1,36 @@
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+    <title>JSF Demo</title>
+</h:head>
+
+<h:body>
+    <ui:composition>
+        <div>
+            <h:link value="add Train" outcome="addTrainResp" />
+        </div>
+        <div>
+            <h:link value="add Station" outcome="index" />
+        </div>
+        <div>
+            <h:link value="add Schedule Record" outcome="index" />
+        </div>
+        <div>
+            <h:link value="train passanger view" outcome="index" />
+        </div>
+        <div>
+            <h:link value="trains view" outcome="viewTrains" />
+        </div>
+        <div>
+            <h:form>
+                <h:commandButton value="log-out" action="index" actionListener="#{userBean.clearEnteredPassword}"></h:commandButton>
+            </h:form>
+        </div>
+    </ui:composition>
+
+</h:body>
+
+</html>

@@ -22,12 +22,10 @@
         <table width="600" border="0" cellspacing="0" cellpadding="0">
             <tr align="center">
                 <td> <h:link style="font-weight:bold" value="Home" outcome="index" /><br/></td>
-                <!--<td> <h:link value="Train search" outcome="trainSearch" /></td>-->
-                <!--<td> <h:link value="Buy ticket" outcome="ticket" /><br/></td>-->
+                <td> <h:link value="Train search" outcome="trainSearch" /></td>
+                <td> <h:link value="Buy ticket" outcome="buyTicket" /><br/></td>
                 <td> <h:link value="Station schedule" outcome="stationSchedule" /></td>
-                <td> <h:link value="Trains view" outcome="trains" /></td>
-                <td> <h:link value="add Train" outcome="addTrainResp" /></td>
-                <!--<td> <h:link value="Manage service" outcome="index" /></td>-->
+                <td> <h:link value="Manage service" outcome="#{userBean.verifyUserRegistration()}" /></td>
             </tr>
         </table>
     </div>

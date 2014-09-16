@@ -6,8 +6,8 @@
 
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
 
 <h:head>
     <title>JSF Demo</title>
@@ -16,9 +16,15 @@
 <h:body>
     <ui:composition>
         <h:form>
-            <h:commandButton value="get trains" action="trainsResp"></h:commandButton>
+            <h:panelGrid columns="2">
+                password:
+                <h:inputText value="#{userBean.enteredPassword}"></h:inputText>
+            </h:panelGrid>
+
+            <h:commandButton value="submit" action="#{userBean.verifyUserRegistration()}"></h:commandButton>
         </h:form>
     </ui:composition>
+
 </h:body>
 
 </html>
