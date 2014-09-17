@@ -10,22 +10,14 @@ import java.util.Scanner;
  * Date: 21.08.14
  */
 public class RegistrationService {
-    private static String password;
+    private String password;
 
-    public RegistrationService(){
-        Scanner in = null;
-        try {
-            in = new Scanner(new File("psw.txt"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        if(in.hasNextLine()){
-            password =  in.nextLine();
-        }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-
-    public boolean checkPassword(String psw){
+    public boolean checkPassword(String psw) {
         return psw.equals(password);
     }
 }

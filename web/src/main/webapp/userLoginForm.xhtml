@@ -18,7 +18,7 @@
         <h:form>
             <h:panelGrid columns="2">
                 password:
-                <h:inputText value="#{userBean.enteredPassword}"></h:inputText>
+                <h:inputSecret value="#{userBean.enteredPassword}"></h:inputSecret>
             </h:panelGrid>
 
             <h:commandButton value="submit" action="#{userBean.verifyUserRegistration()}"></h:commandButton>

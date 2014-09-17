@@ -1,13 +1,25 @@
 package ru.sbb.beans;
 
 
+import ru.sbb.RegistrationService;
+
 import javax.faces.event.ActionEvent;
 import java.io.Serializable;
 
 
 public class UserBean implements Serializable {
     private String enteredPassword;
-    private String password = "123";
+   // private String password = "123";
+
+    private RegistrationService registrationService;
+
+    public RegistrationService getRegistrationService() {
+        return registrationService;
+    }
+
+    public void setRegistrationService(RegistrationService registrationService) {
+        this.registrationService = registrationService;
+    }
 
     public String getEnteredPassword() {
         return enteredPassword;
@@ -22,7 +34,7 @@ public class UserBean implements Serializable {
         if (enteredPassword == null) {
             return "login";
         } else {
-            if (enteredPassword.equals(password)) {
+            if (registrationService.checkPassword(enteredPassword)) {
                 return "managePage";
             } else {
                 return "repeatLogin";

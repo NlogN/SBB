@@ -39,6 +39,10 @@
         <property name="passengerDAO" ref="passengerDAO"/>
     </bean>
 
+    <bean id="registrationService" class="ru.sbb.RegistrationService">
+        <property name="password" value="123"/>
+    </bean>
+
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
         <property name="persistenceUnitName" value="sbb_unit"/>
     </bean>
