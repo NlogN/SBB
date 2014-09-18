@@ -13,6 +13,10 @@
         <managed-bean-name>ticketBean</managed-bean-name>
         <managed-bean-class>ru.sbb.beans.TicketBean</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>clientService</property-name>
+            <value>#{clientService}</value>
+        </managed-property>
     </managed-bean>
 
     <managed-bean>

@@ -6,7 +6,6 @@
 
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html">
 
 <h:head>
@@ -17,17 +16,19 @@
     <h:form>
         <h:panelGrid columns="2">
             name:
-            <h:inputText id="name" value="#{ticketBean.name}"/>
-            train num:
-            <h:inputText id="num" value="#{ticketBean.num}"/>
+            <h:inputText  value="#{ticketBean.name}"/>
+            surname:
+            <h:inputText  value="#{ticketBean.surname}"/>
+            birthday:
+            <h:inputText  value="#{ticketBean.bithday}"/>
+            day of race:
+            <h:inputText  value="#{ticketBean.dateOfRace}"/>
+            train number:
+            <h:inputText  value="#{ticketBean.trainNumber}"/>
+            station:
+            <h:inputText  value="#{ticketBean.station}"/>
         </h:panelGrid>
-        <p>
-            <h:commandButton value="buy ticket">
-                <f:ajax execute="name num" render="output" />
-            </h:commandButton>
-        </p>
-
-        <h2><h:outputText id="output" value="#{ticketBean.operationResult}" /></h2>
+        <h:commandButton value="buy ticket" action="buyTicket" actionListener="#{ticketBean.buyTicket}"></h:commandButton>
     </h:form>
 
 </h:body>

@@ -23,7 +23,7 @@ public class StationScheduleBean implements Serializable {
 
     private String name;
 
-    ClientService clientService;
+    private ClientService clientService;
 
     public void setClientService(ClientService clientService) {
         this.clientService = clientService;
