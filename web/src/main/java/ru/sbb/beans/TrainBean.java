@@ -15,7 +15,7 @@ public class TrainBean implements Serializable {
     private String number;
     private String capacity;
 
-    ManagerService managerService;
+    private ManagerService managerService;
 
     public void setManagerService(ManagerService managerService) {
         this.managerService = managerService;

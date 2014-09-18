@@ -6,19 +6,31 @@
 <body>
 <ui:composition template="tamplates/layout.xhtml">
     <ui:define name="windowTitle">
-        train search
+        station
     </ui:define>
 
     <ui:define name="content">
         <div>
             <ui:insert name="heading">
-                <ui:include src="searchTrainForm.xhtml"/>
+                <ui:include src="trainSearchForm.xhtml"/>
             </ui:insert>
         </div>
     </ui:define>
+
+    <ui:define name="responseContent">
+        <div>
+            <ui:insert name="heading">
+                <ui:include src="trainSearchRes.xhtml"/>
+            </ui:insert>
+        </div>
+    </ui:define>
+
 </ui:composition>
+
+
+
+<ui:debug/>
 </body>
 </html>
-
 
 

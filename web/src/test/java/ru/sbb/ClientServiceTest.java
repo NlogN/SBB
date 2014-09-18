@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.sbb.entity.Passenger;
+import ru.sbb.entity.Train;
 import ru.sbb.exception.BuyTicketException;
 import ru.sbb.exception.StationNotFoundException;
 import ru.sbb.exception.TrainNotFoundException;
@@ -73,9 +74,11 @@ public class ClientServiceTest {
     public void testGetTrainsByRoute() throws ParseException {
         Date lowerBound = DateBuilder.createDate("1991/01/01 01:02:12");
         Date upperBound = DateBuilder.createDate("2016/01/01 01:02:12");
-        String result = clientService.getTrainsByRoute(lowerBound, upperBound, "Moskow", "Omsk");
-        String expectedResult = 300 + "; \n" + 321 + "; \n";
-        assertTrue(result.equals(expectedResult));
+        List<Train> trainList = clientService.getTrainsByRoute(lowerBound, upperBound, "Moskow", "Omsk");
+        for (Train train:trainList){
+            System.out.println(train.getNumber());
+        }
+
     }
 
 

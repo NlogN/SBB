@@ -9,7 +9,6 @@ import java.io.Serializable;
 
 public class UserBean implements Serializable {
     private String enteredPassword;
-   // private String password = "123";
 
     private RegistrationService registrationService;
 

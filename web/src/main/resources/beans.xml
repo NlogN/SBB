@@ -40,7 +40,7 @@
     </bean>
 
     <bean id="registrationService" class="ru.sbb.RegistrationService">
-        <property name="password" value="123"/>
+        <property name="password" value="1"/>
     </bean>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">

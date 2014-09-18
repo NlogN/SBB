@@ -46,25 +46,32 @@ public class ClientService {
     }
 
 
-//    public ClientService(TicketDAO ticketDAO, TrainDAO trainDAO, ScheduleRecordDAO scheduleRecordDAO, PassengerDAO passengerDAO) {
-//        this.scheduleRecordDAO = scheduleRecordDAO;
-//        this.trainDAO = trainDAO;
-//        this.ticketDAO = ticketDAO;
-//        this.passengerDAO = passengerDAO;
+
+//    public String getTrainsByRoute(java.util.Date lowerBound, java.util.Date upperBound, String stationAName, String stationBName) {
+//        List<Train> trainList = trainDAO.getTrainByRoute(lowerBound, upperBound, stationAName, stationBName);
+//        if (trainList.isEmpty()) {
+//            return "no such trains";
+//        } else {
+//            StringBuffer sb = new StringBuffer();
+//            for (Train train : trainList) {
+//                sb.append(train.getNumber() + "; \n");
+//            }
+//            return sb.toString();
+//        }
 //    }
 
-
-    public String getTrainsByRoute(java.util.Date lowerBound, java.util.Date upperBound, String stationAName, String stationBName) {
+    public List<Train> getTrainsByRoute(java.util.Date lowerBound, java.util.Date upperBound, String stationAName, String stationBName) {
         List<Train> trainList = trainDAO.getTrainByRoute(lowerBound, upperBound, stationAName, stationBName);
-        if (trainList.isEmpty()) {
-            return "no such trains";
-        } else {
-            StringBuffer sb = new StringBuffer();
-            for (Train train : trainList) {
-                sb.append(train.getNumber() + "; \n");
-            }
-            return sb.toString();
-        }
+        return trainList;
+//        if (trainList.isEmpty()) {
+//            return "no such trains";
+//        } else {
+//            StringBuffer sb = new StringBuffer();
+//            for (Train train : trainList) {
+//                sb.append(train.getNumber() + "; \n");
+//            }
+//            return sb.toString();
+//        }
     }
 
 

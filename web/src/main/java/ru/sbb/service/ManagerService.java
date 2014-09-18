@@ -43,12 +43,6 @@ public class ManagerService {
     }
 
 
-//    public ManagerService(PassengerDAO passengerDAO, TrainDAO trainDAO, StationDAO stationDAO, ScheduleRecordDAO scheduleRecordDAO) {
-//        this.scheduleRecordDAO = scheduleRecordDAO;
-//        this.passengerDAO = passengerDAO;
-//        this.trainDAO = trainDAO;
-//        this.stationDAO = stationDAO;
-//    }
 
 
     public String getTrainNumbers() {

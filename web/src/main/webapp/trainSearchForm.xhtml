@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+    <title>JSF Demo</title>
+</h:head>
+
+<h:body>
+    <h:form>
+        <h:panelGrid columns="2">
+            from:
+            <h:inputText  value="#{trainSearchBean.stationAName}"/>
+            to:
+            <h:inputText  value="#{trainSearchBean.stationBName}"/>
+        <!--</h:panelGrid>-->
+        <!--<h:panelGrid columns="2">-->
+            day:
+            <h:inputText  value="#{trainSearchBean.lowerBoundDay}"/>
+            time:
+            <h:inputText  value="#{trainSearchBean.lowerBoundTime}"/>
+            day:
+            <h:inputText  value="#{trainSearchBean.upperBoundDay}"/>
+            time:
+            <h:inputText  value="#{trainSearchBean.upperBoundTime}"/>
+        </h:panelGrid>
+        <h:commandButton value="search" action="trainSearch"></h:commandButton>
+    </h:form>
+
+</h:body>
+
+</html>

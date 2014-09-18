@@ -15,7 +15,6 @@
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
 
-
     <managed-bean>
         <managed-bean-name>stationScheduleBean</managed-bean-name>
         <managed-bean-class>ru.sbb.beans.StationScheduleBean</managed-bean-class>
@@ -36,7 +35,6 @@
         </managed-property>
     </managed-bean>
 
-
     <managed-bean>
         <managed-bean-name>userBean</managed-bean-name>
         <managed-bean-class>ru.sbb.beans.UserBean</managed-bean-class>
@@ -44,6 +42,16 @@
         <managed-property>
             <property-name>registrationService</property-name>
             <value>#{registrationService}</value>
+        </managed-property>
+    </managed-bean>
+
+    <managed-bean>
+        <managed-bean-name>trainSearchBean</managed-bean-name>
+        <managed-bean-class>ru.sbb.beans.TrainSearchBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>clientService</property-name>
+            <value>#{clientService}</value>
         </managed-property>
     </managed-bean>
 
