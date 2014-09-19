@@ -17,7 +17,7 @@
     <ui:composition>
         <h:form>
             <h:inputText value="#{stationScheduleBean.name}"></h:inputText>
-            <h:commandButton value="get schedule" action="stationScheduleResp"></h:commandButton>
+            <h:commandButton value="get schedule" action="#{stationScheduleBean.getStationSchedulePage()}"></h:commandButton>
         </h:form>
     </ui:composition>
 

@@ -15,15 +15,14 @@
 
 <h:body>
     <ui:composition>
-    <h:form>
-        <h:panelGrid columns="2">
-            train number:
-            <h:inputText id="number" value="#{trainBean.number}"/>
-            train capacity:
-            <h:inputText id="capacity" value="#{trainBean.capacity}"/>
-        </h:panelGrid>
-        <h:commandButton value="add new train" action="addTrainResp"></h:commandButton>
-    </h:form>
+        <h:form>
+            <h:panelGrid columns="2">
+                station name:
+                <h:inputText value="#{stationBean.name}"/>
+            </h:panelGrid>
+            <h:commandButton value="add new Station" action="addStationResp"
+                             actionListener="#{stationBean.addStation}"></h:commandButton>
+        </h:form>
     </ui:composition>
 
 </h:body>

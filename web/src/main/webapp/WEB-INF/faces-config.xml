@@ -30,6 +30,26 @@
     </managed-bean>
 
     <managed-bean>
+        <managed-bean-name>scheduleRecordBean</managed-bean-name>
+        <managed-bean-class>ru.sbb.beans.ScheduleRecordBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>managerService</property-name>
+            <value>#{managerService}</value>
+        </managed-property>
+    </managed-bean>
+
+    <managed-bean>
+        <managed-bean-name>stationBean</managed-bean-name>
+        <managed-bean-class>ru.sbb.beans.StationBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>managerService</property-name>
+            <value>#{managerService}</value>
+        </managed-property>
+    </managed-bean>
+
+    <managed-bean>
         <managed-bean-name>trainBean</managed-bean-name>
         <managed-bean-class>ru.sbb.beans.TrainBean</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
@@ -58,7 +78,6 @@
             <value>#{clientService}</value>
         </managed-property>
     </managed-bean>
-
 
 
 </faces-config>

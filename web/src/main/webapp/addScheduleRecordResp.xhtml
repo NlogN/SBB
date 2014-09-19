@@ -12,19 +12,19 @@
     <ui:define name="content">
         <div>
             <ui:insert name="heading">
-                <ui:include src="stationScheduleForm.xhtml"/>
+                <ui:include src="addScheduleRecordForm.xhtml"/>
             </ui:insert>
         </div>
     </ui:define>
 
     <ui:define name="responseContent">
         <div>
-            <ui:insert name="heading">
-                #{stationScheduleBean.operationResult}
-            </ui:insert>
+            #{scheduleRecordBean.operationResult}
         </div>
     </ui:define>
+
 </ui:composition>
+
 
 
 <ui:debug/>

@@ -1,29 +1,34 @@
 package ru.sbb.beans;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import ru.sbb.StationScheduleRecord;
-import ru.sbb.dao.ScheduleRecordDAO;
-import ru.sbb.dao.ScheduleRecordDAOImpl;
-import ru.sbb.entity.ScheduleRecord;
 import ru.sbb.exception.StationNotFoundException;
 import ru.sbb.service.ClientService;
-
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import java.io.Serializable;
 import java.util.List;
 
-//import javax.inject.Inject;
-//import javax.inject.Named;
-import org.springframework.context.annotation.Scope;
-
 
 public class StationScheduleBean implements Serializable {
-
     private String name;
-
+    private String operationResult = "";
     private ClientService clientService;
+    private List<StationScheduleRecord> stationSchedule;
+
+    public List<StationScheduleRecord> getStationSchedule() {
+        return stationSchedule;
+    }
+
+    public void setStationSchedule() throws StationNotFoundException {
+        this.stationSchedule = clientService.getStationSchedule(name);
+    }
+
+    public String getOperationResult() {
+        return operationResult;
+    }
+
+    public void setOperationResult(String operationResult) {
+        this.operationResult = operationResult;
+    }
 
     public void setClientService(ClientService clientService) {
         this.clientService = clientService;
@@ -38,28 +43,15 @@ public class StationScheduleBean implements Serializable {
         this.name = name;
     }
 
-//    public void submit() {
-//
-//    }
 
-    public List<StationScheduleRecord>  getStationSchedule() {
+    public String  getStationSchedulePage() {
         try {
-            return clientService.getStationSchedule(name);
+            setStationSchedule();
+            return "stationScheduleResp";
         } catch (StationNotFoundException e) {
-            e.printStackTrace();
-            return null;
+            setOperationResult(e.getMessage());
+            return "stationSchedule";
         }
-//        if (name == null) {
-//            return "";
-//        } else {
-//            try {
-//                return clientService.getStationSchedule(name);
-//            } catch (StationNotFoundException e) {
-//                return "Station " + name + " Not Found";
-//            }
-//        }
-
-
     }
 
 

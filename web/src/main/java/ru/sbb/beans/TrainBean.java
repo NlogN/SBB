@@ -9,8 +9,7 @@ import javax.faces.bean.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
 
-//@ManagedBean(name = "trainBean")
-//@SessionScoped
+
 public class TrainBean implements Serializable {
     private String number;
     private String capacity;
@@ -30,7 +29,6 @@ public class TrainBean implements Serializable {
     }
 
     public void setCapacity(String trainCapacity) {
-//        int capacity = Integer.parseInt(trainCapacity);
         this.capacity = trainCapacity;
     }
 

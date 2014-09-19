@@ -6,30 +6,34 @@
 
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
     <title>JSF Demo</title>
 </h:head>
 
 <h:body>
-    <h:form>
-        <h:panelGrid columns="2">
-            name:
-            <h:inputText  value="#{ticketBean.name}"/>
-            surname:
-            <h:inputText  value="#{ticketBean.surname}"/>
-            birthday:
-            <h:inputText  value="#{ticketBean.bithday}"/>
-            day of race:
-            <h:inputText  value="#{ticketBean.dateOfRace}"/>
-            train number:
-            <h:inputText  value="#{ticketBean.trainNumber}"/>
-            station:
-            <h:inputText  value="#{ticketBean.station}"/>
-        </h:panelGrid>
-        <h:commandButton value="buy ticket" action="buyTicket" actionListener="#{ticketBean.buyTicket}"></h:commandButton>
-    </h:form>
+    <ui:composition>
+        <h:form>
+            <h:panelGrid columns="2">
+                name:
+                <h:inputText value="#{ticketBean.name}"/>
+                surname:
+                <h:inputText value="#{ticketBean.surname}"/>
+                birthday:
+                <h:inputText value="#{ticketBean.bithday}"/>
+                day of race:
+                <h:inputText value="#{ticketBean.dateOfRace}"/>
+                train number:
+                <h:inputText value="#{ticketBean.trainNumber}"/>
+                station:
+                <h:inputText value="#{ticketBean.station}"/>
+            </h:panelGrid>
+            <h:commandButton value="buy ticket" action="buyTicket"
+                             actionListener="#{ticketBean.buyTicket}"></h:commandButton>
+        </h:form>
+    </ui:composition>
 
 </h:body>
 
