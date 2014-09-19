@@ -22,7 +22,7 @@
             train capacity:
             <h:inputText id="capacity" value="#{trainBean.capacity}"/>
         </h:panelGrid>
-        <h:commandButton value="add new train" action="addTrainResp"></h:commandButton>
+        <h:commandButton value="add new train" action="addTrainResp" actionListener="#{trainBean.addTrain}"></h:commandButton>
     </h:form>
     </ui:composition>
 

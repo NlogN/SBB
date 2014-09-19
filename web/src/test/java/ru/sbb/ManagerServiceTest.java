@@ -32,17 +32,17 @@ public class ManagerServiceTest {
     }
 
 
-    @Test
-    public void testGetPassengersInfo1() throws IOException, StationNotFoundException {
-        String res = managerService.getPassengersInfoByTrainNum(123);
-        System.out.println(res);
-    }
+//    @Test
+//    public void testGetPassengersInfo1() throws IOException, StationNotFoundException {
+//        String res = managerService.getPassengersInfoByTrainNum(123);
+//        System.out.println(res);
+//    }
 
-    @Test
-    public void testGetPassengersInfo2() throws IOException, StationNotFoundException {
-        String result = managerService.getPassengersInfoByTrainNum(555);
-        assertTrue(result.equals("no data"));
-    }
+//    @Test
+//    public void testGetPassengersInfo2() throws IOException, StationNotFoundException {
+//        String result = managerService.getPassengersInfoByTrainNum(555);
+//        assertTrue(result.equals("no data"));
+//    }
 
 
 }

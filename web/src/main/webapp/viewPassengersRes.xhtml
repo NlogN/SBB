@@ -12,23 +12,31 @@
 
 <h:body>
     <ui:composition>
-        <h1>Trains</h1>
+        <h1>Passenger</h1>
 
-        <h:dataTable value="#{trainSearchBean.trains}" var="c">
+        <h:dataTable value="#{passengerBean.passengers}" var="c">
 
             <h:column>
                 <f:facet name="header">
-                    number
+                    name
                 </f:facet>
-                #{c.getNumber()}
+                #{c.name}
             </h:column>
 
             <h:column>
                 <f:facet name="header">
-                    capacity
+                    surname
                 </f:facet>
-                #{c.getCapacity()}
+                #{c.surname}
             </h:column>
+
+            <h:column>
+                <f:facet name="header">
+                    date
+                </f:facet>
+                #{c.date}
+            </h:column>
+
 
         </h:dataTable>
     </ui:composition>

@@ -6,6 +6,7 @@ import ru.sbb.service.ManagerService;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.event.ActionEvent;
 import java.io.Serializable;
 import java.util.List;
 
@@ -13,11 +14,19 @@ import java.util.List;
 public class TrainBean implements Serializable {
     private String number;
     private String capacity;
-
+    private String operationResult = "";
     private ManagerService managerService;
 
     public void setManagerService(ManagerService managerService) {
         this.managerService = managerService;
+    }
+
+    public String getOperationResult() {
+        return operationResult;
+    }
+
+    public void setOperationResult(String operationResult) {
+        this.operationResult = operationResult;
     }
 
     public String getNumber() {
@@ -36,24 +45,16 @@ public class TrainBean implements Serializable {
         return capacity;
     }
 
-    public String getOperationResult() {
-        return "Train with params: " + number;
-    }
 
-    public String addTrain() {
-        if (number == null || capacity == null) {
-            return "";
-        } else {
+    public void addTrain(ActionEvent event) {
+        if (number != null && capacity != null) {
             int num = Integer.parseInt(number);
             int cap = Integer.parseInt(capacity);
             managerService.addTrain(num, cap);
-            return "train added";
+            setOperationResult("train added");
         }
     }
 
-    public String getTrains() {
-        return "Train numbers: " + managerService.getTrainNumbers();
-    }
 
     public List<Train> getAllTrains() {
         return managerService.getTrains();

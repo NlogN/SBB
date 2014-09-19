@@ -20,8 +20,28 @@ public class TrainSearchBean implements Serializable {
     private String upperBoundDay = "2014/05/12";
     private String lowerBoundTime = "01:01";
     private String upperBoundTime = "01:02";
+    private String operationResult = "";
+    private List<Train> trains;
 
     private ClientService clientService;
+
+    public List<Train> getTrains() {
+        return trains;
+    }
+
+    public void setTrains() throws ParseException {
+        java.util.Date lowerBound = DateBuilder.createDateTime(lowerBoundDay + " " + lowerBoundTime + ":00");
+        java.util.Date upperBound = DateBuilder.createDateTime(upperBoundDay + " " + upperBoundTime + ":00");
+        this.trains = clientService.getTrainsByRoute(lowerBound, upperBound, stationAName, stationBName);
+    }
+
+    public String getOperationResult() {
+        return operationResult;
+    }
+
+    public void setOperationResult(String operationResult) {
+        this.operationResult = operationResult;
+    }
 
     public String getUpperBoundTime() {
         return upperBoundTime;
@@ -75,18 +95,20 @@ public class TrainSearchBean implements Serializable {
         this.clientService = clientService;
     }
 
-    public List<Train> getTrainsByResponse() {
-        if (stationAName == null || stationBName == null) {
-            return new ArrayList<Train>();
-        }
+    public String getTrainsByResponsePage() {
         try {
-            java.util.Date lowerBound = DateBuilder.createDateTime(lowerBoundDay + " " + lowerBoundTime + ":00");
-            java.util.Date upperBound = DateBuilder.createDateTime(upperBoundDay + " " + upperBoundTime + ":00");
-            return clientService.getTrainsByRoute(lowerBound, upperBound, stationAName, stationBName);
+            setTrains();
+            if(trains.isEmpty()){
+                setOperationResult("no such trains");
+                return "trainSearch";
+            }else{
+                return "trainSearchResp";
+            }
         } catch (ParseException e) {
-            e.printStackTrace();
+            setOperationResult(e.getMessage());
+            return "trainSearch";
         }
-        return new ArrayList<Train>();
+
     }
 
 

@@ -40,6 +40,16 @@
     </managed-bean>
 
     <managed-bean>
+        <managed-bean-name>passengerBean</managed-bean-name>
+        <managed-bean-class>ru.sbb.beans.PassengerBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>managerService</property-name>
+            <value>#{managerService}</value>
+        </managed-property>
+    </managed-bean>
+
+    <managed-bean>
         <managed-bean-name>stationBean</managed-bean-name>
         <managed-bean-class>ru.sbb.beans.StationBean</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>

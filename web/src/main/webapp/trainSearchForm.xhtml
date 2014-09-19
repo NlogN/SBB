@@ -32,7 +32,7 @@
             time:
             <h:inputText  value="#{trainSearchBean.upperBoundTime}"/>
         </h:panelGrid>
-        <h:commandButton value="search" action="trainSearch"></h:commandButton>
+        <h:commandButton value="search" action="#{trainSearchBean.getTrainsByResponsePage()}"></h:commandButton>
     </h:form>
     </ui:composition>
 
