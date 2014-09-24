@@ -18,6 +18,10 @@ public class RegistrationService {
     }
 
     public boolean checkPassword(String psw) {
-        return psw.equals(password);
+        if(psw!=null){
+            return psw.equals(password);
+        }else{
+            return false;
+        }
     }
 }

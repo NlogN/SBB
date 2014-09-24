@@ -7,37 +7,37 @@
 
 <h:head>
     <title><ui:insert name="windowTitle"/></title>
+    <link type="text/css" rel="stylesheet" href="resources/css/style.css" media="all" />
+
 </h:head>
 
 <h:body>
 
+    <div id="wrapper">
 
-    <div id="heading">
-        <ui:insert name="heading">
-            <ui:include src="../sections/header.xhtml"/>
-        </ui:insert>
+        <div id="header">
+            <ui:insert name="heading">
+                <ui:include src="../sections/header.xhtml"/>
+            </ui:insert>
+        </div>
+
+        <ul class="menu">
+            <li><h:link value="Home" outcome="index"/></li>
+            <li><h:link value="Train search" outcome="trainSearch"/></li>
+            <li><h:link value="Buy ticket" outcome="buyTicket"/></li>
+            <li><h:link value="Station schedule" outcome="stationSchedule"/></li>
+            <li><h:link value="Manage service" outcome="#{userBean.verifyUserRegistration()}"/></li>
+        </ul>
+
+
+        <div id="content" style="clear: both;">
+            <ui:insert name="content"/>
+        </div>
+
+        <div id="responseContent" style="">
+            <ui:insert name="responseContent"/>
+        </div>
+        <ui:debug/>
     </div>
-
-    <div style="background-color: lightskyblue">
-        <table width="600" border="0" cellspacing="0" cellpadding="0">
-            <tr align="center">
-                <td> <h:link style="font-weight:bold" value="Home" outcome="index" /><br/></td>
-                <td> <h:link value="Train search" outcome="trainSearch" /></td>
-                <td> <h:link value="Buy ticket" outcome="buyTicket" /><br/></td>
-                <td> <h:link value="Station schedule" outcome="stationSchedule" /></td>
-                <td> <h:link value="Manage service" outcome="#{userBean.verifyUserRegistration()}" /></td>
-            </tr>
-        </table>
-    </div>
-
-
-    <div id="content" style="background-color: burlywood; clear: both;">
-        <ui:insert name="content"/>
-    </div>
-
-    <div id="responseContent" style="background-color: burlywood">
-        <ui:insert name="responseContent"/>
-    </div>
-    <ui:debug/>
 </h:body>
 </html>

@@ -1,6 +1,7 @@
 package ru.sbb.dao;
 
 
+import ru.sbb.beans.EntityManagerBean;
 import ru.sbb.entity.Passenger;
 import ru.sbb.entity.Ticket;
 import ru.sbb.entity.Train;
@@ -20,9 +21,14 @@ import java.util.List;
 public class TicketDAOImpl implements TicketDAO {
     private EntityManager entityManager;
 
-    public void setEntityManager(EntityManagerFactory entityManagerFactory) {
-        this.entityManager = entityManagerFactory.createEntityManager();
+    public void setEntityManager(EntityManagerBean entityManagerBean) {
+        this.entityManager = entityManagerBean.getEntityManager1();
     }
+
+//    public void setEntityManager(EntityManagerFactory entityManagerFactory) {
+//        //this.entityManager = entityManagerFactory.createEntityManager();
+//        this.entityManager = EntityManagerBean.getEntityManager();
+//    }
 
 //    public void setEntityManager(EntityManager entityManager) {
 //        this.entityManager = entityManager;

@@ -5,24 +5,37 @@
     http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
 
-    <bean id="passengerDAO" class="ru.sbb.dao.PassengerDAOImpl">
+    <bean id="entityManagerBean" class="ru.sbb.beans.EntityManagerBean">
         <property name="entityManager" ref="entityManagerFactory"/>
+    </bean>
+
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
+        <property name="persistenceUnitName" value="sbb_unit"/>
+    </bean>
+
+    <bean id="passengerDAO" class="ru.sbb.dao.PassengerDAOImpl">
+        <!--<property name="entityManager" ref="entityManagerFactory"/>-->
+        <property name="entityManager" ref="entityManagerBean"/>
     </bean>
 
     <bean id="scheduleRecordDAO" class="ru.sbb.dao.ScheduleRecordDAOImpl">
-        <property name="entityManager" ref="entityManagerFactory"/>
+        <!--<property name="entityManager" ref="entityManagerFactory"/>-->
+        <property name="entityManager" ref="entityManagerBean"/>
     </bean>
 
     <bean id="ticketDAO" class="ru.sbb.dao.TicketDAOImpl">
-        <property name="entityManager" ref="entityManagerFactory"/>
+        <!--<property name="entityManager" ref="entityManagerFactory"/>-->
+        <property name="entityManager" ref="entityManagerBean"/>
     </bean>
 
     <bean id="trainDAO" class="ru.sbb.dao.TrainDAOImpl">
-        <property name="entityManager" ref="entityManagerFactory"/>
+        <!--<property name="entityManager" ref="entityManagerFactory"/>-->
+        <property name="entityManager" ref="entityManagerBean"/>
     </bean>
 
     <bean id="stationDAO" class="ru.sbb.dao.StationDAOImpl">
-        <property name="entityManager" ref="entityManagerFactory"/>
+        <!--<property name="entityManager" ref="entityManagerFactory"/>-->
+        <property name="entityManager" ref="entityManagerBean"/>
     </bean>
 
     <bean id="clientService" class="ru.sbb.service.ClientService">
@@ -43,9 +56,9 @@
         <property name="password" value="1"/>
     </bean>
 
-    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
-        <property name="persistenceUnitName" value="sbb_unit"/>
-    </bean>
+
+
+
 
     <!--<bean id="entityManager" class="org.springframework.orm.jpa.support.SharedEntityManagerBean">-->
         <!--<property name="entityManagerFactory" ref="entityManagerFactory" />-->

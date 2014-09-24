@@ -16,7 +16,10 @@
 <h:body>
     <ui:composition>
         <h:form>
-            <h:inputText value="#{passengerBean.number}"></h:inputText>
+            <h:panelGrid columns="2">
+                train number:
+                <h:inputText value="#{passengerBean.number}"></h:inputText>
+            </h:panelGrid>
             <h:commandButton value="view passengers" action="#{passengerBean.getPassengersPage()}"></h:commandButton>
         </h:form>
 

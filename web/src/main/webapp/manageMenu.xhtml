@@ -9,22 +9,22 @@
 
 <h:body>
     <ui:composition>
-        <div>
-            <h:link value="add Train" outcome="addTrainResp" />
+        <div class="menu2">
+            <h:link outcome="addTrainResp" styleClass="popup"><img src="resources/images/train.png" alt="add Train"/>Add train</h:link>
         </div>
-        <div>
-            <h:link value="add Station" outcome="addStationResp" />
+        <div class="menu2">
+            <h:link outcome="addStationResp" styleClass="popup"><img src="resources/images/station.png" alt="add Station"/>Add station</h:link>
         </div>
-        <div>
-            <h:link value="add Schedule Record" outcome="addScheduleRecordResp" />
+        <div class="menu2">
+            <h:link outcome="addScheduleRecordResp" styleClass="popup"><img src="resources/images/time.png" alt="add Schedule Record"/>Add schedule record</h:link>
         </div>
-        <div>
-            <h:link value="view passangers by train" outcome="viewPassengers" />
+        <div class="menu2">
+            <h:link outcome="viewPassengers" styleClass="popup"><img src="resources/images/passager.png" alt="view passangers by train"/>View passengers</h:link>
         </div>
-        <div>
-            <h:link value="trains view" outcome="viewTrains" />
+        <div class="menu2">
+            <h:link outcome="viewTrains" styleClass="popup"><img src="resources/images/train_search.png" alt="trains view"/>View trains</h:link>
         </div>
-        <div>
+        <div class="button">
             <h:form>
                 <h:commandButton value="log-out" action="index" actionListener="#{userBean.clearEnteredPassword}"></h:commandButton>
             </h:form>

@@ -16,6 +16,7 @@
 <h:body>
     <ui:composition>
     <h:form>
+
         <h:panelGrid columns="2">
             from:
             <h:inputText  value="#{trainSearchBean.stationAName}"/>
@@ -32,6 +33,7 @@
             time:
             <h:inputText  value="#{trainSearchBean.upperBoundTime}"/>
         </h:panelGrid>
+
         <h:commandButton value="search" action="#{trainSearchBean.getTrainsByResponsePage()}"></h:commandButton>
     </h:form>
     </ui:composition>
