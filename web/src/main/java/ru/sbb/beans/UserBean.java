@@ -45,12 +45,12 @@ public class UserBean implements Serializable {
 
     public String verifyUserRegistration() {
         if (enteredPassword == null) {
-            return "login";
+            return "/login";
         } else {
             if (registrationService.checkPassword(enteredPassword)) {
-                return "managePage";
+                return "/managePage";
             } else {
-                return "repeatLogin";
+                return "/repeatLogin";
             }
         }
     }

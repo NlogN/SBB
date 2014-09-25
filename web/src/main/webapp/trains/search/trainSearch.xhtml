@@ -4,19 +4,33 @@
       xmlns:ui="http://java.sun.com/jsf/facelets">
 <head><title>IGNORED</title></head>
 <body>
-<ui:composition template="tamplates/layout.xhtml">
+<ui:composition template="/tamplates/layout.xhtml">
     <ui:define name="windowTitle">
-        trains
+        station
     </ui:define>
 
     <ui:define name="content">
         <div>
             <ui:insert name="heading">
-                <ui:include src="viewTrainsForm.xhtml"/>
+                <ui:include src="trainSearchForm.xhtml"/>
             </ui:insert>
         </div>
     </ui:define>
+
+    <ui:define name="responseContent">
+        <div>
+            <ui:insert name="heading">
+                #{trainSearchBean.operationResult}
+            </ui:insert>
+        </div>
+    </ui:define>
+
 </ui:composition>
+
+
+
+<ui:debug/>
 </body>
 </html>
+
 
