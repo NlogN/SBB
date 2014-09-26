@@ -1,11 +1,9 @@
-package ru.sbb.beans;
+package ru.sbb;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-/**
- * Created by Admin on 24.09.2014.
- */
+
 public class EntityManagerBean {
     private  EntityManager entityManager;
 
@@ -13,7 +11,7 @@ public class EntityManagerBean {
         this.entityManager = entityManagerFactory.createEntityManager();
     }
 
-    public EntityManager getEntityManager1() {
+    public EntityManager getEntityManagerInstance() {
         return entityManager;
     }
 

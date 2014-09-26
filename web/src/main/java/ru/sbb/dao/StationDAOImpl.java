@@ -1,11 +1,10 @@
 package ru.sbb.dao;
 
 
-import ru.sbb.beans.EntityManagerBean;
+import ru.sbb.EntityManagerBean;
 import ru.sbb.entity.Station;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 
 /**
@@ -17,17 +16,8 @@ public class StationDAOImpl implements StationDAO {
     private EntityManager entityManager;
 
     public void setEntityManager(EntityManagerBean entityManagerBean) {
-        this.entityManager = entityManagerBean.getEntityManager1();
+        this.entityManager = entityManagerBean.getEntityManagerInstance();
     }
-
-//    public void setEntityManager(EntityManagerFactory entityManagerFactory) {
-//        //this.entityManager = entityManagerFactory.createEntityManager();
-//        this.entityManager = EntityManagerBean.getEntityManager();
-//    }
-
-//    public StationDAOImpl(EntityManager entityManager) {
-//        this.entityManager = entityManager;
-//    }
 
 
 

@@ -12,15 +12,14 @@ import java.util.Scanner;
 public class RegistrationService {
     private String password;
 
-
     public void setPassword(String password) {
         this.password = password;
     }
 
     public boolean checkPassword(String psw) {
-        if(psw!=null){
+        if (psw != null) {
             return psw.equals(password);
-        }else{
+        } else {
             return false;
         }
     }

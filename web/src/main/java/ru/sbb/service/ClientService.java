@@ -63,9 +63,11 @@ public class ClientService {
     public List<StationScheduleRecord> getStationSchedule(String stationName) throws StationNotFoundException {
         List<ScheduleRecord> scheduleList = scheduleRecordDAO.getStationScheduleRecords(stationName);
         List<StationScheduleRecord> recordList = new ArrayList<StationScheduleRecord>();
-
         for (ScheduleRecord schedule : scheduleList) {
-            recordList.add(new StationScheduleRecord(Integer.toString(schedule.getTrain().getNumber()), schedule.getTime()));
+            StationScheduleRecord newStationScheduleRecord = new StationScheduleRecord();
+            newStationScheduleRecord.setTrainNum(Integer.toString(schedule.getTrain().getNumber()));
+            newStationScheduleRecord.setTime(schedule.getTime());
+            recordList.add(newStationScheduleRecord);
         }
         return recordList;
     }

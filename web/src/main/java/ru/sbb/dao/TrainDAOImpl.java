@@ -1,11 +1,10 @@
 package ru.sbb.dao;
 
-import ru.sbb.beans.EntityManagerBean;
+import ru.sbb.EntityManagerBean;
 import ru.sbb.entity.ScheduleRecord;
 import ru.sbb.entity.Train;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import java.util.ArrayList;
@@ -21,21 +20,9 @@ public class TrainDAOImpl implements TrainDAO {
     private EntityManager entityManager;
 
     public void setEntityManager(EntityManagerBean entityManagerBean) {
-        this.entityManager = entityManagerBean.getEntityManager1();
+        this.entityManager = entityManagerBean.getEntityManagerInstance();
     }
 
-//    public void setEntityManager(EntityManagerFactory entityManagerFactory) {
-//       // this.entityManager = entityManagerFactory.createEntityManager();
-//        this.entityManager = EntityManagerBean.getEntityManager();
-//    }
-
-//    public void setEntityManager(EntityManager entityManager) {
-//        this.entityManager = entityManager;
-//    }
-
-//    public TrainDAOImpl(EntityManager entityManager) {
-//        this.entityManager = entityManager;
-//    }
 
     @Override
     public void addTrain(int number, int capacity) {

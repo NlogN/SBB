@@ -1,13 +1,12 @@
 package ru.sbb.dao;
 
 
-import ru.sbb.beans.EntityManagerBean;
+import ru.sbb.EntityManagerBean;
 import ru.sbb.entity.Passenger;
 import ru.sbb.entity.Ticket;
 import ru.sbb.entity.Train;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,37 +23,14 @@ import java.util.List;
 public class PassengerDAOImpl implements PassengerDAO {
     private EntityManager entityManager;
 
-//    public void setEntityManager(EntityManagerFactory entityManagerFactory) {
-//        //this.entityManager = entityManagerFactory.createEntityManager();
-//        this.entityManager = EntityManagerBean.getEntityManager();
-//    }
-
     public void setEntityManager(EntityManagerBean entityManagerBean) {
-        this.entityManager = entityManagerBean.getEntityManager1();
+        this.entityManager = entityManagerBean.getEntityManagerInstance();
     }
-
-
-//    public void setEntityManager(EntityManager entityManager) {
-//        this.entityManager = entityManager;
-//    }
-
-//    public EntityManager getEntityManager() {
-//        return entityManager;
-//    }
-
-//    public PassengerDAOImpl(EntityManager entityManager) {
-//        this.entityManager = entityManager;
-//    }
-
 
     @Override
     public List<Passenger> getPassengersByTrain(int trainNum) {
-
         Query query = entityManager.createQuery("SELECT ts.passenger FROM ru.sbb.entity.Train tr join tr.ticketList ts where tr.number =:numb");
-       // System.out.println(entityManager.isOpen());
-
         query.setParameter("numb", trainNum);
-     //   System.out.println(entityManager.isOpen());
         List<Passenger> passengerList = query.getResultList();
         return passengerList;
     }
