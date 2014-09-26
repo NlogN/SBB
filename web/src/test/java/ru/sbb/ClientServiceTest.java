@@ -1,24 +1,31 @@
 package ru.sbb;
 
 
-import java.io.IOException;
-import java.text.ParseException;
-import java.util.Date;
-import java.util.List;
-
+import org.junit.Rule;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ru.sbb.dto.StationScheduleRecord;
-import ru.sbb.dto.TrainRecord;
+import org.junit.rules.ExpectedException;
+
+import ru.sbb.dao.ScheduleRecordDAO;
+import ru.sbb.dao.TicketDAO;
+import ru.sbb.dao.TrainDAO;
+
 import ru.sbb.entity.Passenger;
+import ru.sbb.entity.ScheduleRecord;
+import ru.sbb.entity.Ticket;
 import ru.sbb.entity.Train;
 import ru.sbb.exception.BuyTicketException;
 import ru.sbb.exception.StationNotFoundException;
 import ru.sbb.exception.TrainNotFoundException;
 import ru.sbb.service.ClientService;
 
-import static junit.framework.TestCase.assertTrue;
+import java.io.IOException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import static org.mockito.Mockito.*;
+import static org.junit.Assert.*;
 
 
 /**
@@ -27,58 +34,118 @@ import static junit.framework.TestCase.assertTrue;
  * Date: 02.09.14
  */
 public class ClientServiceTest {
-    ApplicationContext context =
-            new ClassPathXmlApplicationContext("beans.xml");
-
-    ClientService clientService = (ClientService) context.getBean("clientService");
 
 
-    @Test(expected = StationNotFoundException.class)
-    public void testGetStationSchedule1() throws IOException, StationNotFoundException {
-        List<StationScheduleRecord> recordList = clientService.getStationSchedule("Moskow123");
-        for (StationScheduleRecord record:recordList){
-            System.out.println(record.getTrainNum()+" "+record.getTime());
+    @Test
+    public void testBuyTicketRegistrationClosed() throws IOException, StationNotFoundException, ParseException, BuyTicketException, TrainNotFoundException {
+        TrainDAO trainDAOMock = mock(TrainDAO.class);
+        List<Train> trainList = new ArrayList<Train>();
+        Train train = new Train();
+        train.setNumber(123);
+        train.setCapacity(100);
+        trainList.add(train);
+        when(trainDAOMock.getTrainByNum(123)).thenReturn(trainList);
+
+        TicketDAO ticketDAOMock = mock(TicketDAO.class);
+        Date dateOfRace = DateBuilder.createDate("1900/01/01");
+        List<Ticket> ticketList = new ArrayList<Ticket>();
+        ticketList.add(new Ticket());
+        when(ticketDAOMock.getTicketsByDayAndTrain(train, dateOfRace)).thenReturn(ticketList);
+
+        ScheduleRecordDAO scheduleRecordDAOMock = mock(ScheduleRecordDAO.class);
+        List<ScheduleRecord> scheduleRecordList = new ArrayList<ScheduleRecord>();
+        ScheduleRecord scheduleRecord = new ScheduleRecord();
+        scheduleRecord.setTime(dateOfRace);
+        scheduleRecordList.add(scheduleRecord);
+        when(scheduleRecordDAOMock.findScheduleRecordsByStationNameAndTrain(train, "Moskow")).thenReturn(scheduleRecordList);
+
+        ClientService clientService = new ClientService();
+        clientService.setTrainDAO(trainDAOMock);
+        clientService.setScheduleRecordDAO(scheduleRecordDAOMock);
+        clientService.setTicketDAO(ticketDAOMock);
+
+        try {
+            clientService.buyTicket(123, "Moskow", new Passenger(), dateOfRace);
+            fail("Should have thrown an BuyTicketException!");
+        } catch (BuyTicketException e) {
+            assertTrue(e.getMessage().contains("registration on this train is closed"));
+        }
+    }
+
+    @Test
+    public void testBuyTicketTrainNotVisitStation() throws IOException, StationNotFoundException, ParseException, BuyTicketException, TrainNotFoundException {
+        TrainDAO trainDAOMock = mock(TrainDAO.class);
+        List<Train> trainList = new ArrayList<Train>();
+        Train train = new Train();
+        train.setNumber(123);
+        train.setCapacity(100);
+        trainList.add(train);
+        when(trainDAOMock.getTrainByNum(123)).thenReturn(trainList);
+
+        TicketDAO ticketDAOMock = mock(TicketDAO.class);
+        Date date = DateBuilder.createDate("1900/01/01");
+        List<Ticket> ticketList = new ArrayList<Ticket>();
+        ticketList.add(new Ticket());
+        when(ticketDAOMock.getTicketsByDayAndTrain(train, date)).thenReturn(ticketList);
+
+        ScheduleRecordDAO scheduleRecordDAOMock = mock(ScheduleRecordDAO.class);
+        when(scheduleRecordDAOMock.findScheduleRecordsByStationNameAndTrain(train, "Moskow")).thenReturn(new ArrayList<ScheduleRecord>());
+
+        ClientService clientService = new ClientService();
+        clientService.setTrainDAO(trainDAOMock);
+        clientService.setScheduleRecordDAO(scheduleRecordDAOMock);
+        clientService.setTicketDAO(ticketDAOMock);
+
+        try {
+            clientService.buyTicket(123, "Moskow", new Passenger(), date);
+            fail("Should have thrown an BuyTicketException!");
+        } catch (BuyTicketException e) {
+            assertTrue(e.getMessage().contains("train not visit this station"));
         }
 
     }
 
     @Test
-    public void testGetStationSchedule2() throws IOException, StationNotFoundException {
-        List<StationScheduleRecord> recordList = clientService.getStationSchedule("Moskow");
-        for (StationScheduleRecord record:recordList){
-            System.out.println(record.getTrainNum()+" "+record.getTime());
+    public void testBuyTicketTrainNotFound() throws IOException, StationNotFoundException, ParseException, BuyTicketException, TrainNotFoundException {
+        TrainDAO trainDAOMock = mock(TrainDAO.class);
+        when(trainDAOMock.getTrainByNum(123)).thenReturn(new ArrayList<Train>());
+
+        ClientService clientService = new ClientService();
+        clientService.setTrainDAO(trainDAOMock);
+
+        try {
+            clientService.buyTicket(123, "Moskow", new Passenger(), new Date());
+            fail("Should have thrown an TrainNotFoundException!");
+        } catch (TrainNotFoundException e) {
+            assertTrue(e.getMessage().contains("Train not found"));
         }
     }
 
-    @Test(expected = BuyTicketException.class)
-    public void testBuyTicket1() throws IOException, StationNotFoundException, ParseException, BuyTicketException, TrainNotFoundException {
-        Passenger passenger = new Passenger();
-        Date birthDate = DateBuilder.createDate("1991/01/01");
-        passenger.setDate(birthDate);
-        passenger.setName("Peter");
-        passenger.setSurname("Ivanov");
-        Date dateOfRace = DateBuilder.createDate("2014/08/22");
-        clientService.buyTicket(123, "Novosibirsk312", passenger, dateOfRace);
-    }
-
-    @Test(expected = BuyTicketException.class)
-    public void testBuyTicket2() throws IOException, StationNotFoundException, ParseException, BuyTicketException, TrainNotFoundException {
-        Passenger passenger = new Passenger();
-        Date birthDate = DateBuilder.createDate("1991/01/01");
-        passenger.setDate(birthDate);
-        passenger.setName("Peter");
-        passenger.setSurname("Ivanov");
-        Date dateOfRace = DateBuilder.createDate("2011/08/22");
-        clientService.buyTicket(123, "Novosibirsk", passenger, dateOfRace);
-    }
-
     @Test
-    public void testGetTrainsByRoute() throws ParseException {
-        Date lowerBound = DateBuilder.createDate("1991/01/01 01:02:12");
-        Date upperBound = DateBuilder.createDate("2016/01/01 01:02:12");
-        List<TrainRecord> trainList = clientService.getTrainsByRoute(lowerBound, upperBound, "Moskow", "Omsk");
-        for (TrainRecord train:trainList){
-            System.out.println(train.getNumber());
+    public void testBuyTicketNoEmptySeats() throws IOException, StationNotFoundException, ParseException, BuyTicketException, TrainNotFoundException {
+        TrainDAO trainDAOMock = mock(TrainDAO.class);
+        List<Train> trainList = new ArrayList<Train>();
+        Train train = new Train();
+        train.setNumber(123);
+        train.setCapacity(0);
+        trainList.add(train);
+        when(trainDAOMock.getTrainByNum(123)).thenReturn(trainList);
+
+        TicketDAO ticketDAOMock = mock(TicketDAO.class);
+        Date date = DateBuilder.createDate("1900/01/01");
+        List<Ticket> ticketList = new ArrayList<Ticket>();
+        ticketList.add(new Ticket());
+        when(ticketDAOMock.getTicketsByDayAndTrain(train, date)).thenReturn(ticketList);
+
+        ClientService clientService = new ClientService();
+        clientService.setTrainDAO(trainDAOMock);
+        clientService.setTicketDAO(ticketDAOMock);
+
+        try {
+            clientService.buyTicket(123, "Moskow", new Passenger(), date);
+            fail("Should have thrown an BuyTicketException!");
+        } catch (BuyTicketException e) {
+            assertTrue(e.getMessage().contains("no empty seats"));
         }
 
     }

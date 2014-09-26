@@ -79,24 +79,24 @@ public class ClientService {
             throw new TrainNotFoundException("Train not found!");
         } else {
             Train train = trains.get(0);
-            if (checkStationVisit(train, stationName, dateOfRace)) {
-                if (!checkStartTime(train, stationName)) {
-                    throw new BuyTicketException("registration on this train is closed");
-                } else {
-                    if (!checkSamePassengerNotReg(train, passenger.getName(), passenger.getSurname(), passenger.getDate())) {
-                        throw new BuyTicketException("such passenger is already registered");
+            if(!checkNotFilledState(train, dateOfRace)){
+                throw new BuyTicketException("no empty seats");
+            }else{
+                if (checkStationVisit(train, stationName, dateOfRace)) {
+                    if (!checkStartTime(train, stationName)) {
+                        throw new BuyTicketException("registration on this train is closed");
                     } else {
-                        if (!checkNotFilledState(train, dateOfRace)) {
-                            throw new BuyTicketException("no empty seats");
+                        if (!checkSamePassengerNotReg(train, passenger.getName(), passenger.getSurname(), passenger.getDate())) {
+                            throw new BuyTicketException("such passenger is already registered");
                         } else {
                             ticketDAO.addTicket(passenger, train, dateOfRace);
                         }
-
                     }
+                } else {
+                    throw new BuyTicketException("train not visit this station at this day");
                 }
-            } else {
-                throw new BuyTicketException("train not visit this station in this day");
             }
+
 
         }
     }
@@ -105,7 +105,7 @@ public class ClientService {
         List<ScheduleRecord> scheduleList = scheduleRecordDAO.findScheduleRecordsByStationNameAndTrain(train, stationName);
         if (!scheduleList.isEmpty()) {
             for (ScheduleRecord schedule : scheduleList) {
-                if ((schedule.getUnixTime() > DateBuilder.getUnixTime(dateOfRace)) && (schedule.getUnixTime() < DateBuilder.getUnixTime(dateOfRace) + 86400)) {
+                if ((DateBuilder.getUnixTime(dateOfRace)) <= schedule.getUnixTime()  && (schedule.getUnixTime() < DateBuilder.getUnixTime(dateOfRace) + 86400)) {
                     return true;
                 }
             }
