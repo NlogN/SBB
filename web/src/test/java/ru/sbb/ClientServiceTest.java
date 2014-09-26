@@ -9,6 +9,8 @@ import java.util.List;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import ru.sbb.dto.StationScheduleRecord;
+import ru.sbb.dto.TrainRecord;
 import ru.sbb.entity.Passenger;
 import ru.sbb.entity.Train;
 import ru.sbb.exception.BuyTicketException;
@@ -74,8 +76,8 @@ public class ClientServiceTest {
     public void testGetTrainsByRoute() throws ParseException {
         Date lowerBound = DateBuilder.createDate("1991/01/01 01:02:12");
         Date upperBound = DateBuilder.createDate("2016/01/01 01:02:12");
-        List<Train> trainList = clientService.getTrainsByRoute(lowerBound, upperBound, "Moskow", "Omsk");
-        for (Train train:trainList){
+        List<TrainRecord> trainList = clientService.getTrainsByRoute(lowerBound, upperBound, "Moskow", "Omsk");
+        for (TrainRecord train:trainList){
             System.out.println(train.getNumber());
         }
 

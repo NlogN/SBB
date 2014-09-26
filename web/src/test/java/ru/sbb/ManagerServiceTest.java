@@ -25,11 +25,11 @@ public class ManagerServiceTest {
     ManagerService managerService = (ManagerService) context.getBean("managerService");
 
 
-    @Test
-    public void testGetTrainNumbers() throws IOException, StationNotFoundException {
-        String res = managerService.getTrainNumbers();
-        System.out.println(res);
-    }
+//    @Test
+//    public void testGetTrainNumbers() throws IOException, StationNotFoundException {
+//        String res = managerService.getTrainNumbers();
+//        System.out.println(res);
+//    }
 
 
 //    @Test

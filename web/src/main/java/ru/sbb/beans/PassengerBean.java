@@ -1,6 +1,6 @@
 package ru.sbb.beans;
 
-import ru.sbb.PassengerRecord;
+import ru.sbb.dto.PassengerRecord;
 import ru.sbb.service.ManagerService;
 
 import java.io.Serializable;

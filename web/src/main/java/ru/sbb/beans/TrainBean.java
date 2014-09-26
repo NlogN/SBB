@@ -1,5 +1,6 @@
 package ru.sbb.beans;
 
+import ru.sbb.dto.TrainRecord;
 import ru.sbb.entity.Train;
 import ru.sbb.service.ClientService;
 import ru.sbb.service.ManagerService;
@@ -56,7 +57,7 @@ public class TrainBean implements Serializable {
     }
 
 
-    public List<Train> getAllTrains() {
+    public List<TrainRecord> getAllTrains() {
         return managerService.getTrains();
     }
 

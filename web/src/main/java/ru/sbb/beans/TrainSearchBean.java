@@ -2,6 +2,7 @@ package ru.sbb.beans;
 
 
 import ru.sbb.DateBuilder;
+import ru.sbb.dto.TrainRecord;
 import ru.sbb.entity.Train;
 import ru.sbb.service.ClientService;
 
@@ -21,11 +22,11 @@ public class TrainSearchBean implements Serializable {
     private String lowerBoundTime = "01:01";
     private String upperBoundTime = "01:02";
     private String operationResult = "";
-    private List<Train> trains;
+    private List<TrainRecord> trains;
 
     private ClientService clientService;
 
-    public List<Train> getTrains() {
+    public List<TrainRecord> getTrains() {
         return trains;
     }
 

@@ -1,10 +1,11 @@
 package ru.sbb.service;
 
-import ru.sbb.PassengerRecord;
+import ru.sbb.dto.PassengerRecord;
 import ru.sbb.dao.PassengerDAO;
 import ru.sbb.dao.ScheduleRecordDAO;
 import ru.sbb.dao.StationDAO;
 import ru.sbb.dao.TrainDAO;
+import ru.sbb.dto.TrainRecord;
 import ru.sbb.entity.Passenger;
 import ru.sbb.entity.Train;
 import ru.sbb.exception.StationNotFoundException;
@@ -41,28 +42,16 @@ public class ManagerService {
     }
 
 
-
-
-    public String getTrainNumbers() {
+    public List<TrainRecord> getTrains() {
         List<Train> trainList = trainDAO.getTrains();
-        if (trainList.isEmpty()) {
-            return "no data";
-        } else {
-            Set<String> trainNumberSet = new HashSet<String>();
-            for (Train train : trainList) {
-                trainNumberSet.add(Integer.toString(train.getNumber()));
-            }
-            StringBuffer sb = new StringBuffer();
-            for (String num : trainNumberSet) {
-                sb.append("train " + num + " ;\n");
-            }
-            return sb.toString();
+        List<TrainRecord> trains = new ArrayList<TrainRecord>();
+        for (Train train : trainList) {
+            TrainRecord newTrainRecord = new TrainRecord();
+            newTrainRecord.setNumber(train.getNumber());
+            newTrainRecord.setCapacity(train.getCapacity());
+            trains.add(newTrainRecord);
         }
-    }
-
-    public List<Train> getTrains() {
-        List<Train> trainList = trainDAO.getTrains();
-        return trainList;
+        return trains;
     }
 
     public void addTrain(int number, int capacity) {
@@ -89,19 +78,6 @@ public class ManagerService {
         }
         return passengers;
     }
-
-//    public String getPassengersInfoByTrainNum(int trainNum) {
-//        List<Passenger> passengerList = passengerDAO.getPassengersByTrain(trainNum);
-//        if (passengerList.isEmpty()) {
-//            return "no data";
-//        } else {
-//            StringBuffer sb = new StringBuffer();
-//            for (Passenger passenger : passengerList) {
-//                sb.append(passenger.getName() + " " + passenger.getSurname() + " ;\n");
-//            }
-//            return sb.toString();
-//        }
-//    }
 
 
 }

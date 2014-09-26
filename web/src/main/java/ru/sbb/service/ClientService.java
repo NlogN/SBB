@@ -1,11 +1,12 @@
 package ru.sbb.service;
 
 
-import ru.sbb.StationScheduleRecord;
+import ru.sbb.dto.StationScheduleRecord;
 import ru.sbb.dao.PassengerDAO;
 import ru.sbb.dao.ScheduleRecordDAO;
 import ru.sbb.dao.TicketDAO;
 import ru.sbb.dao.TrainDAO;
+import ru.sbb.dto.TrainRecord;
 import ru.sbb.entity.Passenger;
 import ru.sbb.entity.ScheduleRecord;
 import ru.sbb.entity.Ticket;
@@ -46,72 +47,36 @@ public class ClientService {
     }
 
 
-
-//    public String getTrainsByRoute(java.util.Date lowerBound, java.util.Date upperBound, String stationAName, String stationBName) {
-//        List<Train> trainList = trainDAO.getTrainByRoute(lowerBound, upperBound, stationAName, stationBName);
-//        if (trainList.isEmpty()) {
-//            return "no such trains";
-//        } else {
-//            StringBuffer sb = new StringBuffer();
-//            for (Train train : trainList) {
-//                sb.append(train.getNumber() + "; \n");
-//            }
-//            return sb.toString();
-//        }
-//    }
-
-    public List<Train> getTrainsByRoute(java.util.Date lowerBound, java.util.Date upperBound, String stationAName, String stationBName) {
+    public List<TrainRecord> getTrainsByRoute(java.util.Date lowerBound, java.util.Date upperBound, String stationAName, String stationBName) {
         List<Train> trainList = trainDAO.getTrainByRoute(lowerBound, upperBound, stationAName, stationBName);
-        return trainList;
-//        if (trainList.isEmpty()) {
-//            return "no such trains";
-//        } else {
-//            StringBuffer sb = new StringBuffer();
-//            for (Train train : trainList) {
-//                sb.append(train.getNumber() + "; \n");
-//            }
-//            return sb.toString();
-//        }
+        List<TrainRecord> trains = new ArrayList<TrainRecord>();
+        for (Train train : trainList) {
+            TrainRecord newTrainRecord = new TrainRecord();
+            newTrainRecord.setNumber(train.getNumber());
+            newTrainRecord.setCapacity(train.getCapacity());
+            trains.add(newTrainRecord);
+        }
+        return trains;
     }
 
 
     public List<StationScheduleRecord> getStationSchedule(String stationName) throws StationNotFoundException {
         List<ScheduleRecord> scheduleList = scheduleRecordDAO.getStationScheduleRecords(stationName);
         List<StationScheduleRecord> recordList = new ArrayList<StationScheduleRecord>();
-        if (scheduleList.isEmpty()) {
-            return recordList;
-        } else {
-//            StringBuffer sb = new StringBuffer();
-//            for (ScheduleRecord schedule : scheduleList) {
-//                sb.append("train " + schedule.getTrain().getNumber() + "    time: " + schedule.getTime() + "; \n");
-//            }
 
-            for (ScheduleRecord schedule : scheduleList) {
-                recordList.add(new StationScheduleRecord(Integer.toString(schedule.getTrain().getNumber()),schedule.getTime()));
-            }
-            return recordList;
+        for (ScheduleRecord schedule : scheduleList) {
+            recordList.add(new StationScheduleRecord(Integer.toString(schedule.getTrain().getNumber()), schedule.getTime()));
         }
+        return recordList;
     }
 
-//    public String getStationSchedule(String stationName) throws StationNotFoundException {
-//        List<ScheduleRecord> scheduleList = scheduleRecordDAO.getStationScheduleRecords(stationName);
-//        if (scheduleList.isEmpty()) {
-//            return "no data";
-//        } else {
-//            StringBuffer sb = new StringBuffer();
-//            for (ScheduleRecord schedule : scheduleList) {
-//                sb.append("train " + schedule.getTrain().getNumber() + "    time: " + schedule.getTime() + "; \n");
-//            }
-//            return sb.toString();
-//        }
-//    }
 
     public void buyTicket(int trainNum, String stationName, Passenger passenger, java.util.Date dateOfRace) throws BuyTicketException, TrainNotFoundException {
-        List<Train> list = trainDAO.getTrainByNum(trainNum);
-        if (list.isEmpty()) {
+        List<Train> trains = trainDAO.getTrainByNum(trainNum);
+        if (trains.isEmpty()) {
             throw new TrainNotFoundException("Train not found!");
         } else {
-            Train train = list.get(0);
+            Train train = trains.get(0);
             if (checkStationVisit(train, stationName, dateOfRace)) {
                 if (!checkStartTime(train, stationName)) {
                     throw new BuyTicketException("registration on this train is closed");

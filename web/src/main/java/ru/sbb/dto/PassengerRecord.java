@@ -1,10 +1,8 @@
-package ru.sbb;
+package ru.sbb.dto;
 
 import java.util.Date;
 
-/**
- * Created by Admin on 16.09.2014.
- */
+
 public class PassengerRecord {
     private String name;
     private String surname;
@@ -33,11 +31,6 @@ public class PassengerRecord {
     public void setName(String name) {
         this.name = name;
     }
-
-
-
-
-
 
 
 }

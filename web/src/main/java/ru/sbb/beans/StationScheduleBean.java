@@ -1,7 +1,7 @@
 package ru.sbb.beans;
 
 
-import ru.sbb.StationScheduleRecord;
+import ru.sbb.dto.StationScheduleRecord;
 import ru.sbb.exception.StationNotFoundException;
 import ru.sbb.service.ClientService;
 import java.io.Serializable;

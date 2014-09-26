@@ -1,11 +1,11 @@
 package ru.sbb.beans;
 
-import ru.sbb.entity.Train;
+
 import ru.sbb.service.ManagerService;
 
 import javax.faces.event.ActionEvent;
 import java.io.Serializable;
-import java.util.List;
+
 
 
 public class StationBean implements Serializable {
