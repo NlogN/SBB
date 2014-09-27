@@ -82,7 +82,9 @@ public class ClientService {
             if(!checkNotFilledState(train, dateOfRace)){
                 throw new BuyTicketException("no empty seats");
             }else{
-                if (checkStationVisit(train, stationName, dateOfRace)) {
+                if (!checkStationVisit(train, stationName, dateOfRace)) {
+                    throw new BuyTicketException("train not visit this station at this day");
+                } else {
                     if (!checkStartTime(train, stationName)) {
                         throw new BuyTicketException("registration on this train is closed");
                     } else {
@@ -92,8 +94,6 @@ public class ClientService {
                             ticketDAO.addTicket(passenger, train, dateOfRace);
                         }
                     }
-                } else {
-                    throw new BuyTicketException("train not visit this station at this day");
                 }
             }
 
