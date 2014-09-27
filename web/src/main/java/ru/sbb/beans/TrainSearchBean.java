@@ -30,9 +30,7 @@ public class TrainSearchBean implements Serializable {
         return trains;
     }
 
-    public void setTrains() throws ParseException {
-        java.util.Date lowerBound = DateBuilder.createDateTime(lowerBoundDay + " " + lowerBoundTime + ":00");
-        java.util.Date upperBound = DateBuilder.createDateTime(upperBoundDay + " " + upperBoundTime + ":00");
+    public void setTrains(java.util.Date lowerBound, java.util.Date upperBound) throws ParseException {
         this.trains = clientService.getTrainsByRoute(lowerBound, upperBound, stationAName, stationBName);
     }
 
@@ -98,19 +96,25 @@ public class TrainSearchBean implements Serializable {
 
     public String getTrainsByResponsePage() {
         try {
-            setTrains();
-            if(trains.isEmpty()){
-                setOperationResult("no such trains");
+            java.util.Date lowerBound = DateBuilder.createDateTime(lowerBoundDay + " " + lowerBoundTime + ":00");
+            try {
+                java.util.Date upperBound = DateBuilder.createDateTime(upperBoundDay + " " + upperBoundTime + ":00");
+                setTrains(lowerBound, upperBound);
+                if (trains.isEmpty()) {
+                    setOperationResult("no such trains");
+                    return "trainSearch";
+                } else {
+                    return "trainSearchResp";
+                }
+
+            } catch (ParseException e) {
+                setOperationResult("incorrect upper bound date format");
                 return "trainSearch";
-            }else{
-                return "trainSearchResp";
             }
         } catch (ParseException e) {
-            setOperationResult(e.getMessage());
+            setOperationResult("incorrect lower bound date format");
             return "trainSearch";
         }
-
     }
-
 
 }

@@ -10,12 +10,11 @@
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
-    <title>JSF Demo</title>
 </h:head>
 
 <h:body>
     <ui:composition>
-    <h:form>
+    <h:form id="addTrainForm" styleClass="form">
         <h:panelGrid columns="2">
             train number:
             <h:inputText id="number" value="#{trainBean.number}"/>
@@ -24,6 +23,8 @@
         </h:panelGrid>
         <h:commandButton value="add new train" action="addTrainResp" actionListener="#{trainBean.addTrain}"></h:commandButton>
     </h:form>
+
+
     </ui:composition>
 
 </h:body>

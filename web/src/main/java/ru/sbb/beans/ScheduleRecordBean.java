@@ -81,11 +81,13 @@ public class ScheduleRecordBean implements Serializable {
             managerService.addScheduleRecord(stationName,trainNum,scheduleRecordTime,stationOffset);
             setOperationResult("the operation was successful");
         } catch (ParseException e) {
-            setOperationResult(e.getMessage());
+            setOperationResult("incorrect date format");
         } catch (StationNotFoundException e) {
             setOperationResult(e.getMessage());
         } catch (TrainNotFoundException e) {
             setOperationResult(e.getMessage());
+        }catch (NumberFormatException e) {
+            setOperationResult("incorrect train number format");
         }
 
     }

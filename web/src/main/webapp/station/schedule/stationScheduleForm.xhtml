@@ -7,7 +7,9 @@
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      >
 
 <h:head>
     <title>JSF Demo</title>
@@ -18,7 +20,10 @@
         <h:form>
             <h:panelGrid columns="2">
                 station name:
-                <h:inputText value="#{stationScheduleBean.name}"></h:inputText>
+                <h:inputText id="station" value="#{stationScheduleBean.name}" label="StationName">
+                    <f:validateLength minimum="3" maximum="10" />
+                </h:inputText>
+                <h:message for="station" style="color:red" />
             </h:panelGrid>
 
             <h:commandButton value="get schedule" action="#{stationScheduleBean.getStationSchedulePage()}"></h:commandButton>

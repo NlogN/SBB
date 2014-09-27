@@ -15,12 +15,12 @@
 
 <h:body>
     <ui:composition>
-        <h:form>
+        <h:form id="addStationScheduleForm" styleClass="form">
             <h:panelGrid columns="2">
                 station name:
-                <h:inputText  value="#{scheduleRecordBean.stationName}"/>
+                <h:inputText  id="name" value="#{scheduleRecordBean.stationName}"/>
                 train number:
-                <h:inputText  value="#{scheduleRecordBean.trainNumber}"/>
+                <h:inputText id="num" value="#{scheduleRecordBean.trainNumber}"/>
                 date:
                 <h:inputText  value="#{scheduleRecordBean.date}"/>
                 time:

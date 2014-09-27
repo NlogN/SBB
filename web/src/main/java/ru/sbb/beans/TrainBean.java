@@ -49,10 +49,18 @@ public class TrainBean implements Serializable {
 
     public void addTrain(ActionEvent event) {
         if (number != null && capacity != null) {
-            int num = Integer.parseInt(number);
-            int cap = Integer.parseInt(capacity);
-            managerService.addTrain(num, cap);
-            setOperationResult("train added");
+            try {
+                int num = Integer.parseInt(number);
+                try {
+                    int cap = Integer.parseInt(capacity);
+                    managerService.addTrain(num, cap);
+                    setOperationResult("train added");
+                } catch (NumberFormatException e) {
+                    setOperationResult("incorrect capacity num");
+                }
+            } catch (NumberFormatException e) {
+                setOperationResult("incorrect train num");
+            }
         }
     }
 

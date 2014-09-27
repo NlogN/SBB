@@ -92,19 +92,22 @@ public class TicketBean implements Serializable {
             java.util.Date dayOfBirth = DateBuilder.createDate(bithday);
             passenger.setDate(dayOfBirth);
         } catch (ParseException e) {
-            setOperationResult("dayOfBirth: incorrect date format");
+            setOperationResult("incorrect format of birth date");
             return;
         }
         try {
             java.util.Date dayOfRace = DateBuilder.createDate(dateOfRace);
-            clientService.buyTicket(Integer.parseInt(trainNumber), station, passenger, dayOfRace);
+            int trainNum = Integer.parseInt(trainNumber);
+            clientService.buyTicket(trainNum, station, passenger, dayOfRace);
             setOperationResult("the operation was successful");
         } catch (ParseException e) {
-            setOperationResult("dateOfRace: incorrect date format");
+            setOperationResult("incorrect format of race date");
         } catch (TrainNotFoundException e) {
             setOperationResult(e.getMessage());
         } catch (BuyTicketException e) {
             setOperationResult(e.getMessage());
+        } catch (NumberFormatException e) {
+            setOperationResult("incorrect train number format");
         }
 
     }

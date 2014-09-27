@@ -6,19 +6,21 @@
 
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html">
+      >
 
 <h:head>
-    <title>JSF Demo</title>
+
 </h:head>
 
 <h:body>
+
     <ui:composition>
-        <h:form>
+        <h:form id="viewPassengersForm" styleClass="form">
             <h:panelGrid columns="2">
                 train number:
-                <h:inputText value="#{passengerBean.number}"></h:inputText>
+                <h:inputText id="num" value="#{passengerBean.number}"></h:inputText>
             </h:panelGrid>
             <h:commandButton value="view passengers" action="#{passengerBean.getPassengersPage()}"></h:commandButton>
         </h:form>

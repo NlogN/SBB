@@ -19,8 +19,12 @@ public class PassengerBean implements Serializable {
     }
 
     public void setPassengers() {
-        int trainNum = Integer.parseInt(number);
-        this.passengers = managerService.getPassengersInfoByTrainNum(trainNum);
+        try {
+            int trainNum = Integer.parseInt(number);
+            this.passengers = managerService.getPassengersInfoByTrainNum(trainNum);
+        } catch (NumberFormatException e) {
+            setOperationResult("incorrect train number format");
+        }
     }
 
     public void setManagerService(ManagerService managerService) {
@@ -44,15 +48,16 @@ public class PassengerBean implements Serializable {
     }
 
 
-
-    public String  getPassengersPage() {
-            setPassengers();
-            if(passengers.isEmpty()){
-                setOperationResult("no data");
-                return "viewPassengers";
-            }else{
+    public String getPassengersPage() {
+        setPassengers();
+        if (passengers != null) {
+            if (!passengers.isEmpty()) {
                 return "viewPassengersResp";
+            } else {
+                setOperationResult("no data");
             }
+        }
+        return "viewPassengers";
     }
 
 

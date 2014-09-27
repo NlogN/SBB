@@ -15,28 +15,14 @@
 
 <h:body>
     <ui:composition>
-        <h:form id="addform">
+        <h:form id="addStationForm" styleClass="form">
             <h:panelGrid columns="2">
                 station name:
-
-                <h:inputText id="qwe" value="#{stationBean.name}"/>
+                <h:inputText id="name" value="#{stationBean.name}"/>
             </h:panelGrid>
             <h:commandButton value="add new Station" action="addStationResp"
                              actionListener="#{stationBean.addStation}"></h:commandButton>
         </h:form>
-
-        <script type="text/javascript">
-            $(document).ready(function(){
-                $('#addform').bind('submit', function(event) {
-                    $('[type=text]').each(function() {
-                        if(!$(this).val().length) {
-                            event.preventDefault();
-                            $(this).css('border', '2px solid red');
-                        }
-                    });
-                });
-            });
-        </script>
 
     </ui:composition>
 
