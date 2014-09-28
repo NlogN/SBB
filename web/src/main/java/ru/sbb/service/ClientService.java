@@ -85,24 +85,24 @@ public class ClientService {
         List<Train> trains = trainDAO.getTrainByNum(trainNum);
         if (trains.isEmpty()) {
             logger.error("Train not found: " + "train " + trainNum);
-            throw new TrainNotFoundException("Train not found!");
+            throw new TrainNotFoundException("Train not found!", trainNum);
         } else {
             Train train = trains.get(0);
             if (!checkNotFilledState(train, dateOfRace)) {
                 logger.error("no empty seats: " + "train " + trainNum);
-                throw new BuyTicketException("no empty seats");
+                throw new BuyTicketException("no empty seats", trainNum, stationName, passenger, dateOfRace);
             } else {
                 if (!checkStationVisit(train, stationName, dateOfRace)) {
                     logger.error("train not visit this station at this day: " + "train " + trainNum);
-                    throw new BuyTicketException("train not visit this station at this day");
+                    throw new BuyTicketException("train not visit this station at this day", trainNum, stationName, passenger, dateOfRace);
                 } else {
                     if (!checkStartTime(train, stationName)) {
                         logger.error("registration on this train is closed: " + "train " + trainNum);
-                        throw new BuyTicketException("registration on this train is closed");
+                        throw new BuyTicketException("registration on this train is closed", trainNum, stationName, passenger, dateOfRace);
                     } else {
                         if (!checkSamePassengerNotReg(train, passenger.getName(), passenger.getSurname(), passenger.getDate())) {
                             logger.error("such passenger is already registered: " + "train " + trainNum);
-                            throw new BuyTicketException("such passenger is already registered");
+                            throw new BuyTicketException("such passenger is already registered", trainNum, stationName, passenger, dateOfRace);
                         } else {
                             ticketDAO.addTicket(passenger, train, dateOfRace);
                             logger.error("the operation was successful: " + "train " + trainNum);
