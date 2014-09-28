@@ -10,6 +10,7 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.ComponentSystemEvent;
 import java.io.IOException;
 import java.io.Serializable;
+import javax.servlet.http.HttpServletResponse;
 
 
 public class UserBean implements Serializable {
@@ -59,7 +60,7 @@ public class UserBean implements Serializable {
         this.enteredPassword = null;
     }
 
-    public void checkAlreadyLoggedin() throws IOException {
+    public void checkAlreadyLoggedin(ComponentSystemEvent event) throws IOException {
         setOperationResult("to index");
 
         FacesContext fc = FacesContext.getCurrentInstance();
@@ -68,8 +69,16 @@ public class UserBean implements Serializable {
                     = (ConfigurableNavigationHandler)
                     fc.getApplication().getNavigationHandler();
 
-            nav.performNavigation("index");
+            nav.performNavigation("/index");
        // }
+    }
+
+    public void authentication() throws IOException {
+       // setOperationResult("to index");
+        FacesContext context = FacesContext.getCurrentInstance();
+        javax.servlet.http.HttpServletResponse response = (javax.servlet.http.HttpServletResponse) context.getExternalContext().getResponse();
+        response.sendRedirect("/index.xhtml");
+
     }
 
 }

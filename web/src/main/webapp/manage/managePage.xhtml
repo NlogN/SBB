@@ -6,13 +6,15 @@
       xmlns:f="http://java.sun.com/jsf/core"
         >
 
-<f:event listener="#{userBean.checkAlreadyLoggedin}" type="preRenderView" />
 
 <head><title>IGNORED</title></head>
 
 <body>
 
 <ui:composition template="/tamplates/layout.xhtml">
+
+    <f:event listener="#{userBean.authentication()}" type="preRenderView" />
+
     <ui:define name="windowTitle">
         manage service
     </ui:define>

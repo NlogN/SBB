@@ -9,6 +9,10 @@ input[type="submit"]:active {
 
 }
 
+#homeContent span{
+    color: red;
+}
+
 #wrapper{
     width:800px;
     margin:auto;

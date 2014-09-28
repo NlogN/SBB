@@ -14,27 +14,22 @@
     </bean>
 
     <bean id="passengerDAO" class="ru.sbb.dao.PassengerDAOImpl">
-        <!--<property name="entityManager" ref="entityManagerFactory"/>-->
         <property name="entityManager" ref="entityManagerBean"/>
     </bean>
 
     <bean id="scheduleRecordDAO" class="ru.sbb.dao.ScheduleRecordDAOImpl">
-        <!--<property name="entityManager" ref="entityManagerFactory"/>-->
         <property name="entityManager" ref="entityManagerBean"/>
     </bean>
 
     <bean id="ticketDAO" class="ru.sbb.dao.TicketDAOImpl">
-        <!--<property name="entityManager" ref="entityManagerFactory"/>-->
         <property name="entityManager" ref="entityManagerBean"/>
     </bean>
 
     <bean id="trainDAO" class="ru.sbb.dao.TrainDAOImpl">
-        <!--<property name="entityManager" ref="entityManagerFactory"/>-->
         <property name="entityManager" ref="entityManagerBean"/>
     </bean>
 
     <bean id="stationDAO" class="ru.sbb.dao.StationDAOImpl">
-        <!--<property name="entityManager" ref="entityManagerFactory"/>-->
         <property name="entityManager" ref="entityManagerBean"/>
     </bean>
 

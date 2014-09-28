@@ -1,5 +1,6 @@
 package ru.sbb.service;
 
+import org.apache.log4j.Logger;
 import ru.sbb.dto.PassengerRecord;
 import ru.sbb.dao.PassengerDAO;
 import ru.sbb.dao.ScheduleRecordDAO;
@@ -25,6 +26,8 @@ public class ManagerService {
     private StationDAO stationDAO;
     private ScheduleRecordDAO scheduleRecordDAO;
 
+    private static Logger logger = Logger.getLogger(ClientService.class);
+
     public void setStationDAO(StationDAO stationDAO) {
         this.stationDAO=stationDAO;
     }
@@ -43,6 +46,7 @@ public class ManagerService {
 
 
     public List<TrainRecord> getTrains() {
+        logger.info("getTrains request");
         List<Train> trainList = trainDAO.getTrains();
         List<TrainRecord> trains = new ArrayList<TrainRecord>();
         for (Train train : trainList) {
@@ -55,18 +59,22 @@ public class ManagerService {
     }
 
     public void addTrain(int number, int capacity) {
+        logger.info("addTrain request with param: " + "train: " + number);
         trainDAO.addTrain(number, capacity);
     }
 
     public void addStation(String name) {
+        logger.info("addStation request with param: " + "station name: " + name);
         stationDAO.addStation(name);
     }
 
     public void addScheduleRecord(String stationName, int trainNumber, Date time, int offset) throws StationNotFoundException, TrainNotFoundException {
+        logger.info("addScheduleRecord request with param: " + "station name: " + stationName);
         scheduleRecordDAO.addScheduleRecord(stationName, trainNumber, time, offset);
     }
 
     public List<PassengerRecord> getPassengersInfoByTrainNum(int trainNum) {
+        logger.info("getPassengersInfoByTrainNum request with param: " + "train: " + trainNum);
         List<Passenger> passengerList = passengerDAO.getPassengersByTrain(trainNum);
         List<PassengerRecord> passengers = new ArrayList<PassengerRecord>();
         for (Passenger passenger:passengerList){

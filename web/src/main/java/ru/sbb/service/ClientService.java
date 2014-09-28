@@ -19,6 +19,9 @@ import ru.sbb.DateBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
+
 /**
  * Created with IntelliJ IDEA.
  * User: Ilya Makeev
@@ -29,6 +32,8 @@ public class ClientService {
     private ScheduleRecordDAO scheduleRecordDAO;
     private TrainDAO trainDAO;
     private PassengerDAO passengerDAO;
+
+    private static Logger logger = Logger.getLogger(ClientService.class);
 
     public void setTicketDAO(TicketDAO ticketDAO) {
         this.ticketDAO = ticketDAO;
@@ -48,6 +53,7 @@ public class ClientService {
 
 
     public List<TrainRecord> getTrainsByRoute(java.util.Date lowerBound, java.util.Date upperBound, String stationAName, String stationBName) {
+        logger.info("getTrainsByRoute request with param: " + "StationA: " + stationAName + ", StationB: " + stationBName);
         List<Train> trainList = trainDAO.getTrainByRoute(lowerBound, upperBound, stationAName, stationBName);
         List<TrainRecord> trains = new ArrayList<TrainRecord>();
         for (Train train : trainList) {
@@ -61,6 +67,7 @@ public class ClientService {
 
 
     public List<StationScheduleRecord> getStationSchedule(String stationName) throws StationNotFoundException {
+        logger.info("getStationSchedule request with param: " + "train: " + stationName);
         List<ScheduleRecord> scheduleList = scheduleRecordDAO.getStationScheduleRecords(stationName);
         List<StationScheduleRecord> recordList = new ArrayList<StationScheduleRecord>();
         for (ScheduleRecord schedule : scheduleList) {
@@ -74,24 +81,31 @@ public class ClientService {
 
 
     public void buyTicket(int trainNum, String stationName, Passenger passenger, java.util.Date dateOfRace) throws BuyTicketException, TrainNotFoundException {
+        logger.info("buyTicket request with param: " + "train: " + trainNum + ", " + "station: " + stationName);
         List<Train> trains = trainDAO.getTrainByNum(trainNum);
         if (trains.isEmpty()) {
+            logger.error("Train not found: " + "train " + trainNum);
             throw new TrainNotFoundException("Train not found!");
         } else {
             Train train = trains.get(0);
-            if(!checkNotFilledState(train, dateOfRace)){
+            if (!checkNotFilledState(train, dateOfRace)) {
+                logger.error("no empty seats: " + "train " + trainNum);
                 throw new BuyTicketException("no empty seats");
-            }else{
+            } else {
                 if (!checkStationVisit(train, stationName, dateOfRace)) {
+                    logger.error("train not visit this station at this day: " + "train " + trainNum);
                     throw new BuyTicketException("train not visit this station at this day");
                 } else {
                     if (!checkStartTime(train, stationName)) {
+                        logger.error("registration on this train is closed: " + "train " + trainNum);
                         throw new BuyTicketException("registration on this train is closed");
                     } else {
                         if (!checkSamePassengerNotReg(train, passenger.getName(), passenger.getSurname(), passenger.getDate())) {
+                            logger.error("such passenger is already registered: " + "train " + trainNum);
                             throw new BuyTicketException("such passenger is already registered");
                         } else {
                             ticketDAO.addTicket(passenger, train, dateOfRace);
+                            logger.error("the operation was successful: " + "train " + trainNum);
                         }
                     }
                 }
@@ -105,7 +119,7 @@ public class ClientService {
         List<ScheduleRecord> scheduleList = scheduleRecordDAO.findScheduleRecordsByStationNameAndTrain(train, stationName);
         if (!scheduleList.isEmpty()) {
             for (ScheduleRecord schedule : scheduleList) {
-                if ((DateBuilder.getUnixTime(dateOfRace)) <= schedule.getUnixTime()  && (schedule.getUnixTime() < DateBuilder.getUnixTime(dateOfRace) + 86400)) {
+                if ((DateBuilder.getUnixTime(dateOfRace)) <= schedule.getUnixTime() && (schedule.getUnixTime() < DateBuilder.getUnixTime(dateOfRace) + 86400)) {
                     return true;
                 }
             }

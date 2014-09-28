@@ -15,20 +15,20 @@
 
 <h:body>
     <ui:composition>
-        <h:form>
+        <h:form id="buyTicketForm" styleClass="form">
             <h:panelGrid columns="2">
                 name:
-                <h:inputText value="#{ticketBean.name}"/>
+                <h:inputText id="name" value="#{ticketBean.name}"/>
                 surname:
-                <h:inputText value="#{ticketBean.surname}"/>
+                <h:inputText id="surname" value="#{ticketBean.surname}"/>
                 birthday:
                 <h:inputText value="#{ticketBean.bithday}"/>
                 day of race:
                 <h:inputText value="#{ticketBean.dateOfRace}"/>
                 train number:
-                <h:inputText value="#{ticketBean.trainNumber}"/>
+                <h:inputText id="num" value="#{ticketBean.trainNumber}"/>
                 station:
-                <h:inputText value="#{ticketBean.station}"/>
+                <h:inputText id="station" value="#{ticketBean.station}"/>
             </h:panelGrid>
             <h:commandButton value="buy ticket" action="buyTicket"
                              actionListener="#{ticketBean.buyTicket}"></h:commandButton>

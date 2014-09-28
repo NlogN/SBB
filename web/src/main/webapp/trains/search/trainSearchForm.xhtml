@@ -15,13 +15,13 @@
 
 <h:body>
     <ui:composition>
-    <h:form>
+    <h:form id="searchTrainForm" styleClass="form">
 
         <h:panelGrid columns="2">
             from:
-            <h:inputText  value="#{trainSearchBean.stationAName}"/>
+            <h:inputText  id="stationA" value="#{trainSearchBean.stationAName}"/>
             to:
-            <h:inputText  value="#{trainSearchBean.stationBName}"/>
+            <h:inputText  id="stationB" value="#{trainSearchBean.stationBName}"/>
         </h:panelGrid>
         <h:panelGrid columns="4">
             day:
