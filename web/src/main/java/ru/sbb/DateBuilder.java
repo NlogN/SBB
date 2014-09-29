@@ -50,5 +50,9 @@ public class DateBuilder {
         return new SimpleDateFormat("yyyy-MM-dd").format(date);
     }
 
+    public static String dateTimeToString(Date date){
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm").format(date);
+    }
+
 
 }

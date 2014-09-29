@@ -3,7 +3,7 @@ package ru.sbb.dto;
 
 public class StationScheduleRecord {
     private String trainNum;
-    private java.util.Date time;
+    private String time;
 
     public String getTrainNum() {
         return trainNum;
@@ -13,11 +13,11 @@ public class StationScheduleRecord {
         this.trainNum = trainNum;
     }
 
-    public java.util.Date getTime() {
+    public String  getTime() {
         return time;
     }
 
-    public void setTime(java.util.Date time) {
+    public void setTime(String  time) {
         this.time = time;
     }
 

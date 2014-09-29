@@ -73,7 +73,8 @@ public class ClientService {
         for (ScheduleRecord schedule : scheduleList) {
             StationScheduleRecord newStationScheduleRecord = new StationScheduleRecord();
             newStationScheduleRecord.setTrainNum(Integer.toString(schedule.getTrain().getNumber()));
-            newStationScheduleRecord.setTime(schedule.getTime());
+            String time = DateBuilder.dateTimeToString(schedule.getTime());
+            newStationScheduleRecord.setTime(time);
             recordList.add(newStationScheduleRecord);
         }
         return recordList;

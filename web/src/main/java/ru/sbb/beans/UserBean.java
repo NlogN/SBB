@@ -14,7 +14,7 @@ import java.io.Serializable;
 
 public class UserBean implements Serializable {
     private String enteredPassword;
-   private String operationResult = "";
+    private String operationResult = "";
     public String getOperationResult() {
         return operationResult;
     }

@@ -78,7 +78,7 @@ public class ScheduleRecordBean implements Serializable {
             java.util.Date scheduleRecordTime = DateBuilder.createDateTime(date + " " + time + ":00");
             int trainNum = Integer.parseInt(trainNumber);
             int stationOffset = Integer.parseInt(trainNumber);
-            managerService.addScheduleRecord(stationName,trainNum,scheduleRecordTime,stationOffset);
+            managerService.addScheduleRecord(stationName, trainNum, scheduleRecordTime, stationOffset);
             setOperationResult("the operation was successful");
         } catch (ParseException e) {
             setOperationResult("incorrect date format");
@@ -86,7 +86,7 @@ public class ScheduleRecordBean implements Serializable {
             setOperationResult(e.getMessage());
         } catch (TrainNotFoundException e) {
             setOperationResult(e.getMessage());
-        }catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             setOperationResult("incorrect train number format");
         }
 
