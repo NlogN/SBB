@@ -34,7 +34,7 @@ public class ScheduleRecordDAOImpl implements ScheduleRecordDAO {
         stationQuery.setParameter("stName", stationName);
         List<Station> stationList = stationQuery.getResultList();
         if (stationList.isEmpty()) {
-            throw new StationNotFoundException("Station not found!",stationName);
+            throw new StationNotFoundException("Station not found!", stationName);
         } else {
             Query trainQuery = entityManager.createQuery("SELECT tr FROM ru.sbb.entity.Train tr where tr.number =:trNum");
             trainQuery.setParameter("trNum", trainNumber);
@@ -84,7 +84,7 @@ public class ScheduleRecordDAOImpl implements ScheduleRecordDAO {
         query.setParameter("stName", stationName);
         List<Station> list = query.getResultList();
         if (list.isEmpty()) {
-            throw new StationNotFoundException("Station not found!",stationName);
+            throw new StationNotFoundException("Station not found!", stationName);
         } else {
             List<ScheduleRecord> scheduleList = list.get(0).getScheduleList();
             if (scheduleList == null) {

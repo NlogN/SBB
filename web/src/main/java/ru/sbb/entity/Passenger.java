@@ -28,7 +28,6 @@ public class Passenger {
     private List<Ticket> ticketList;
 
     public Passenger() {
-
     }
 
     public int getId() {

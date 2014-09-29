@@ -4,18 +4,16 @@ package ru.sbb.beans;
 import ru.sbb.RegistrationService;
 
 import javax.faces.application.ConfigurableNavigationHandler;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ComponentSystemEvent;
 import java.io.IOException;
 import java.io.Serializable;
-import javax.servlet.http.HttpServletResponse;
+
 
 
 public class UserBean implements Serializable {
     private String enteredPassword;
-   // private String operationResult = "no change";
    private String operationResult = "";
     public String getOperationResult() {
         return operationResult;
@@ -27,9 +25,6 @@ public class UserBean implements Serializable {
 
     private RegistrationService registrationService;
 
-    public RegistrationService getRegistrationService() {
-        return registrationService;
-    }
 
     public void setRegistrationService(RegistrationService registrationService) {
         this.registrationService = registrationService;
@@ -61,20 +56,17 @@ public class UserBean implements Serializable {
     }
 
     public void checkAlreadyLoggedin(ComponentSystemEvent event) throws IOException {
-        setOperationResult("to index");
-
         FacesContext fc = FacesContext.getCurrentInstance();
-      //  if (!registrationService.checkPassword(enteredPassword)) {
+        if (!registrationService.checkPassword(enteredPassword)) {
             ConfigurableNavigationHandler nav
                     = (ConfigurableNavigationHandler)
                     fc.getApplication().getNavigationHandler();
 
             nav.performNavigation("/index");
-       // }
+       }
     }
 
     public void authentication() throws IOException {
-       // setOperationResult("to index");
         FacesContext context = FacesContext.getCurrentInstance();
         javax.servlet.http.HttpServletResponse response = (javax.servlet.http.HttpServletResponse) context.getExternalContext().getResponse();
         response.sendRedirect("/index.xhtml");

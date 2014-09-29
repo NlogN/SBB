@@ -3,22 +3,19 @@ package ru.sbb.beans;
 
 import ru.sbb.DateBuilder;
 import ru.sbb.dto.TrainRecord;
-import ru.sbb.entity.Train;
 import ru.sbb.service.ClientService;
 
 
 import java.io.Serializable;
 import java.text.ParseException;
-import java.util.AbstractList;
-import java.util.ArrayList;
 import java.util.List;
 
 
 public class TrainSearchBean implements Serializable {
     private String stationAName;
     private String stationBName;
-    private String lowerBoundDay = "2014/12/12";
-    private String upperBoundDay = "2014/05/12";
+    private String lowerBoundDay = "2014/15/12";
+    private String upperBoundDay = "2014/12/12";
     private String lowerBoundTime = "01:01";
     private String upperBoundTime = "01:02";
     private String operationResult = "";

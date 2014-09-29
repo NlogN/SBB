@@ -1,12 +1,8 @@
 package ru.sbb.beans;
 
 import ru.sbb.dto.TrainRecord;
-import ru.sbb.entity.Train;
-import ru.sbb.service.ClientService;
 import ru.sbb.service.ManagerService;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
 import java.io.Serializable;
 import java.util.List;
