@@ -102,7 +102,7 @@ $(document).ready(function () {
             'searchTrainForm:stationB': {
                 required: "enter station name!",
                 minlength: "min length is 1 character",
-                maxlength: "max length is 5 characters"
+                maxlength: "max length is 15 characters"
             },
             'buyTicketForm:name': {
                 required: "enter name!",
