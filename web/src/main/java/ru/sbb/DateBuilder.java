@@ -8,7 +8,6 @@ import java.util.Date;
 /**
  * Created with IntelliJ IDEA.
  * User: Ilya Makeev
- * DateBuilder: 21.08.14
  */
 public class DateBuilder {
 
@@ -45,6 +44,10 @@ public class DateBuilder {
 
     public static Date createDate(int year, int month, int day) {
         return createDate(year, month, day, 0, 0, 0);
+    }
+
+    public static String dateToString(Date date){
+        return new SimpleDateFormat("yyyy-MM-dd").format(date);
     }
 
 

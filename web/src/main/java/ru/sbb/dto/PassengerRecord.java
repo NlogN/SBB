@@ -6,13 +6,13 @@ import java.util.Date;
 public class PassengerRecord {
     private String name;
     private String surname;
-    private Date date;
+    private String date;
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

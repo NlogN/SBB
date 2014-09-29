@@ -1,6 +1,7 @@
 package ru.sbb.service;
 
 import org.apache.log4j.Logger;
+import ru.sbb.DateBuilder;
 import ru.sbb.dto.PassengerRecord;
 import ru.sbb.dao.PassengerDAO;
 import ru.sbb.dao.ScheduleRecordDAO;
@@ -81,7 +82,8 @@ public class ManagerService {
             PassengerRecord passengerRecord = new PassengerRecord();
             passengerRecord.setName(passenger.getName());
             passengerRecord.setSurname(passenger.getSurname());
-            passengerRecord.setDate(passenger.getDate());
+            String birthDate = DateBuilder.dateToString(passenger.getDate());
+            passengerRecord.setDate(birthDate);
             passengers.add(passengerRecord);
         }
         return passengers;

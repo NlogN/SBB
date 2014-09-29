@@ -14,7 +14,7 @@ import java.util.List;
 public class TrainSearchBean implements Serializable {
     private String stationAName;
     private String stationBName;
-    private String lowerBoundDay = "2014/15/12";
+    private String lowerBoundDay = "2014/05/12";
     private String upperBoundDay = "2014/12/12";
     private String lowerBoundTime = "01:01";
     private String upperBoundTime = "01:02";
